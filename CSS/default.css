@@ -1,0 +1,83 @@
+/**
+* @author Gruppe 8
+* @version 1.0
+*/
+
+/* Table of Contents
+Custom Reset       - Resetting default Styles
+Constants          - variable declaration for colors 
+                     and other values that are used more often
+Styling            - individual content styling 
+*/
+
+/* ========== RESET ================= */
+
+body {
+    margin: 0;
+    background-color: #1e2025;
+    background-color: var(--bg-primary);
+    color: var(--text);
+    font-family: "Roboto";
+}
+a {
+    color: var(--contrast);
+    cursor: pointer;
+}
+button {
+    background: none;
+    border: none;
+}
+button:hover {cursor: pointer;}
+button:focus {outline: none;}
+
+::selection {
+    color: white;
+    background: var(--contrast);
+}
+::-webkit-scrollbar {
+	display: none;
+}
+
+/* ========== CONSTANTS ============= */
+
+:root {
+    --bg-primary: #1e2025;
+    --bg-secondary: #212328;
+    --bg-tertionary: #3e3f42;
+    --text: #FFFFFFDE;
+    --contrast: #e74c3c;
+    --border-r: 5px;
+}
+
+.no-select {
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+/* ========== FONTS ================= */
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Regular.eot');
+    src: url('../fonts/Roboto-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Roboto-Regular.woff2') format('woff2'),
+        url('../fonts/Roboto-Regular.woff') format('woff'),
+        url('../fonts/Roboto-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Bold.eot');
+    src: url('../fonts/Roboto-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Roboto-Bold.woff2') format('woff2'),
+        url('../fonts/Roboto-Bold.woff') format('woff'),
+        url('../fonts/Roboto-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}

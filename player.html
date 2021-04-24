@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Music Player Pro</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="icon" type="image/png" href="img/brand/favicon.png">
+    <link rel='stylesheet' type='text/css' media='screen' href='css/default.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='css/player.css'>
+    <script src='/js/default.js'></script>
+</head>
+<body>
+    <div id="player">
+        <div class="drag-bar"></div>
+        <div class="song-info">
+            <span class="title">Phyllis</span>
+             - 
+            <span class="artist">Lettuce</span>
+        </div>
+        <div id="control">
+            <div id="progress-bar-container">
+                <div class="progress-fill"></div>
+                <p class="time left no-select">00:00</p>
+                <p class="time right no-select">00:00</p>
+            </div>
+            <div class="buttons no-select">
+                <button id="rand-control" class="ctrl-btn extra">
+                    <img src="img/ctrl/shuffle.svg">
+                </button>
+                <button id="back-control" class="ctrl-btn skip">
+                    <img src="img/ctrl/back.svg">
+                </button>
+                <button id="play-control" class="ctrl-btn">
+                    <img src="img/ctrl/play.svg">
+                </button>
+                <button id="skip-control" class="ctrl-btn skip">
+                    <img src="img/ctrl/skip.svg">
+                </button>
+                <button id="loop-control" class="ctrl-btn extra">
+                    <img src="img/ctrl/loop.svg">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div id="navbar">
+            <a href="#">Songs</a>
+            <a href="#">Playlists</a>
+        </div>
+
+        <table id="song-table">
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Folder</th>
+                <th>Length</th>
+            </tr>
+            <tr>
+                <td>Arthur</td>
+                <td>Philanthrope</td>
+                <td>Todai moto kurashi</td>
+                <td>songs_good</td>
+                <td>1:50</td>
+            </tr>
+            <tr>
+                <td>Glue</td>
+                <td>Bicep</td>
+                <td>Bicep</td>
+                <td>songs_good</td>
+                <td>3:35</td>
+            </tr>
+            <tr>
+                <td>Distant Lands</td>
+                <td>Kupla</td>
+                <td>Life Forms</td>
+                <td>songs_good</td>
+                <td>2:50</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
