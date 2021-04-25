@@ -1,0 +1,27 @@
+h1 {
+    color: var(--contrast);
+}
+
+body {
+    background-color: var(--bg-secondary);
+}
+
+nav{
+    flex-direction: row;
+    display: flex;
+    box-shadow: 0px 5px 15px var(--bg-primary);
+    width:  100%;
+}
+
+nav img{
+    width: 64px;
+    height: 64px;
+}
+
+nav .nav-item {
+    margin-right: 20px;
+}
+
+#content {
+    padding-left: 50px;
+}
