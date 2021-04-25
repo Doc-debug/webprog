@@ -109,6 +109,11 @@ Styling            - individual content styling
 #control .skip:hover, .extra:hover {
     opacity: 1;
 }
+
+#audioPlayer{
+    visibility: hidden;
+}
+
 @media only screen and (max-width: 1000px) {
     #player .drag-bar {
         max-width: 600px;
