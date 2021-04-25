@@ -8,8 +8,7 @@
     <link rel="icon" type="image/png" href="img/brand/favicon.png">
     <link rel='stylesheet' type='text/css' media='screen' href='css/default.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='css/player.css'>
-    <script type="module" src='/js/crawler.js'></script>
-    <script src='/js/default.js'></script>
+    <script type='module' src='/js/songlist.js'></script>
 </head>
 <body>
     <div id="player">
@@ -45,42 +44,30 @@
         </div>
     </div>
 
-    <div>
+    <div id="content">
         <div id="navbar">
             <a href="#">Songs</a>
             <a href="#">Playlists</a>
+            
+            <input type="text" id="searchbar" onkeyup="searchbarUpdate()" placeholder="Search..">
         </div>
 
-        <table id="song-table">
-            <tr>
-                <th>Title</th>
-                <th>Artist</th>
-                <th>Album</th>
-                <th>Folder</th>
-                <th>Length</th>
-            </tr>
-            <tr>
-                <td>Arthur</td>
-                <td>Philanthrope</td>
-                <td>Todai moto kurashi</td>
-                <td>songs_good</td>
-                <td>1:50</td>
-            </tr>
-            <tr>
-                <td>Glue</td>
-                <td>Bicep</td>
-                <td>Bicep</td>
-                <td>songs_good</td>
-                <td>3:35</td>
-            </tr>
-            <tr>
-                <td>Distant Lands</td>
-                <td>Kupla</td>
-                <td>Life Forms</td>
-                <td>songs_good</td>
-                <td>2:50</td>
-            </tr>
-        </table>
+        <div id="table-container">
+            <table id="song-table">
+                <thead>
+                    <tr>
+                        <th onclick="sortTag('title')">Title</th>
+                        <th onclick="sortTag('artist')">Artist</th>
+                        <th onclick="sortTag('album')">Album</th>
+                        <th onclick="sortTag('url')">Folder</th>
+                        <th onclick="sortTag('length')">Length</th>
+                    </tr>
+                </thead>
+                <tbody id="song-table-body">
+
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>

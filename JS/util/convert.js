@@ -39,3 +39,9 @@ export function decodeHTMLEntities(text) {
 
     return text;
 }
+
+// zero pad a number
+export function pad(num, digits = 2) {
+    if (isNaN(num) || num == null) return "0".repeat(digits);
+    return "0".repeat(digits - String(num).length) + String(num);
+}
