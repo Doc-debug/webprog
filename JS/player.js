@@ -1,4 +1,4 @@
-import { lastSongArr } from "./songlist.js";
+import { getSonglist } from "./songlist.js";
 "use strict";
 
 window.onload = function(){

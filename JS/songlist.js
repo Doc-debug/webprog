@@ -7,8 +7,7 @@ window.onload = async function () {
     let data = await crawler();
     fillSongList(find(""));
 };
-
-export let lastSongArr = [];
+let lastSongArr = [];
 // fills song list with given object array
 async function fillSongList(songs, sortingTag = "title", sortDir = 1) {
     songs = arrSort(songs, sortingTag, sortDir);
@@ -33,6 +32,10 @@ async function fillSongList(songs, sortingTag = "title", sortDir = 1) {
         let title = row.insertCell(0);
         title.innerHTML = song.title;
     });
+}
+
+export function getSonglist(){
+    return lastSongArr;
 }
 
 let lastSort = "title";
