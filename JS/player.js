@@ -1,89 +1,99 @@
-import { getSonglist } from "./songlist.js";
-"use strict";
+import { crawler } from "./crawler.js";
+import { initSonglist } from "./songlist.js";
+("use strict");
 
-window.onload = function(){
+window.onload = async function () {
+    let data = await crawler();
+    initSonglist();
     initPlayer();
 };
 
-let playing, player, loop, shuffle, btnPlayPause, btnLoop, btnShuffle, btnSkip, btnBack;
+let playing,
+    player,
+    loop,
+    shuffle,
+    btnPlayPause,
+    btnLoop,
+    btnShuffle,
+    btnSkip,
+    btnBack;
 
-function initPlayer(){
+function initPlayer() {
     //init player variables
     player = new Audio();
     playing = false;
     loop = false;
     shuffle = false;
-    let musicFolder = "music/"
+    let musicFolder = "music/";
 
     btnPlayPause = document.getElementById("play-control");
     btnSkip = document.getElementById("skip-control");
     btnBack = document.getElementById("back-control");
     btnShuffle = document.getElementById("shuffle-control");
     btnLoop = document.getElementById("loop-control");
-    
+
     //adding event listeners to buttons
-    btnPlayPause.addEventListener("click", function(){
-        switchPlayPause()
+    btnPlayPause.addEventListener("click", function () {
+        switchPlayPause();
     });
-    btnSkip.addEventListener("click", function(){
+    btnSkip.addEventListener("click", function () {
         audioSkip();
-    } );
-    btnBack.addEventListener("click", function(){
+    });
+    btnBack.addEventListener("click", function () {
         audioBack();
     });
-    btnShuffle.addEventListener("click", function(){
+    btnShuffle.addEventListener("click", function () {
         audioShuffle();
     });
-    btnLoop.addEventListener("click", function(){
+    btnLoop.addEventListener("click", function () {
         audioLoop();
     });
 
     //init first song
-    player.src = musicFolder + "01 Bleach.mp3"
-
+    player.src = musicFolder + "01 Bleach.mp3";
 }
 
 //Switch for play and pause
-function switchPlayPause(){
-    if (playing){
+function switchPlayPause() {
+    if (playing) {
         audioPause();
-    }else{
+    } else {
         audioPlay();
     }
 }
 
 //Set player to play
-function audioPlay(){
+function audioPlay() {
     playing = true;
     player.play();
 }
 
 //Set player to pause
-function audioPause(){
+function audioPause() {
     playing = false;
     player.pause();
 }
 
 //Skipping song
-function audioSkip(){
+function audioSkip() {
     //ToDo when track list implemented
 }
 
 //Got to song start or a song back
-function audioBack(){
+function audioBack() {
     //ToDo when track list implemented
 }
 
 //Switches shuffle
-function audioShuffle(){
+function audioShuffle() {
     //ToDo when track list implemented
 }
 
 //Switching loop control
-function audioLoop(){
+function audioLoop() {
     loop = !loop;
     player.loop = loop;
-    if (loop){
+    if (loop) {
         //ToDo svg in --contrast
     }
 }

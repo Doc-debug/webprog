@@ -3,10 +3,11 @@ import { arrSort } from "./util/object.js";
 import { crawler, tree, find } from "./crawler.js";
 ("use strict");
 
-window.onload = async function () {
-    let data = await crawler();
+export async function initSonglist() {
     fillSongList(find(""));
-};
+    window.searchbarUpdate = searchbarUpdate; // add to global scope for onkeyup
+    window.sortTag = sortTag; // add to global scope for onclick
+}
 let lastSongArr = [];
 // fills song list with given object array
 async function fillSongList(songs, sortingTag = "title", sortDir = 1) {
@@ -34,7 +35,7 @@ async function fillSongList(songs, sortingTag = "title", sortDir = 1) {
     });
 }
 
-export function getSonglist(){
+export function getSonglist() {
     return lastSongArr;
 }
 
@@ -53,5 +54,3 @@ function searchbarUpdate() {
     let input = document.getElementById("searchbar").value;
     fillSongList(find(input));
 }
-window.searchbarUpdate = searchbarUpdate; // add to global scope for onkeyup
-window.sortTag = sortTag; // add to global scope for onclick
