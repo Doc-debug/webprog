@@ -3,19 +3,18 @@ import { decodeHTMLEntities } from "./util/convert.js";
 import { modNestedObj, flattenTree } from "./util/object.js";
 ("use strict");
 
-window.onload = function () {
-    createFrame();
-    setTimeout(() => {
-        console.log(tree);
-        console.log(find("test", "url"));
-        console.log(find("bleach", "title"));
-        console.log(find("anatu", "artist"));
-    }, 2000);
-};
+export async function crawler() {
+    await createframe();
+    return promise;
+}
 
+const promise = defer();
+// a list of iframes to check if the recursion is still running
+let iframes = [];
 // creates an invisible iframe
-async function createFrame(src = "./music") {
+async function createframe(src = "./music") {
     let iframe = document.createElement("iframe");
+    iframes.push(iframe);
     iframe.style.display = "none";
     iframe.src = src;
     // waits until iframe is fully loaded before reading body
@@ -25,12 +24,18 @@ async function createFrame(src = "./music") {
 
         // remove iframe dom
         iframe.remove();
+        // remove iframe when done
+        iframes.pop();
+        // check if recursion is finished and then resolve and return promise
+        if (iframes.length == 0) {
+            promise.resolve(tree);
+            return promise;
+        }
     });
-
     document.body.appendChild(iframe);
 }
 
-var tree = {};
+export var tree = {};
 // recursivley reads files in music directory
 async function getData(iframe, src) {
     let treeTemp = {};
@@ -62,15 +67,39 @@ async function getData(iframe, src) {
     modNestedObj(tree, src.split("/"), treeTemp);
     for (const i in folders) {
         let nextSrc = src + "/" + folders[i];
-        await createFrame(nextSrc);
+        await createframe(nextSrc);
     }
 }
 
 // filters song list by given search string and tag (artist, title, url...)
-function find(titel, tag) {
+export function find(title, tag = null) {
     let list = flattenTree(tree);
-    return list.filter(
-        (ele) =>
-            tag in ele && ele[tag].toLowerCase().includes(titel.toLowerCase())
-    );
+    // if tag is undefined search whole object
+    if (tag == null) {
+        return list.filter((ele) =>
+            JSON.stringify(ele).toLowerCase().includes(title.toLowerCase())
+        );
+    } else {
+        // if tag is specified search only tag
+        return list.filter(
+            (ele) =>
+                tag in ele &&
+                ele[tag].toLowerCase().includes(title.toLowerCase())
+        );
+    }
+}
+
+// returns promise that can be resolved from outside
+function defer() {
+    var res, rej;
+
+    var promise = new Promise((resolve, reject) => {
+        res = resolve;
+        rej = reject;
+    });
+
+    promise.resolve = res;
+    promise.reject = rej;
+
+    return promise;
 }

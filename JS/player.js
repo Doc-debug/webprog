@@ -1,3 +1,4 @@
+import { lastSongArr } from "./songlist.js";
 "use strict";
 
 window.onload = function(){
@@ -8,10 +9,11 @@ let playing, player, loop, shuffle, btnPlayPause, btnLoop, btnShuffle, btnSkip, 
 
 function initPlayer(){
     //init player variables
+    player = new Audio();
     playing = false;
     loop = false;
     shuffle = false;
-    player = document.getElementById("audioPlayer")
+    let musicFolder = "music/"
 
     btnPlayPause = document.getElementById("play-control");
     btnSkip = document.getElementById("skip-control");
@@ -35,6 +37,9 @@ function initPlayer(){
     btnLoop.addEventListener("click", function(){
         audioLoop();
     });
+
+    //init first song
+    player.src = musicFolder + "01 Bleach.mp3"
 
 }
 

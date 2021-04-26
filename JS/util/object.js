@@ -31,3 +31,21 @@ export function flattenTree(
     }
     return songs;
 }
+
+// sort array of objects by key
+export function arrSort(objarr, key, sortDir) {
+    // use array.sort for sorting
+    return objarr.sort(function (a, b) {
+        // pass key and compare with <>
+
+        let x = a[key];
+        let y = b[key];
+        // to lowercase if its a string
+        x = typeof x === "string" ? x.toLowerCase() : x;
+        y = typeof y === "string" ? y.toLowerCase() : y;
+        // move to the bottom if null
+        if (x == null) return 1;
+        if (y == null) return -1;
+        return x < y ? -1 * sortDir : x > y ? 1 * sortDir : 0;
+    });
+}

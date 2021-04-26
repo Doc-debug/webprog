@@ -15,7 +15,7 @@ Styling            - individual content styling
     --bg-primary: #1e2025;
     --bg-secondary: #212328;
     --bg-tertionary: #3e3f42;
-    --text: #FFFFFFDE;
+    --text: #ffffffde;
     --contrast: #e74c3c;
     --border-r: 5px;
 
@@ -62,7 +62,7 @@ Styling            - individual content styling
     opacity: 0.8;
     transition: opacity 0.5s ease;
 }
-#progress-bar-container:hover div{
+#progress-bar-container:hover div {
     opacity: 1;
 }
 #progress-bar-container .time {
@@ -102,16 +102,14 @@ Styling            - individual content styling
     background-color: var(--bg-tertionary);
 }
 
-#control .skip, .extra {
+#control .skip,
+.extra {
     opacity: var(--op-m);
     transition: opacity 0.5s ease;
 }
-#control .skip:hover, .extra:hover {
+#control .skip:hover,
+.extra:hover {
     opacity: 1;
-}
-
-#audioPlayer{
-    visibility: hidden;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -146,7 +144,6 @@ Styling            - individual content styling
     }
 }
 @media only screen and (max-width: 400px) {
-    
     #control .buttons {
         width: 100%;
         margin: auto;
@@ -154,6 +151,14 @@ Styling            - individual content styling
         min-width: 400px;
         left: 50%;
         position: relative;
+    }
+}
+
+/* ========== CONTENT =============== */
+
+@media only screen and (max-width: 1000px) {
+    #content {
+        margin-bottom: 200px;
     }
 }
 
@@ -171,8 +176,22 @@ Styling            - individual content styling
     color: var(--text);
 }
 
+#searchbar {
+    display: block;
+    margin: 15px auto;
+    padding: 5px 20px;
+    border-radius: 100px;
+    border: none;
+    background-color: var(--bg-tertionary);
+    color: var(--text);
+}
+#searchbar:focus {
+    outline: none;
+}
 /* ========== SONG LIST ============= */
-
+#table-container {
+    overflow: scroll;
+}
 #song-table {
     margin: 0 auto;
     width: 90%;
@@ -185,8 +204,15 @@ Styling            - individual content styling
     color: text;
     opacity: var(--op-m);
     padding: 15px;
+    cursor: pointer;
 }
 #song-table td {
     padding: 15px;
-    /*border-top: solid #ffffff50 1px;*/
+    border-top: solid var(--bg-tertionary) 1px;
+}
+@media only screen and (max-width: 1000px) {
+    #song-table td:nth-child(4),
+    #song-table th:nth-child(4) {
+        display: none;
+    }
 }
