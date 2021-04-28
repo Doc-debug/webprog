@@ -1,5 +1,5 @@
 import { crawler } from "./crawler.js";
-import { initSonglist } from "./songlist.js";
+import { initSonglist, getSonglist } from "./songlist.js";
 ("use strict");
 
 window.onload = async function () {
@@ -16,7 +16,9 @@ let playing,
     btnLoop,
     btnShuffle,
     btnSkip,
-    btnBack;
+    btnBack,
+    songlist,
+    selectedSong;
 
 function initPlayer() {
     //init player variables
@@ -24,8 +26,10 @@ function initPlayer() {
     playing = false;
     loop = false;
     shuffle = false;
-    let musicFolder = "music/";
+    songlist = getSonglist();
+    selectedSong = 0;
 
+    //init buttons
     btnPlayPause = document.getElementById("play-control");
     btnSkip = document.getElementById("skip-control");
     btnBack = document.getElementById("back-control");
@@ -50,7 +54,8 @@ function initPlayer() {
     });
 
     //init first song
-    player.src = musicFolder + "01 Bleach.mp3";
+    player.src = songlist[selectedSong]['url'];
+    updateSongInfo()
 }
 
 //Switch for play and pause
@@ -76,17 +81,35 @@ function audioPause() {
 
 //Skipping song
 function audioSkip() {
-    //ToDo when track list implemented
+    //Skip to the next song if possible else restart songlist and pause
+    if(songlist[selectedSong+1] != null){
+        player.src = songlist[selectedSong++]['url'];
+        updateSongInfo()
+
+    }else{
+        selectedSong = 0
+        player.src = songlist[selectedSong]['url'];
+        updateSongInfo()
+        if(playing){
+            player.pause();
+        }
+    }
 }
 
 //Got to song start or a song back
 function audioBack() {
-    //ToDo when track list implemented
+    //Restart song or go a song back
+    if(player.currentTime < 3 || selectedSong == 0){
+        player.currentTime = 0;
+    }else{
+        player.src = songlist[selectedSong--]['url'];
+        updateSongInfo()
+    }
 }
 
 //Switches shuffle
 function audioShuffle() {
-    //ToDo when track list implemented
+    //TODO
 }
 
 //Switching loop control
@@ -96,4 +119,16 @@ function audioLoop() {
     if (loop) {
         //ToDo svg in --contrast
     }
+}
+
+//Set volume
+//@param volume from 0.0 to 1.0
+function audioVolume(volume){
+    player.volume = volume;
+}
+
+function updateSongInfo(){
+    let songInfo = document.getElementById("song-info");
+    songInfo.childNodes[1].innerHTML = songlist[selectedSong]['title']
+    songInfo.childNodes[3].innerHTML = songlist[selectedSong]['artist']
 }

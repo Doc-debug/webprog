@@ -8,6 +8,11 @@ export async function initSonglist() {
     window.searchbarUpdate = searchbarUpdate; // add to global scope for onkeyup
     window.sortTag = sortTag; // add to global scope for onclick
 }
+
+export function getSonglist(){
+    return lastSongArr;
+}
+
 let lastSongArr = [];
 // fills song list with given object array
 async function fillSongList(songs, sortingTag = "title", sortDir = 1) {
@@ -33,10 +38,6 @@ async function fillSongList(songs, sortingTag = "title", sortDir = 1) {
         let title = row.insertCell(0);
         title.innerHTML = song.title;
     });
-}
-
-export function getSonglist() {
-    return lastSongArr;
 }
 
 let lastSort = "title";
