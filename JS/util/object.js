@@ -49,3 +49,16 @@ export function arrSort(objarr, key, sortDir) {
         return x < y ? -1 * sortDir : x > y ? 1 * sortDir : 0;
     });
 }
+
+/**
+ * Random shuffles an array
+ * @param {*} array
+ */
+export function arrShuffle(array) {
+    //Shuffle array using Fisher-Yates shuffle
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
