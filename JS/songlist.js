@@ -1,5 +1,5 @@
 import { pad } from "./util/convert.js";
-import { arrSort } from "./util/object.js";
+import { arrSort, arrClone } from "./util/object.js";
 import { crawler, tree, find } from "./crawler.js";
 ("use strict");
 
@@ -10,7 +10,7 @@ export async function initSonglist() {
 }
 
 export function getSonglist() {
-    return lastSongArr;
+    return arrClone(lastSongArr);
 }
 
 let lastSongArr = [];

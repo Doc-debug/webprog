@@ -19,7 +19,7 @@ let playing,
     btnSkip,
     btnBack,
     songlist,
-    selectedSong,
+    currentTrack,
     playingPos;
 
 function initPlayer() {
@@ -28,9 +28,9 @@ function initPlayer() {
     playing = false;
     loop = false;
     shuffle = false;
-    songlist = updateSonglist();
-    selectedSong = songlist[0];
-    player.src = selectedSong["url"];
+    updateSonglist();
+    currentTrack = songlist[0];
+    player.src = currentTrack["url"];
     playingPos = 0;
 
     //init buttons
@@ -58,6 +58,7 @@ function initPlayer() {
     });
 
     updateSongInfo();
+    test();
 }
 
 //Switch for play and pause
@@ -89,13 +90,13 @@ function audioPause() {
 function audioSkip() {
     //Skip to the next song if possible else restart songlist and pause
     if (songlist[playingPos + 1] != null) {
-        selectedSong = songlist[playingPos++];
-        player.src = selectedSong["url"];
+        currentTrack = songlist[playingPos++];
+        player.src = currentTrack["url"];
         updateSongInfo();
     } else {
         playingPos = 0;
-        selectedSong = songlist[playingPos];
-        player.src = selectedSong["url"];
+        currentTrack = songlist[playingPos];
+        player.src = currentTrack["url"];
         updateSongInfo();
         if (playing) {
             player.pause();
@@ -109,8 +110,8 @@ function audioBack() {
     if (player.currentTime > 3 || playingPos == 0) {
         player.currentTime = 0;
     } else {
-        selectedSong = songlist[playingPos--];
-        player.src = selectedSong["url"];
+        currentTrack = songlist[playingPos--];
+        player.src = currentTrack["url"];
         updateSongInfo();
     }
 }
@@ -119,18 +120,21 @@ function audioBack() {
 function audioShuffle() {
     if (shuffle) {
         songlist = arrSort(songlist, "index", 1);
-        playingPos = selectedSong["index"];
+        playingPos = currentTrack["index"];
     } else {
-        songlist = arrShuffle(songlist);
+        arrShuffle(songlist);
         playingPos = 0;
-        //Bring selectedSong to position 0
+        //Bring currentTrack to position 0
+        console.log(songlist);
         for (let i = 0; i < songlist.length; i++) {
-            if (songlist[i] == selectedSong) {
+            if (songlist[i] == currentTrack) {
                 [songlist[0], songlist[i]] = [songlist[i], songlist[0]];
                 break;
             }
         }
     }
+    shuffle = !shuffle;
+    //TODO svg color togglen
 }
 
 //Switching loop control
@@ -150,15 +154,21 @@ function audioVolume(volume) {
 
 function updateSongInfo() {
     let songInfo = document.getElementById("song-info");
-    songInfo.childNodes[1].innerHTML = selectedSong["title"];
-    songInfo.childNodes[3].innerHTML = selectedSong["artist"];
+    songInfo.childNodes[1].innerHTML = currentTrack["title"];
+    songInfo.childNodes[3].innerHTML = currentTrack["artist"];
 }
 
 function updateSonglist() {
-    let list = getSonglist();
+    songlist = getSonglist();
     //Index songlist
-    for (let i = 0; i < list.length; i++) {
-        list[i]["index"] = i;
+    for (let i = 0; i < songlist.length; i++) {
+        songlist[i]["index"] = i;
     }
-    return list;
+}
+
+function test() {
+    let list = getSonglist();
+    let test = getSonglist();
+    console.log(test);
+    arrShuffle(list);
 }
