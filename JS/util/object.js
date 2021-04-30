@@ -55,20 +55,19 @@ export function arrSort(objarr, key, sortDir) {
  * @param {*} array
  */
 export function arrShuffle(array) {
+    array = array.slice(0);
     //Shuffle array using Fisher-Yates shuffle
     for (let i = array.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
-        console.log(i, array[i]["title"]);
-        console.log(j, array[j]["title"]);
-        //[array[i], array[j]] = [array[j], array[i]];
-        let save = array[i];
-        array[i] = array[j];
-        array[j] = save;
-        console.log("  ");
+        [array[i], array[j]] = [array[j], array[i]];
     }
-    console.log(array);
+    return array;
 }
 
 export function arrClone(array) {
+    return array.slice(0);
+}
+
+export function objClone(array) {
     return JSON.parse(JSON.stringify(array));
 }

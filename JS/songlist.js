@@ -1,5 +1,5 @@
 import { pad } from "./util/convert.js";
-import { arrSort, arrClone } from "./util/object.js";
+import { arrShuffle, arrSort } from "./util/object.js";
 import { crawler, tree, find } from "./crawler.js";
 ("use strict");
 
@@ -9,15 +9,12 @@ export async function initSonglist() {
     window.sortTag = sortTag; // add to global scope for onclick
 }
 
-export function getSonglist() {
-    return arrClone(lastSongArr);
-}
-
-let lastSongArr = [];
+export var songlist = [];
 // fills song list with given object array
-async function fillSongList(songs, sortingTag = "title", sortDir = 1) {
-    songs = arrSort(songs, sortingTag, sortDir);
-    lastSongArr = songs;
+async function fillSongList(songs = songlist, sortingTag = null, sortDir = 1) {
+    if (sortingTag != null) songs = arrSort(songs, sortingTag, sortDir);
+    songlist = songs;
+
     // get dom element
     let list = document.getElementById("song-table-body");
     list.innerHTML = "";
@@ -48,7 +45,7 @@ function sortTag(tag) {
     let sortDir = lastSort == tag ? lastSortDir * -1 : 1;
     lastSortDir = sortDir;
     lastSort = tag;
-    fillSongList(lastSongArr, tag, sortDir);
+    fillSongList(songlist, tag, sortDir);
 }
 // gets data from searchbar input and updates the song list with it
 function searchbarUpdate() {

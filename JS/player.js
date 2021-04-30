@@ -1,6 +1,6 @@
 import { crawler } from "./crawler.js";
-import { initSonglist, getSonglist } from "./songlist.js";
-import { arrSort, arrShuffle } from "./util/object.js";
+import { initSonglist, songlist } from "./songlist.js";
+import { arrSort, arrShuffle, arrClone } from "./util/object.js";
 ("use strict");
 
 window.onload = async function () {
@@ -18,9 +18,9 @@ let playing,
     btnShuffle,
     btnSkip,
     btnBack,
-    songlist,
     currentTrack,
-    playingPos;
+    playingPos,
+    playerlist;
 
 function initPlayer() {
     //init player variables
@@ -29,7 +29,7 @@ function initPlayer() {
     loop = false;
     shuffle = false;
     updateSonglist();
-    currentTrack = songlist[0];
+    currentTrack = playerlist[0];
     player.src = currentTrack["url"];
     playingPos = 0;
 
@@ -58,7 +58,6 @@ function initPlayer() {
     });
 
     updateSongInfo();
-    test();
 }
 
 //Switch for play and pause
@@ -89,13 +88,13 @@ function audioPause() {
 //Skipping song
 function audioSkip() {
     //Skip to the next song if possible else restart songlist and pause
-    if (songlist[playingPos + 1] != null) {
-        currentTrack = songlist[playingPos++];
+    if (playerlist[playingPos + 1] != null) {
+        currentTrack = playerlist[playingPos++];
         player.src = currentTrack["url"];
         updateSongInfo();
     } else {
         playingPos = 0;
-        currentTrack = songlist[playingPos];
+        currentTrack = playerlist[playingPos];
         player.src = currentTrack["url"];
         updateSongInfo();
         if (playing) {
@@ -110,7 +109,7 @@ function audioBack() {
     if (player.currentTime > 3 || playingPos == 0) {
         player.currentTime = 0;
     } else {
-        currentTrack = songlist[playingPos--];
+        currentTrack = playerlist[playingPos--];
         player.src = currentTrack["url"];
         updateSongInfo();
     }
@@ -119,16 +118,15 @@ function audioBack() {
 //Switches shuffle
 function audioShuffle() {
     if (shuffle) {
-        songlist = arrSort(songlist, "index", 1);
+        playerlist = arrSort(playerlist, "index", 1);
         playingPos = currentTrack["index"];
     } else {
-        arrShuffle(songlist);
+        playerlist = arrShuffle(playerlist);
         playingPos = 0;
         //Bring currentTrack to position 0
-        console.log(songlist);
-        for (let i = 0; i < songlist.length; i++) {
-            if (songlist[i] == currentTrack) {
-                [songlist[0], songlist[i]] = [songlist[i], songlist[0]];
+        for (let i = 0; i < playerlist.length; i++) {
+            if (playerlist[i] == currentTrack) {
+                [playerlist[0], playerlist[i]] = [playerlist[i], playerlist[0]];
                 break;
             }
         }
@@ -159,16 +157,9 @@ function updateSongInfo() {
 }
 
 function updateSonglist() {
-    songlist = getSonglist();
+    playerlist = arrClone(songlist);
     //Index songlist
-    for (let i = 0; i < songlist.length; i++) {
-        songlist[i]["index"] = i;
+    for (let i = 0; i < playerlist.length; i++) {
+        playerlist[i]["index"] = i;
     }
-}
-
-function test() {
-    let list = getSonglist();
-    let test = getSonglist();
-    console.log(test);
-    arrShuffle(list);
 }
