@@ -1,9 +1,12 @@
 import { pad } from "./util/convert.js";
 import { arrShuffle, arrSort } from "./util/object.js";
 import { crawler, tree, find } from "./crawler.js";
+import { initctxm } from "./util/ctxm.js";
+import { ctxmPlaylists } from "./playlistMod.js";
 ("use strict");
 
-export async function initSonglist() {
+let listID = "song-table-body";
+export async function initSonglist(listID = "song-table-body") {
     fillSongList(find(""));
     window.searchbarUpdate = searchbarUpdate; // add to global scope for onkeyup
     window.sortTag = sortTag; // add to global scope for onclick
@@ -11,16 +14,28 @@ export async function initSonglist() {
 
 export var songlist = [];
 // fills song list with given object array
-async function fillSongList(songs = songlist, sortingTag = null, sortDir = 1) {
+export async function fillSongList(
+    songs = songlist,
+    sortingTag = null,
+    sortDir = 1,
+    overwriteSongList = true
+) {
     if (sortingTag != null) songs = arrSort(songs, sortingTag, sortDir);
-    songlist = songs;
+    if (overwriteSongList) songlist = songs;
 
     // get dom element
-    let list = document.getElementById("song-table-body");
+    let list = document.getElementById(listID);
     list.innerHTML = "";
     // for each object in array create a row and cells with song details
     songs.forEach((song) => {
         let row = list.insertRow();
+        let options = row.insertCell(0);
+        let link = document.createElement("a");
+        link.innerHTML = "...";
+        link.addEventListener("click", function () {
+            ctxmSonglist(link, song.title);
+        });
+        options.appendChild(link);
         let length = row.insertCell(0);
         length.innerHTML =
             pad(Math.floor(parseInt(song.length) / 60)) +
@@ -51,5 +66,20 @@ function sortTag(tag) {
 function searchbarUpdate() {
     let input = document.getElementById("searchbar").value;
     let tag = document.getElementById("searchtag").value;
-    fillSongList(find(input, tag));
+
+    fillSongList(find(input, tag, songlist), null, 1, false);
+}
+
+function ctxmSonglist(ele, song) {
+    let container = initctxm(ele);
+    let addToPlaylist = document.createElement("a");
+    addToPlaylist.innerHTML = "add to playlist";
+    addToPlaylist.addEventListener("click", function () {
+        ctxmPlaylists(ele, song);
+    });
+    container.appendChild(addToPlaylist);
+
+    let play = document.createElement("a");
+    play.innerHTML = "play song";
+    container.appendChild(play);
 }

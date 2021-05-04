@@ -1,0 +1,255 @@
+/**
+* @author Gruppe 8
+* @version 1.0
+*/
+
+/* Table of Contents
+Constants          - variable declaration for colors 
+Styling            - individual content styling 
+    Player         - music player controls
+*/
+
+/* ========== CONSTANTS ============= */
+
+:root {
+    --bg-primary: #1e2025;
+    --bg-secondary: #212328;
+    --bg-tertionary: #3e3f42;
+    --text: #ffffffde;
+    --contrast: #e74c3c;
+    --border-r: 5px;
+
+    --op-h: 87%;
+    --op-m: 60%;
+    --op-d: 38%;
+    --border-r: 5px;
+}
+/* ========== PLAYER ================ */
+#player {
+    position: fixed;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    background-color: var(--bg-secondary);
+    z-index: 1000;
+}
+#player .song-info {
+    float: left;
+    width: 100px;
+    margin: 25px;
+}
+
+#control {
+    margin: 25px auto;
+    text-align: center;
+    max-width: 2000px;
+    width: calc(100% - 500px);
+}
+
+#progress-bar-container {
+    position: relative;
+    float: right;
+    height: 5px;
+    width: calc(100% - 300px);
+    margin: 20px auto;
+    cursor: pointer;
+}
+
+#progress-bar-container .time {
+    position: absolute;
+    top: -9px;
+    font-size: 0.9em;
+    opacity: var(--op-m);
+}
+#progress-bar-container .time.right {
+    right: 0;
+}
+
+#control .buttons {
+    width: 300px;
+}
+#control button {
+    display: inline-block;
+    padding: 0;
+    height: 50px;
+    width: 50px;
+}
+
+#control button img {
+    position: relative;
+    width: 50%;
+}
+
+#play-control {
+    height: 50px;
+    width: 50px;
+    border: solid 3px white;
+    border-radius: 100%;
+    background-color: var(--bg-secondary);
+    transition: background-color 0.5s ease;
+}
+#play-control:hover {
+    background-color: var(--bg-tertionary);
+}
+
+#control .skip,
+.extra {
+    opacity: var(--op-m);
+    transition: opacity 0.5s ease;
+}
+#control .skip:hover,
+.extra:hover {
+    opacity: 1;
+}
+
+@media only screen and (max-width: 1000px) {
+    #player {
+        height: 200px;
+    }
+    #player .drag-bar {
+        max-width: 600px;
+        width: 10%;
+        height: 3px;
+        margin: 10px auto 30px auto;
+        background-color: var(--bg-tertionary);
+    }
+
+    #player .song-info {
+        text-align: center;
+        width: 100%;
+        float: none;
+        margin: 0;
+    }
+
+    #progress-bar-container {
+        width: 80%;
+        float: none;
+    }
+    #control {
+        width: 80%;
+    }
+    #control .buttons {
+        width: 100%;
+        margin: auto;
+    }
+    #control .extra {
+        position: unset;
+    }
+}
+@media only screen and (max-width: 400px) {
+    #control .buttons {
+        width: 100%;
+        margin: auto;
+        transform: translateX(-50%);
+        min-width: 400px;
+        left: 50%;
+        position: relative;
+    }
+}
+
+/* ===== CONTENT (with navbar) ====== */
+
+#content {
+    height: calc(100vh - 100px);
+    contain: content;
+}
+@media only screen and (max-width: 1000px) {
+    #content {
+        height: calc(100vh - 200px);
+    }
+}
+
+/* ========== NAVBAR ================ */
+
+#navbar {
+    display: block;
+    height: 90px;
+    margin: 20px;
+    font-size: 2em;
+    text-align: center;
+}
+#navbar a {
+    margin: 20px;
+    text-decoration: none;
+    color: var(--text);
+}
+
+#searchwrapper {
+    display: block;
+    margin: 15px auto;
+}
+#searchbar {
+    padding: 5px 20px;
+    border-radius: 100px;
+    border: none;
+    background-color: var(--bg-tertionary);
+    color: var(--text);
+}
+#searchbar:focus {
+    outline: none;
+}
+
+/* ========== CONTENT CONTAINER====== */
+
+#content-container {
+    display: flex;
+    height: calc(100% - 90px);
+}
+/* ========== PLAYLIST LIST ========= */
+
+#playlist-list {
+    width: 200px;
+    background-color: var(--bg-secondary);
+    overflow: scroll;
+}
+#playlist-list a,
+#playlist-list p {
+    display: block;
+    color: white;
+    padding: 15px;
+    margin: 0;
+    border-top: solid var(--bg-tertionary) 1px;
+}
+#playlist-list p {
+    font-weight: bold;
+    opacity: var(--op-m);
+    border: none;
+}
+/* ========== PLAYLIST SONG LIST ==== */
+#playlist-songs {
+    width: calc(100% - 200px);
+    overflow: scroll;
+}
+
+#table-container {
+    overflow: scroll;
+}
+#playlist-song-table {
+    margin: 0 auto;
+    width: 90%;
+    max-width: 1000px;
+    text-align: left;
+    border-collapse: collapse;
+    overflow: scroll;
+}
+#playlist-song-table th {
+    color: text;
+    opacity: var(--op-m);
+    padding: 15px;
+    cursor: pointer;
+}
+#playlist-song-table td {
+    padding: 15px;
+    border-top: solid var(--bg-tertionary) 1px;
+}
+@media only screen and (max-width: 1000px) {
+    #playlist-song-table td:nth-child(4),
+    #playlist-song-table th:nth-child(4) {
+        display: none;
+    }
+}
+
+#songSlider {
+    position: relative;
+    top: -15px;
+}

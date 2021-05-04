@@ -1,9 +1,15 @@
 import { id3fromFile } from "./util/id3v2.js";
 import { decodeHTMLEntities } from "./util/convert.js";
 import { modNestedObj, flattenTree } from "./util/object.js";
+import { getObj, setObj } from "./util/localstorage.js";
 ("use strict");
 
 export async function crawler() {
+    let cache = getObj("tree");
+    if (cache != null) {
+        tree = cache;
+        promise.resolve(tree);
+    }
     await createframe();
     return promise;
 }
@@ -26,9 +32,10 @@ async function createframe(src = "./music") {
         iframe.remove();
         // remove iframe when done
         iframes.pop();
-        // check if recursion is finished and then resolve and return promise
+        // check if recursion is finished and then resolve, cache and return promise
         if (iframes.length == 0) {
             promise.resolve(tree);
+            setObj("tree", tree);
             return promise;
         }
     });
@@ -81,8 +88,8 @@ async function getData(iframe, src) {
 }
 
 // filters song list by given search string and tag (artist, title, url...)
-export function find(title, tag = null) {
-    let list = flattenTree(tree);
+export function find(title, tag = null, customList = tree) {
+    let list = flattenTree(customList);
     // if tag is undefined search whole object
     if (tag == null || tag == "all") {
         return list.filter((ele) =>

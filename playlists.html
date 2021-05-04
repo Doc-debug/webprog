@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Music Player Pro</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/png" href="img/brand/favicon.png" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            media="screen"
+            href="css/default.css"
+        />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            media="screen"
+            href="css/playlist.css"
+        />
+        <!-- <script type="module" src="/js/player.js"></script> -->
+        <script type="module" src="/js/playlist.js"></script>
+    </head>
+    <body>
+        <div id="context-menu"></div>
+        <div id="content">
+            <div id="navbar">
+                <a href="/player.html">Songs</a>
+                <a href="/playlists.html">Playlists</a>
+
+                <div id="searchwrapper">
+                    <input
+                        type="text"
+                        id="searchbar"
+                        onkeyup="searchbarUpdate()"
+                        placeholder="Search.."
+                    />
+
+                    <select name="searchtag" id="searchtag">
+                        <option value="all">all</option>
+                        <option value="folder">folder</option>
+                        <option value="album">album</option>
+                        <option value="artist">artist</option>
+                        <option value="title">title</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="content-container">
+                <div id="playlist-list">
+                    <p>your playlists</p>
+                    <a id="addplaylist" onclick="promptCreatePlaylist()"
+                        >Add Playlist +
+                    </a>
+                    <div id="playlist-list-container">
+                        <a>epic music</a>
+                        <a>chill</a>
+                        <a>rock</a>
+                        <a>rap music 2020</a>
+                        <a>hans zimmer</a>
+                    </div>
+                </div>
+                <div id="playlist-songs">
+                    <table id="playlist-song-table">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTag('title')">Title</th>
+                                <th onclick="sortTag('artist')">Artist</th>
+                                <th onclick="sortTag('album')">Album</th>
+                                <th onclick="sortTag('url')">Folder</th>
+                                <th onclick="sortTag('length')">Length</th>
+                            </tr>
+                        </thead>
+                        <tbody id="song-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="player">
+            <div class="drag-bar"></div>
+            <div class="song-info" id="song-info">
+                <span class="title"></span>
+                -
+                <span class="artist"></span>
+            </div>
+            <div id="control">
+                <div id="progress-bar-container">
+                    <input
+                        type="range"
+                        min="1"
+                        max="100"
+                        value="0"
+                        class="slider"
+                        id="songSlider"
+                    />
+                    <p class="time left no-select">00:00</p>
+                    <p class="time right no-select">00:00</p>
+                </div>
+                <div class="buttons no-select">
+                    <button id="shuffle-control" class="ctrl-btn extra">
+                        <img src="img/ctrl/shuffle.svg" />
+                    </button>
+                    <button id="back-control" class="ctrl-btn skip">
+                        <img src="img/ctrl/back.svg" />
+                    </button>
+                    <button id="play-control" class="ctrl-btn">
+                        <img src="img/ctrl/play.svg" />
+                    </button>
+                    <button id="skip-control" class="ctrl-btn skip">
+                        <img src="img/ctrl/skip.svg" />
+                    </button>
+                    <button id="loop-control" class="ctrl-btn extra">
+                        <img src="img/ctrl/loop.svg" />
+                    </button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
