@@ -50,5 +50,6 @@ function sortTag(tag) {
 // gets data from searchbar input and updates the song list with it
 function searchbarUpdate() {
     let input = document.getElementById("searchbar").value;
-    fillSongList(find(input));
+    let tag = document.getElementById("searchtag").value;
+    fillSongList(find(input, tag));
 }

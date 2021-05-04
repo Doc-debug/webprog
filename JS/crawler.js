@@ -84,7 +84,7 @@ async function getData(iframe, src) {
 export function find(title, tag = null) {
     let list = flattenTree(tree);
     // if tag is undefined search whole object
-    if (tag == null) {
+    if (tag == null || tag == "all") {
         return list.filter((ele) =>
             JSON.stringify(ele).toLowerCase().includes(title.toLowerCase())
         );
