@@ -3,10 +3,10 @@ import { getFile } from "./httpRequest.js";
 
 export async function id3fromFile(url) {
     let file = await getFile(url);
-    return readID3v2(file, url);
+    return readID3v2(file);
 }
 // creates a data object using the ID3v2 layout
-export function readID3v2(str, url) {
+export function readID3v2(str) {
     if (str.slice(0, 3) != "ID3") return null;
     let data = {};
     data.title = readID3v2Tag(str, "TIT2");
@@ -14,7 +14,6 @@ export function readID3v2(str, url) {
     data.type = readID3v2Tag(str, "TCON");
     data.album = readID3v2Tag(str, "TALB");
     data.length = readID3v2Tag(str, "TLEN", 11);
-    data.url = url;
     return data;
 }
 // finds the data string to a given ID3v2 tag

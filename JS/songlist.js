@@ -26,8 +26,8 @@ async function fillSongList(songs = songlist, sortingTag = null, sortDir = 1) {
             pad(Math.floor(parseInt(song.length) / 60)) +
             ":" +
             pad(parseInt(song.length) % 60);
-        let url = row.insertCell(0);
-        url.innerHTML = song.url;
+        let folder = row.insertCell(0);
+        folder.innerHTML = song.folder;
         let album = row.insertCell(0);
         album.innerHTML = song.album;
         let artist = row.insertCell(0);
