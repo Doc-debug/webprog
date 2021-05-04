@@ -50,21 +50,9 @@ Styling            - individual content styling
     height: 5px;
     width: calc(100% - 300px);
     margin: 20px auto;
-    background-color: var(--bg-tertionary);
-    border-radius: 5px;
     cursor: pointer;
 }
-#progress-bar-container div {
-    height: 100%;
-    width: 50%;
-    background-color: var(--contrast);
-    border-radius: 5px;
-    opacity: 0.8;
-    transition: opacity 0.5s ease;
-}
-#progress-bar-container:hover div {
-    opacity: 1;
-}
+
 #progress-bar-container .time {
     position: absolute;
     top: -9px;
@@ -215,4 +203,9 @@ Styling            - individual content styling
     #song-table th:nth-child(4) {
         display: none;
     }
+}
+
+#songSlider {
+    position: relative;
+    top: -15px;
 }

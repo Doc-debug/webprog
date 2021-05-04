@@ -20,7 +20,8 @@ let playing,
     btnBack,
     currentTrack,
     playingPos,
-    playerlist;
+    playerlist,
+    songSlider;
 
 function initPlayer() {
     //init player variables
@@ -39,6 +40,19 @@ function initPlayer() {
     btnBack = document.getElementById("back-control");
     btnShuffle = document.getElementById("shuffle-control");
     btnLoop = document.getElementById("loop-control");
+
+    //init songSlider
+    songSlider = document.getElementById("songSlider");
+    songSlider.oninput = function () {
+        var x = songSlider.value;
+        var sliderBackground =
+            "linear-gradient(90deg, var(--contrast) " +
+            x +
+            "%, var(--bg-tertionary)" +
+            x +
+            "%)";
+        songSlider.style.background = sliderBackground;
+    };
 
     //adding event listeners to buttons
     btnPlayPause.addEventListener("click", function () {
