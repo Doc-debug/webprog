@@ -63,6 +63,12 @@ Styling            - individual content styling
     right: 0;
 }
 
+#volume-container {
+    position: relative;
+    float: right;
+    width: 100px;
+}
+
 #control .buttons {
     width: 300px;
 }
