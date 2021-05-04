@@ -3,22 +3,21 @@ import { getFile } from "./httpRequest.js";
 
 export async function id3fromFile(url) {
     let file = await getFile(url);
-    return readID3v2(file, url);
+    return readID3v2(file);
 }
 // creates a data object using the ID3v2 layout
-export function readID3v2(str, url) {
+export function readID3v2(str) {
     if (str.slice(0, 3) != "ID3") return null;
     let data = {};
     data.title = readID3v2Tag(str, "TIT2");
     data.artist = readID3v2Tag(str, "TPE1");
     data.type = readID3v2Tag(str, "TCON");
     data.album = readID3v2Tag(str, "TALB");
-    data.length = readID3v2Tag(str, "TLEN", 11, false);
-    data.url = url;
+    data.length = readID3v2Tag(str, "TLEN", 11);
     return data;
 }
 // finds the data string to a given ID3v2 tag
-export function readID3v2Tag(str, tag, tagOffset = 13, every2nd = true) {
+export function readID3v2Tag(str, tag, tagOffset = 11, every2nd = false) {
     let end, start;
     // find tag
     end = start = str.indexOf(tag) + tagOffset;
@@ -38,6 +37,7 @@ export function readID3v2Tag(str, tag, tagOffset = 13, every2nd = true) {
         }
         return ret;
     } else {
-        return str;
+        // replace weird unicode chars (everything except alphanumerical and some special chars)
+        return str.replace(/[^\w!?\.'",;:\_\- ()\[\]\{\}]+/g, "");
     }
 }

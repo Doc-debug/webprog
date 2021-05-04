@@ -55,10 +55,19 @@ async function getData(iframe, src) {
             let url = src + "/" + name;
             let songData = await id3fromFile(url);
             if (songData != null) {
+                songData["url"] = url;
+                songData["folder"] = src;
                 treeTemp[name] = songData;
             } else {
                 // default object if ID3 could not be parsed
-                treeTemp[name] = { url: url, title: name };
+                treeTemp[name] = {
+                    url: url,
+                    folder: src,
+                    title: name,
+                    album: "",
+                    artist: "",
+                    length: 0,
+                };
             }
         }
     }
@@ -75,7 +84,7 @@ async function getData(iframe, src) {
 export function find(title, tag = null) {
     let list = flattenTree(tree);
     // if tag is undefined search whole object
-    if (tag == null) {
+    if (tag == null || tag == "all") {
         return list.filter((ele) =>
             JSON.stringify(ele).toLowerCase().includes(title.toLowerCase())
         );

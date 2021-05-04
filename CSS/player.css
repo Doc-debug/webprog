@@ -170,9 +170,11 @@ Styling            - individual content styling
     color: var(--text);
 }
 
-#searchbar {
+#searchwrapper {
     display: block;
     margin: 15px auto;
+}
+#searchbar {
     padding: 5px 20px;
     border-radius: 100px;
     border: none;
@@ -181,6 +183,13 @@ Styling            - individual content styling
 }
 #searchbar:focus {
     outline: none;
+}
+#searchtag {
+    padding: 5px;
+    border-radius: 100px;
+    border: none;
+    background-color: var(--bg-tertionary);
+    color: var(--text);
 }
 /* ========== SONG LIST ============= */
 #table-container {
