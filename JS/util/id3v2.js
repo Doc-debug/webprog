@@ -13,12 +13,12 @@ export function readID3v2(str, url) {
     data.artist = readID3v2Tag(str, "TPE1");
     data.type = readID3v2Tag(str, "TCON");
     data.album = readID3v2Tag(str, "TALB");
-    data.length = readID3v2Tag(str, "TLEN", 11, false);
+    data.length = readID3v2Tag(str, "TLEN", 11);
     data.url = url;
     return data;
 }
 // finds the data string to a given ID3v2 tag
-export function readID3v2Tag(str, tag, tagOffset = 13, every2nd = true) {
+export function readID3v2Tag(str, tag, tagOffset = 11, every2nd = false) {
     let end, start;
     // find tag
     end = start = str.indexOf(tag) + tagOffset;
@@ -38,6 +38,7 @@ export function readID3v2Tag(str, tag, tagOffset = 13, every2nd = true) {
         }
         return ret;
     } else {
-        return str;
+        // replace weird unicode chars (everything except alphanumerical and some special chars)
+        return str.replace(/[^\w!?\.'",;:\_\- ()\[\]\{\}]+/g, "");
     }
 }
