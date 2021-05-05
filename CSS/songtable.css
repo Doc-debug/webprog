@@ -41,6 +41,11 @@ Song list           - styling for the song table
     padding: 15px;
     cursor: pointer;
 }
+#song-table tbody tr:hover {
+    background-color: var(--bg-secondary);
+    color: var(--contrast);
+    cursor: pointer;
+}
 #song-table td {
     padding: 15px;
     border-top: solid var(--bg-tertionary) 1px;

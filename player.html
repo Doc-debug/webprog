@@ -30,15 +30,23 @@
             media="screen"
             href="css/songtable.css"
         />
+        <script type="module" src="/js/theme.js"></script>
         <script type="module" src="/js/player.js"></script>
     </head>
     <body>
         <div id="content">
             <div id="header">
                 <nav id="menu">
-                    <img src="/img/ctrl/burgermenu.svg" alt="" />
+                    <img id="menu-icon" src="/img/ctrl/burgermenu.svg" />
                     <a href="/player.html">Songs</a>
                     <a href="/playlists.html">Playlists</a>
+                    <a>
+                        <img
+                            onclick="setTheme()"
+                            src="/img/ctrl/themeswitch.svg"
+                            alt="switch theme"
+                        />
+                    </a>
                 </nav>
 
                 <div id="searchwrapper">

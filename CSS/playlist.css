@@ -50,7 +50,6 @@ Styling             - individual content styling
 }
 #menu {
     display: inline-block;
-    width: 200px;
     margin: 17px 0;
     text-align: center;
 }
@@ -59,16 +58,19 @@ Styling             - individual content styling
     text-decoration: none;
     color: var(--text);
 }
+#menu a img {
+    width: 20px;
+}
+
+#menu-icon {
+    display: none;
+    width: 30px;
+    margin: 15px;
+}
 
 #searchwrapper {
     display: inline-block;
     margin: 15px auto;
-}
-
-#menu img {
-    display: none;
-    width: 30px;
-    margin: 15px;
 }
 
 @media only screen and (max-width: 800px) {
@@ -80,7 +82,7 @@ Styling             - individual content styling
     #menu a {
         display: none;
     }
-    #menu img {
+    #menu-icon {
         display: block;
     }
     #menu:hover a,
@@ -111,7 +113,7 @@ Styling             - individual content styling
 #playlist-list a,
 #playlist-list p {
     display: block;
-    color: white;
+    color: var(--text);
     padding: 15px;
     margin: 0;
     border-top: solid var(--bg-tertionary) 1px;
