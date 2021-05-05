@@ -65,6 +65,25 @@ Styling            - individual content styling
     right: 0;
 }
 
+#song-slider {
+    position: relative;
+    top: -15px;
+}
+
+#volume-container {
+    position: relative;
+    float: right;
+    width: 100px;
+}
+
+#volume-control {
+    background: linear-gradient(
+        90deg,
+        var(--contrast) 30%,
+        var(--bg-tertionary) 30%
+    );
+}
+
 #control .buttons {
     width: 300px;
 }

@@ -83,8 +83,3 @@ Styling            - individual content styling
         display: none;
     }
 }
-
-#songSlider {
-    position: relative;
-    top: -15px;
-}
