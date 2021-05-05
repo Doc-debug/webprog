@@ -63,10 +63,23 @@ Styling            - individual content styling
     right: 0;
 }
 
+#song-slider {
+    position: relative;
+    top: -15px;
+}
+
 #volume-container {
     position: relative;
     float: right;
     width: 100px;
+}
+
+#volume-control {
+    background: linear-gradient(
+        90deg,
+        var(--contrast) 30%,
+        var(--bg-tertionary) 30%
+    );
 }
 
 #control .buttons {
@@ -126,6 +139,7 @@ Styling            - individual content styling
         width: 80%;
         float: none;
     }
+
     #control {
         width: 80%;
     }
@@ -218,9 +232,4 @@ Styling            - individual content styling
     #song-table th:nth-child(4) {
         display: none;
     }
-}
-
-#songSlider {
-    position: relative;
-    top: -15px;
 }

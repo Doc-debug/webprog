@@ -36,7 +36,7 @@
                         max="100"
                         value="0"
                         class="slider"
-                        id="songSlider"
+                        id="song-slider"
                     />
                     <p class="time left no-select">00:00</p>
                     <p class="time right no-select">00:00</p>
@@ -59,8 +59,11 @@
                     </button>
                 </div>
             </div>
-            <div id="volume-container">
-                <input type="range" min="0" max="100" value="50" class="slider no-select" id="volume-control">
+            <div class="no-select" id="volume-container">
+                <button class="buttons" id="mute-control">
+                    <!-- <img src=""> Lautprechersymbol needed-->
+                </button>
+                <input type="range" min="0" max="100" value="30" class="slider no-select" id="volume-control">
             </div>
         </div>
 

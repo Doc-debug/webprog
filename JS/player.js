@@ -11,6 +11,9 @@ window.onload = async function () {
 
 let playing,
     player,
+    playerlist,
+    playingPos,
+    currentTrack,
     loop,
     shuffle,
     btnPlayPause,
@@ -18,13 +21,13 @@ let playing,
     btnShuffle,
     btnSkip,
     btnBack,
-    currentTrack,
-    playingPos,
-    playerlist,
-    songSlider;
+    btnMute,
+    imgPlayPause,
+    songSlider,
+    volumeSlider;
 
 function initPlayer() {
-    //init player variables
+    //init player
     player = new Audio();
     playing = false;
     loop = false;
@@ -33,6 +36,10 @@ function initPlayer() {
     currentTrack = playerlist[0];
     player.src = currentTrack["url"];
     playingPos = 0;
+    player.volume = 0.3;
+    player.addEventListener("ended", function () {
+        audioSkip();
+    });
 
     //init buttons
     btnPlayPause = document.getElementById("play-control");
@@ -40,9 +47,13 @@ function initPlayer() {
     btnBack = document.getElementById("back-control");
     btnShuffle = document.getElementById("shuffle-control");
     btnLoop = document.getElementById("loop-control");
+    btnMute = document.getElementById("mute-control");
+
+    //init playPauseImg
+    imgPlayPause = btnPlayPause.childNodes[1];
 
     //init songSlider
-    songSlider = document.getElementById("songSlider");
+    songSlider = document.getElementById("song-slider");
     songSlider.oninput = function () {
         var x = songSlider.value;
         var sliderBackground =
@@ -53,6 +64,22 @@ function initPlayer() {
             "%)";
         songSlider.style.background = sliderBackground;
     };
+
+    //init volumeSlider
+    volumeSlider = document.getElementById("volume-control");
+    volumeSlider.oninput = function () {
+        var x = volumeSlider.value;
+        var sliderBackground =
+            "linear-gradient(90deg, var(--contrast) " +
+            x +
+            "%, var(--bg-tertionary)" +
+            x +
+            "%)";
+        volumeSlider.style.background = sliderBackground;
+    };
+    volumeSlider.addEventListener("mousemove", function () {
+        audioVolume(volumeSlider.value / 100);
+    });
 
     //adding event listeners to buttons
     btnPlayPause.addEventListener("click", function () {
@@ -70,6 +97,9 @@ function initPlayer() {
     btnLoop.addEventListener("click", function () {
         audioLoop();
     });
+    btnMute.addEventListener("click", function () {
+        audioMuteSwitch();
+    });
 
     updateSongInfo();
 }
@@ -85,34 +115,33 @@ function switchPlayPause() {
 
 //Set player to play
 function audioPlay() {
-    if (!playing) {
-        playing = true;
-        player.play();
-    }
+    playing = true;
+    player.play();
+    imgPlayPause.src = "../img/ctrl/pause.svg";
 }
 
 //Set player to pause
 function audioPause() {
-    if (playing) {
-        playing = false;
-        player.pause();
-    }
+    playing = false;
+    player.pause();
+    imgPlayPause.src = "../img/ctrl/play.svg";
 }
 
 //Skipping song
 function audioSkip() {
     //Skip to the next song if possible else restart songlist and pause
     if (playerlist[playingPos + 1] != null) {
-        currentTrack = playerlist[playingPos++];
+        currentTrack = playerlist[++playingPos];
         player.src = currentTrack["url"];
         updateSongInfo();
+        audioPlay();
     } else {
         playingPos = 0;
         currentTrack = playerlist[playingPos];
         player.src = currentTrack["url"];
         updateSongInfo();
         if (playing) {
-            player.pause();
+            audioPause();
         }
     }
 }
@@ -120,12 +149,13 @@ function audioSkip() {
 //Got to song start or a song back
 function audioBack() {
     //Restart song or go a song back
-    if (player.currentTime > 3 || playingPos == 0) {
+    if (player.currentTime < 3 || playingPos == 0) {
         player.currentTime = 0;
     } else {
-        currentTrack = playerlist[playingPos--];
+        currentTrack = playerlist[--playingPos];
         player.src = currentTrack["url"];
         updateSongInfo();
+        player.play();
     }
 }
 
@@ -162,6 +192,10 @@ function audioLoop() {
 //@param volume from 0.0 to 1.0
 function audioVolume(volume) {
     player.volume = volume;
+}
+
+function audioMuteSwitch() {
+    //TODO
 }
 
 function updateSongInfo() {
