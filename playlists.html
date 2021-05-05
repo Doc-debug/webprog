@@ -88,7 +88,6 @@
         </div>
 
         <div id="player">
-            <div class="drag-bar"></div>
             <div class="song-info" id="song-info">
                 <span class="title"></span>
                 -
@@ -124,6 +123,19 @@
                         <img src="img/ctrl/loop.svg" />
                     </button>
                 </div>
+            </div>
+            <div class="no-select" id="volume-container">
+                <button class="buttons" id="mute-control">
+                    <img src="/img/ctrl/sound.svg" />
+                </button>
+                <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="30"
+                    class="slider no-select"
+                    id="volume-control"
+                />
             </div>
         </div>
     </body>

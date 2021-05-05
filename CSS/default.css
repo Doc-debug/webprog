@@ -117,7 +117,7 @@ button:focus {
     );
     border-radius: 15px;
     border: none;
-    height: 8px;
+    height: 10px;
     width: 100%;
 }
 
