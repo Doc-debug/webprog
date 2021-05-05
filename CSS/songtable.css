@@ -53,8 +53,8 @@ Song list           - styling for the song table
 }
 
 @media only screen and (max-width: 700px) {
-    #playlist-song-table td:nth-child(3),
-    #playlist-song-table th:nth-child(3) {
+    #song-table td:nth-child(3),
+    #song-table th:nth-child(3) {
         display: none;
     }
 }
