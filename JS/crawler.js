@@ -4,20 +4,40 @@ import { modNestedObj, flattenTree } from "./util/object.js";
 import { getObj, setObj } from "./util/localstorage.js";
 ("use strict");
 
+/**
+ * @type {Object} the object holding the file tree structure
+ */
+export var tree = {};
+
+/**
+ * @const {Promise<object>} promise for the file structure
+ */
+const promise = defer();
+/**
+ * @type {Array} a list of iframes to check if the recursion of createframe is still running
+ */
+let iframes = [];
+
+/**
+ * will initialize the crawler
+ * @returns a promise with the tree structure. This can be awaited
+ */
 export async function crawler() {
+    // gets the file structure from the cache
     let cache = getObj("tree");
     if (cache != null) {
         tree = cache;
+        // resolve if cache has been found
         promise.resolve(tree);
     }
     await createframe();
     return promise;
 }
 
-const promise = defer();
-// a list of iframes to check if the recursion is still running
-let iframes = [];
-// creates an invisible iframe
+/**
+ * recursively searches a folder by creating iframes and saves all files found in the tree object
+ * @param {string} src the folder path which should be searched for files
+ */
 async function createframe(src = "./music") {
     let iframe = document.createElement("iframe");
     iframes.push(iframe);
@@ -42,8 +62,11 @@ async function createframe(src = "./music") {
     document.body.appendChild(iframe);
 }
 
-export var tree = {};
-// recursivley reads files in music directory
+/**
+ * gets the file structure from a given iframe and recursivly creates a new iframe for each folder
+ * @param {dom} iframe the iframe that holds the data
+ * @param {string} src the location of the folder that is currently read
+ */
 async function getData(iframe, src) {
     let treeTemp = {};
     // a list of folders that will be used for recursive call
@@ -87,7 +110,13 @@ async function getData(iframe, src) {
     }
 }
 
-// filters song list by given search string and tag (artist, title, url...)
+/**
+ * filters song list by given search string and tag
+ * @param {string} title the search query
+ * @param {string} tag the tag that is searched (artist, title, url...) "all" represents the whole object
+ * @param {Array} [customList=tree] customList the list that is searched
+ * @returns a list with matching songs
+ */
 export function find(title, tag = null, customList = tree) {
     let list = flattenTree(customList);
     // if tag is undefined search whole object
@@ -105,15 +134,21 @@ export function find(title, tag = null, customList = tree) {
     }
 }
 
-// returns promise that can be resolved from outside
+/**
+ * returns promise that can be resolved from outside
+ * @returns the promise
+ */
 function defer() {
+    // the functions that have a global scope
     var res, rej;
-
+    // create the promise
     var promise = new Promise((resolve, reject) => {
+        // overwrite promise functions
         res = resolve;
         rej = reject;
     });
 
+    // overwrite promise functions
     promise.resolve = res;
     promise.reject = rej;
 

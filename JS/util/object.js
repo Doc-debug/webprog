@@ -1,5 +1,10 @@
-// will update a nested object in a given object with a provided path and value
-// path should be array of keys e.g.: ["key1", "key2", ...]
+/**
+ * will update a nested object in a given object with a provided path and value
+ * path should be array of keys e.g.: ["key1", "key2", ...]
+ * @param {object} obj the object
+ * @param {array} path path to the key value e.g.: ["key1", "key1.1", ...]
+ * @param {*} value the new value that replaces the old one
+ */
 export function modNestedObj(obj, path, value) {
     let len = path.length;
     // iterate through path and create new nested object if path does not exist
@@ -12,27 +17,39 @@ export function modNestedObj(obj, path, value) {
     obj[path[len - 1]] = value;
 }
 
-// recurse traverse that returns a flat array with all songs
-// takes one object and two pseudo functions for filtering
+/**
+ * recurse traverse that returns a flat array with all songs
+ * takes one object and two pseudo functions for filtering
+ * @param {object} obj the object to flatten
+ * @param {function} file determines which objects counts as a file
+ * @param {function} folder determines what counts as a folder
+ * @returns
+ */
 export function flattenTree(
     obj,
     file = (x) => "url" in x,
     folder = (x) => true
 ) {
-    let songs = [];
+    let files = [];
     for (const key in obj) {
         if (!obj[key] instanceof Object || file(obj[key])) {
-            // add file to array
-            songs.push(obj[key]);
+            // add file to array if not an object or file function is true
+            files.push(obj[key]);
         } else if (obj[key] instanceof Object && folder(obj[key])) {
             // recursive call if new folder was found
-            songs = songs.concat(flattenTree(obj[key]));
+            files = files.concat(flattenTree(obj[key]));
         }
     }
-    return songs;
+    return files;
 }
 
-// sort array of objects by key
+/**
+ * sort array of objects by key
+ * @param {array} objarr an array containing objects
+ * @param {string} key the key by which the array is sorted
+ * @param {number} sortDir the sorting direction (1 or -1)
+ * @returns the sorted array
+ */
 export function arrSort(objarr, key, sortDir) {
     // use array.sort for sorting
     return objarr.sort(function (a, b) {
@@ -51,23 +68,36 @@ export function arrSort(objarr, key, sortDir) {
 }
 
 /**
- * Random shuffles an array
- * @param {*} array
+ * Randomly shuffles an array
+ * @param {array} array the given array
+ * @returns the new random array
  */
 export function arrShuffle(array) {
     array = array.slice(0);
     //Shuffle array using Fisher-Yates shuffle
     for (let i = array.length - 1; i > 0; i--) {
+        // exchange current item with item at random position
         let j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
 }
 
+/**
+ * creates a copy of an array
+ * @param {array} array the array to clone
+ * @returns cloned array
+ */
 export function arrClone(array) {
     return array.slice(0);
 }
 
-export function objClone(array) {
-    return JSON.parse(JSON.stringify(array));
+/**
+ * creates a clone of a given object.
+ * (WARNING: this might stringify some values (dates, etc) and delete undefined keys)
+ * @param {object} obj the object to clone
+ * @returns an object clone
+ */
+export function objClone(obj) {
+    return JSON.parse(JSON.stringify(obj));
 }

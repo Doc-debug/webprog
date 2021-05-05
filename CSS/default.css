@@ -145,9 +145,11 @@ select {
 /* ========== CONTEXT MENU ========== */
 
 #context-menu {
+    display: none;
     background-color: var(--bg-secondary);
     padding: 5px;
     width: 120px;
+    border: solid 1px var(--bg-tertionary);
     z-index: 10000;
 }
 #context-menu a {

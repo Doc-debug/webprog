@@ -1,3 +1,8 @@
+/**
+ * makes a get request to a given url and returns a promise that will be resolved as soon as its done
+ * @param {string} url the url to the file
+ * @returns a promise for the file
+ */
 export function getFile(url) {
     // return promise from get request
     return new Promise(function (resolve, reject) {

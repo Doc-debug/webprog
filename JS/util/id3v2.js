@@ -1,12 +1,22 @@
 import { str2ab } from "./convert.js";
 import { getFile } from "./httpRequest.js";
 
+/**
+ * gets a song file from a given url and returns an object containing ID3 information
+ * @param {string} url the url of the file
+ * @returns an object containing ID3 information
+ */
 export async function id3fromFile(url) {
     let file = await getFile(url);
     return readID3v2(file);
 }
-// creates a data object using the ID3v2 layout
-export function readID3v2(str) {
+
+/**
+ * creates a data object using the ID3v2 layout
+ * @param {string} str data string of the file
+ * @returns object containing ID3 information
+ */
+function readID3v2(str) {
     if (str.slice(0, 3) != "ID3") return null;
     let data = {};
     data.title = readID3v2Tag(str, "TIT2");
@@ -16,8 +26,16 @@ export function readID3v2(str) {
     data.length = readID3v2Tag(str, "TLEN");
     return data;
 }
-// finds the data string to a given ID3v2 tag
-export function readID3v2Tag(str, tag, tagOffset = 11, every2nd = false) {
+
+/**
+ * finds the data string to a given ID3v2 tag
+ * @param {string} str data string of the file
+ * @param {string} tag the searched ID3 tag
+ * @param {number} tagOffset offset of the tag data
+ * @param {boolean}[every2nd=11] every2nd skips every second byte
+ * @returns data from ID3 tag field
+ */
+function readID3v2Tag(str, tag, tagOffset = 11, every2nd = false) {
     let end, start;
     // find tag
     end = start = str.indexOf(tag) + tagOffset;
