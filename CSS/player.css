@@ -24,129 +24,16 @@ Styling            - individual content styling
     --op-d: 38%;
     --border-r: 5px;
 }
-/* ========== PLAYER ================ */
-#player {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: var(--bg-secondary);
-}
-#player .song-info {
-    float: left;
-    width: 100px;
-    margin: 25px;
-}
-
-#control {
-    margin: 25px auto;
-    text-align: center;
-    max-width: 2000px;
-    width: calc(100% - 500px);
-}
-
-#progress-bar-container {
-    position: relative;
-    float: right;
-    height: 5px;
-    width: calc(100% - 300px);
-    margin: 20px auto;
-    cursor: pointer;
-}
-
-#progress-bar-container .time {
-    position: absolute;
-    top: -9px;
-    font-size: 0.9em;
-    opacity: var(--op-m);
-}
-#progress-bar-container .time.right {
-    right: 0;
-}
-
-#control .buttons {
-    width: 300px;
-}
-#control button {
-    display: inline-block;
-    padding: 0;
-    height: 50px;
-    width: 50px;
-}
-
-#control button img {
-    position: relative;
-    width: 50%;
-}
-
-#play-control {
-    height: 50px;
-    width: 50px;
-    border: solid 3px white;
-    border-radius: 100%;
-    background-color: var(--bg-secondary);
-    transition: background-color 0.5s ease;
-}
-#play-control:hover {
-    background-color: var(--bg-tertionary);
-}
-
-#control .skip,
-.extra {
-    opacity: var(--op-m);
-    transition: opacity 0.5s ease;
-}
-#control .skip:hover,
-.extra:hover {
-    opacity: 1;
-}
-
-@media only screen and (max-width: 1000px) {
-    #player .drag-bar {
-        max-width: 600px;
-        width: 10%;
-        height: 3px;
-        margin: 10px auto 30px auto;
-        background-color: var(--bg-tertionary);
-    }
-
-    #player .song-info {
-        text-align: center;
-        width: 100%;
-        float: none;
-        margin: 0;
-    }
-
-    #progress-bar-container {
-        width: 80%;
-        float: none;
-    }
-    #control {
-        width: 80%;
-    }
-    #control .buttons {
-        width: 100%;
-        margin: auto;
-    }
-    #control .extra {
-        position: unset;
-    }
-}
-@media only screen and (max-width: 400px) {
-    #control .buttons {
-        width: 100%;
-        margin: auto;
-        transform: translateX(-50%);
-        min-width: 400px;
-        left: 50%;
-        position: relative;
-    }
-}
 
 /* ========== CONTENT =============== */
 
+#content {
+    height: calc(100vh - 100px);
+    contain: content;
+}
 @media only screen and (max-width: 1000px) {
     #content {
-        margin-bottom: 200px;
+        height: calc(100vh - 200px);
     }
 }
 
@@ -154,6 +41,7 @@ Styling            - individual content styling
 
 #navbar {
     display: block;
+    height: 90px;
     margin: 20px;
     font-size: 2em;
     text-align: center;
@@ -168,25 +56,9 @@ Styling            - individual content styling
     display: block;
     margin: 15px auto;
 }
-#searchbar {
-    padding: 5px 20px;
-    border-radius: 100px;
-    border: none;
-    background-color: var(--bg-tertionary);
-    color: var(--text);
-}
-#searchbar:focus {
-    outline: none;
-}
-#searchtag {
-    padding: 5px;
-    border-radius: 100px;
-    border: none;
-    background-color: var(--bg-tertionary);
-    color: var(--text);
-}
 /* ========== SONG LIST ============= */
 #table-container {
+    height: calc(100% - 130px);
     overflow: scroll;
 }
 #song-table {
@@ -195,7 +67,6 @@ Styling            - individual content styling
     max-width: 1000px;
     text-align: left;
     border-collapse: collapse;
-    overflow: scroll;
 }
 #song-table th {
     color: text;

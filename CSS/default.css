@@ -50,6 +50,10 @@ button:focus {
     --bg-tertionary: #3e3f42;
     --text: #ffffffde;
     --contrast: #e74c3c;
+
+    --op-h: 87%;
+    --op-m: 60%;
+    --op-d: 38%;
     --border-r: 5px;
 }
 
@@ -60,6 +64,18 @@ button:focus {
     user-select: none; /* Standard */
 }
 
+.highlight {
+    color: var(--contrast) !important;
+}
+.op-h {
+    opacity: var(--op-h) !important;
+}
+.op-m {
+    opacity: var(--op-m) !important;
+}
+.op-d {
+    opacity: var(--op-d) !important;
+}
 /* ========== FONTS ================= */
 
 @font-face {
@@ -129,17 +145,33 @@ button:focus {
 
 /* ========== SELECT ================ */
 
-option:checked,
-option:hover {
-    background-color: var(--contrast);
-    box-shadow: 0 0 10px 100px red inset;
-}
 select {
     padding: 5px;
     border-radius: 100px;
     border: none;
     background-color: var(--bg-tertionary);
     color: var(--text);
+}
+select:focus {
+    outline: none;
+}
+option:checked,
+option:hover {
+    background-color: var(--contrast);
+    box-shadow: 0 0 10px 100px red inset;
+}
+
+/* ========== SEARCHBAR ============= */
+
+input[type="text"] {
+    padding: 5px 20px;
+    border-radius: 100px;
+    border: none;
+    background-color: var(--bg-tertionary);
+    color: var(--text);
+}
+input[type="text"]:focus {
+    outline: none;
 }
 
 /* ========== CONTEXT MENU ========== */

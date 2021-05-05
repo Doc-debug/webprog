@@ -57,7 +57,9 @@ export function addSong(playlistIndex, song) {
  * @param {string} song the song title that should be added to the playlist
  */
 export function ctxmPlaylists(ele, song) {
+    // if playlists is empty try to get it from local storage
     if (playlists.length == 0) initPlaylist();
+    // if still empty create empty ctxm body
     let container = initctxm(ele);
     for (let i = 0; i < playlists.length; i++) {
         const playlist = playlists[i];
@@ -70,4 +72,17 @@ export function ctxmPlaylists(ele, song) {
         });
         container.appendChild(dom);
     }
+    // button to add a new playlist
+    let dom = document.createElement("a");
+    dom.classList.add("op-m");
+    dom.innerHTML = "new playlist +";
+    dom.addEventListener("click", function () {
+        let name = prompt("What name should your new playlist have?");
+        // return if user pressed cancel
+        if (name == null) return;
+        // if no name was given set name to "new Playlist"
+        else if (name == "") name = "new Playlist";
+        createPlaylist(name, find(song));
+    });
+    container.appendChild(dom);
 }

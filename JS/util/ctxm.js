@@ -14,9 +14,13 @@ let container = null;
 export function initctxm(ele) {
     if (!initialized) initialize();
     let pos = ele.getBoundingClientRect();
+    // check if ctxm is outside window and move to left if true (120 = ctxm width)
+    let offset = pos.x + 120 - window.innerWidth;
+    offset = offset > 0 ? 120 : 0;
+
     container.innerHTML = "";
     container.style.position = "absolute";
-    container.style.left = pos.x - 120 + "px";
+    container.style.left = pos.x - offset + "px";
     container.style.top = pos.y + "px";
     document.body.appendChild(container);
     container.style.display = "block";

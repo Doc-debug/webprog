@@ -18,7 +18,12 @@
             media="screen"
             href="css/playlist.css"
         />
-        <!-- <script type="module" src="/js/player.js"></script> -->
+        <link
+            rel="stylesheet"
+            type="text/css"
+            media="screen"
+            href="css/musicplayer.css"
+        />
         <script type="module" src="/js/playlist.js"></script>
     </head>
     <body>
@@ -49,7 +54,10 @@
             <div id="content-container">
                 <div id="playlist-list">
                     <p>your playlists</p>
-                    <a id="addplaylist" onclick="promptCreatePlaylist()"
+                    <a
+                        id="addplaylist"
+                        class="op-m"
+                        onclick="promptCreatePlaylist()"
                         >Add Playlist +
                     </a>
                     <div id="playlist-list-container"></div>
