@@ -37,28 +37,62 @@ Styling            - individual content styling
     }
 }
 
-/* ========== NAVBAR ================ */
+/* ========== HEADER ================ */
 
-#navbar {
-    display: block;
-    height: 90px;
-    margin: 20px;
-    font-size: 2em;
+#header {
+    height: 60px;
+    display: flex;
+}
+#menu {
+    display: inline-block;
+    width: 200px;
+    margin: 17px 0;
     text-align: center;
 }
-#navbar a {
+#menu a {
     margin: 20px;
     text-decoration: none;
     color: var(--text);
 }
 
 #searchwrapper {
-    display: block;
+    display: inline-block;
     margin: 15px auto;
+}
+
+#menu img {
+    display: none;
+    width: 30px;
+    margin: 15px;
+}
+
+@media only screen and (max-width: 700px) {
+    #menu {
+        width: 60px;
+        height: 60px;
+        margin: 0;
+    }
+    #menu a {
+        display: none;
+    }
+    #menu img {
+        display: block;
+    }
+    #menu:hover a,
+    #menu:focus a {
+        position: relative;
+        display: inline-block;
+        width: 70px;
+        padding: 15px;
+        margin: 0;
+        background-color: var(--bg-primary);
+        border: 1px solid var(--bg-tertionary);
+        z-index: 1000;
+    }
 }
 /* ========== SONG LIST ============= */
 #table-container {
-    height: calc(100% - 130px);
+    height: calc(100% - 60px);
     overflow: scroll;
 }
 #song-table {
@@ -80,6 +114,13 @@ Styling            - individual content styling
 @media only screen and (max-width: 1000px) {
     #song-table td:nth-child(4),
     #song-table th:nth-child(4) {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    #playlist-song-table td:nth-child(3),
+    #playlist-song-table th:nth-child(3) {
         display: none;
     }
 }
