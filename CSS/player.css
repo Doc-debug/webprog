@@ -69,7 +69,6 @@ Styling            - individual content styling
     border-collapse: collapse;
 }
 #song-table th {
-    color: text;
     opacity: var(--op-m);
     padding: 15px;
     cursor: pointer;
