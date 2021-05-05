@@ -24,6 +24,12 @@
             media="screen"
             href="css/musicplayer.css"
         />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            media="screen"
+            href="css/songtable.css"
+        />
         <script type="module" src="/js/playlist.js"></script>
     </head>
     <body>
@@ -64,8 +70,8 @@
                     </a>
                     <div id="playlist-list-container"></div>
                 </div>
-                <div id="playlist-songs">
-                    <table id="playlist-song-table">
+                <div id="table-container">
+                    <table id="song-table">
                         <thead>
                             <tr>
                                 <th onclick="sortTag('title')">Title</th>

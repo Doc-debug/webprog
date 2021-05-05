@@ -4,9 +4,14 @@
 */
 
 /* Table of Contents
-Constants          - variable declaration for colors 
-Styling            - individual content styling 
-    Player         - music player controls
+Constants           - variable declaration for colors 
+Styling             - individual content styling 
+    Content         - the main content (without the player)
+    Header          - the header containing navbar and searchbar
+    Content cont    - the container holding the playlist list and the playlist songlist
+    Playlist list   - a list displaying all playlists
+    Pl songlist     - a table containing songs from a selected playlist
+    Layout mobile   - media query for small screens to realign content
 */
 
 /* ========== CONSTANTS ============= */
@@ -25,7 +30,7 @@ Styling            - individual content styling
     --border-r: 5px;
 }
 
-/* ===== CONTENT (with navbar) ====== */
+/* ========== CONTENT =============== */
 
 #content {
     height: calc(100vh - 100px);
@@ -118,50 +123,10 @@ Styling            - individual content styling
 }
 
 /* ========== PLAYLIST SONG LIST ==== */
-#playlist-songs {
+#table-container {
     width: calc(100% - 60px);
     overflow: scroll;
 }
-
-#table-container {
-    overflow: scroll;
-}
-#playlist-song-table {
-    margin: 0 auto;
-    width: 90%;
-    max-width: 1000px;
-    text-align: left;
-    border-collapse: collapse;
-    overflow: scroll;
-}
-#playlist-song-table th {
-    color: text;
-    opacity: var(--op-m);
-    padding: 15px;
-    cursor: pointer;
-}
-#playlist-song-table td {
-    padding: 15px;
-    border-top: solid var(--bg-tertionary) 1px;
-}
-@media only screen and (max-width: 1000px) {
-    #playlist-song-table td:nth-child(4),
-    #playlist-song-table th:nth-child(4) {
-        display: none;
-    }
-}
-
-@media only screen and (max-width: 700px) {
-    #playlist-song-table td:nth-child(3),
-    #playlist-song-table th:nth-child(3) {
-        display: none;
-    }
-}
-#songSlider {
-    position: relative;
-    top: -15px;
-}
-
 /* ========== LAYOUT MOBILE ========= */
 
 @media only screen and (max-width: 700px) {
@@ -187,7 +152,7 @@ Styling            - individual content styling
         display: none;
     }
 
-    #playlist-songs {
+    #table-container {
         width: 100%;
         overflow: scroll;
     }

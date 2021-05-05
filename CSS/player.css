@@ -5,8 +5,9 @@
 
 /* Table of Contents
 Constants          - variable declaration for colors 
-Styling            - individual content styling 
-    Player         - music player controls
+Styling             - individual content styling 
+    Content         - the main content (without the player)
+    Header          - the header containing navbar and searchbar
 */
 
 /* ========== CONSTANTS ============= */
@@ -88,39 +89,5 @@ Styling            - individual content styling
         background-color: var(--bg-primary);
         border: 1px solid var(--bg-tertionary);
         z-index: 1000;
-    }
-}
-/* ========== SONG LIST ============= */
-#table-container {
-    height: calc(100% - 60px);
-    overflow: scroll;
-}
-#song-table {
-    margin: 0 auto;
-    width: 90%;
-    max-width: 1000px;
-    text-align: left;
-    border-collapse: collapse;
-}
-#song-table th {
-    opacity: var(--op-m);
-    padding: 15px;
-    cursor: pointer;
-}
-#song-table td {
-    padding: 15px;
-    border-top: solid var(--bg-tertionary) 1px;
-}
-@media only screen and (max-width: 1000px) {
-    #song-table td:nth-child(4),
-    #song-table th:nth-child(4) {
-        display: none;
-    }
-}
-
-@media only screen and (max-width: 700px) {
-    #playlist-song-table td:nth-child(3),
-    #playlist-song-table th:nth-child(3) {
-        display: none;
     }
 }

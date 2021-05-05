@@ -4,10 +4,14 @@
 */
 
 /* Table of Contents
-Custom Reset       - Resetting default Styles
-Constants          - variable declaration for colors 
-                     and other values that are used more often
-Styling            - individual content styling 
+Custom Reset        - Resetting default Styles
+Constants           - variable declaration for colors and other values that are used more often
+Fonts               - Sets default fonts for the webpage
+Styling             - preset styling for certain elements
+    Select
+    Searchbar
+    Context Menu
+
 */
 
 /* ========== RESET ================= */
