@@ -68,7 +68,7 @@ Styling             - individual content styling
     margin: 15px auto;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 900px) {
     #menu {
         width: 60px;
         height: 60px;

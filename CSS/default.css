@@ -39,7 +39,7 @@ button:focus {
 }
 
 ::selection {
-    color: white;
+    color: var(--text);
     background: var(--contrast);
 }
 ::-webkit-scrollbar {
@@ -162,7 +162,7 @@ select:focus {
 option:checked,
 option:hover {
     background-color: var(--contrast);
-    box-shadow: 0 0 10px 100px red inset;
+    box-shadow: 0 0 10px 100px var(--contrast) inset;
 }
 
 /* ========== SEARCHBAR ============= */
@@ -191,7 +191,7 @@ input[type="text"]:focus {
 #context-menu a {
     display: block;
     margin: 5px;
-    color: white;
+    color: var(--text);
 }
 #context-menu a:hover {
     color: var(--contrast);

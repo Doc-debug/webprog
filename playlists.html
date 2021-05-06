@@ -40,9 +40,8 @@
                     <img id="menu-icon" src="/img/ctrl/burgermenu.svg" />
                     <a href="/player.html">Songs</a>
                     <a href="/playlists.html">Playlists</a>
-                    <a>
+                    <a onclick="setTheme()">
                         <img
-                            onclick="setTheme()"
                             src="/img/ctrl/themeswitch.svg"
                             alt="switch theme"
                         />
@@ -85,7 +84,7 @@
                                 <th onclick="sortTag('title')">Title</th>
                                 <th onclick="sortTag('artist')">Artist</th>
                                 <th onclick="sortTag('album')">Album</th>
-                                <th onclick="sortTag('url')">Folder</th>
+                                <th onclick="sortTag('folder')">Folder</th>
                                 <th onclick="sortTag('length')">Length</th>
                             </tr>
                         </thead>
