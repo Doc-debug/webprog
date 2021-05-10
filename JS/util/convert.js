@@ -1,3 +1,4 @@
+"use strict";
 /**
  * converts a string into an array buffer
  * @param {string} str the data string

@@ -1,6 +1,6 @@
 import { str2ab } from "./convert.js";
 import { getFile } from "./httpRequest.js";
-
+("use strict");
 /**
  * gets a song file from a given url and returns an object containing ID3 information
  * @param {string} url the url of the file

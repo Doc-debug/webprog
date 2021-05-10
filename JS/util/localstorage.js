@@ -1,3 +1,4 @@
+"use strict";
 /**
  * saves an object in the local storage
  * @param {string} name name of the local storage field

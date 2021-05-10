@@ -1,6 +1,7 @@
 import { getObj, setObj } from "./util/localstorage.js";
 import { initctxm } from "./util/ctxm.js";
 import { find } from "./crawler.js";
+("use strict");
 
 /**
  * holds all playlists in format {name: "name", songs: []}

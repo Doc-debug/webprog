@@ -1,3 +1,4 @@
+"use strict";
 /**
  * makes a get request to a given url and returns a promise that will be resolved as soon as its done
  * @param {string} url the url to the file

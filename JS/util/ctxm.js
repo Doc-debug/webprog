@@ -1,3 +1,4 @@
+"use strict";
 /**
  * if the ctxm is initialized or not. This will prevent the ctxm from being created multiple times
  */

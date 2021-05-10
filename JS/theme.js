@@ -1,4 +1,5 @@
 import { getObj, setObj } from "./util/localstorage.js";
+("use strict");
 
 let themes = [
     {

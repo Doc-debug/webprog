@@ -1,3 +1,4 @@
+"use strict";
 /**
  * will update a nested object in a given object with a provided path and value
  * path should be array of keys e.g.: ["key1", "key2", ...]
