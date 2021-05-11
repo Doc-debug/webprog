@@ -88,31 +88,6 @@ Styling            - individual content styling
     width: 52px;
 }
 
-#control button img {
-    position: relative;
-    width: 50%;
-}
-
-#play-control {
-    border: solid 3px var(--text);
-    border-radius: 100%;
-    background-color: var(--bg-secondary);
-    transition: background-color 0.5s ease;
-}
-#play-control:hover {
-    background-color: var(--bg-tertionary);
-}
-
-#control .skip,
-.extra {
-    opacity: var(--op-m);
-    transition: opacity 0.5s ease;
-}
-#control .skip:hover,
-.extra:hover {
-    opacity: 1;
-}
-
 /* ********** volume **************** */
 #volume-container {
     display: flex;
@@ -165,6 +140,43 @@ Styling            - individual content styling
         margin: 10px;
         flex-grow: unset;
     }
+}
+
+/* ========== SVG STYLING =========== */
+
+#control button svg {
+    position: relative;
+    width: 50%;
+}
+#control button svg .stroke {
+    fill: none;
+    stroke: var(--text);
+    stroke-width: 25;
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+}
+#control button svg .fill {
+    fill: var(--text);
+}
+#play-control {
+    border: solid 3px var(--text);
+    border-radius: 100%;
+    background-color: var(--bg-secondary);
+    transition: background-color 0.5s ease;
+}
+
+#play-control:hover {
+    background-color: var(--bg-tertionary);
+}
+
+#control .skip,
+.extra {
+    opacity: var(--op-m);
+    transition: opacity 0.5s ease;
+}
+#control .skip:hover,
+.extra:hover {
+    opacity: 1;
 }
 
 /* ========== CURRENT SONGLIST ====== */
