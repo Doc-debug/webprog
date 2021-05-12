@@ -108,6 +108,7 @@ Styling            - individual content styling
     );
 }
 
+/* for smaller screens */
 @media only screen and (max-width: 900px) {
     #player {
         height: 200px;
@@ -139,6 +140,16 @@ Styling            - individual content styling
     #volume-container {
         margin: 10px;
         flex-grow: unset;
+    }
+}
+/* for super small screens */
+@media only screen and (max-width: 900px) {
+    #control .extra {
+        display: none;
+    }
+    #player .song-info {
+        white-space: nowrap;
+        overflow-x: scroll;
     }
 }
 

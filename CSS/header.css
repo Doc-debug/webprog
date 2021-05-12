@@ -54,6 +54,14 @@ Styling             - individual content styling
     display: inline-block;
     margin: 15px auto;
 }
+#searchbar {
+    width: 70%;
+    box-sizing: border-box;
+}
+#searchtag {
+    width: 25%;
+    box-sizing: border-box;
+}
 
 @media only screen and (max-width: 900px) {
     #menu {
