@@ -1,8 +1,9 @@
 import { pad } from "./util/convert.js";
-import { arrShuffle, arrSort } from "./util/object.js";
-import { crawler, tree, find } from "./crawler.js";
+import { arrSort } from "./util/object.js";
+import { find } from "./crawler.js";
 import { initctxm } from "./util/ctxm.js";
 import { ctxmPlaylists } from "./playlistMod.js";
+import { playSongAt } from "./playerMod.js";
 ("use strict");
 
 /**
@@ -52,7 +53,7 @@ export async function fillSongList(
     let list = document.getElementById(listID);
     list.innerHTML = "";
     // for each object in array create a row and cells with song details
-    songs.forEach((song) => {
+    songs.forEach((song, index) => {
         let row = list.insertRow();
         let options = row.insertCell(0);
         let link = document.createElement("a");
@@ -75,6 +76,10 @@ export async function fillSongList(
         artist.innerHTML = song.artist;
         let title = row.insertCell(0);
         title.innerHTML = song.title;
+        title.addEventListener("click", function () {
+            // calls context menu when clicked
+            playSongAt(index);
+        });
     });
 }
 

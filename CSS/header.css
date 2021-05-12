@@ -1,0 +1,82 @@
+/**
+* @author Gruppe 8
+* @version 1.0
+*/
+
+/* Table of Contents
+Constants          - variable declaration for colors 
+Styling             - individual content styling 
+    Header          - the header containing navbar and searchbar
+*/
+
+/* ========== CONSTANTS ============= */
+
+:root {
+    --bg-primary: #1e2025;
+    --bg-secondary: #212328;
+    --bg-tertionary: #3e3f42;
+    --text: #ffffffde;
+    --contrast: #e74c3c;
+    --border-r: 5px;
+
+    --op-h: 87%;
+    --op-m: 60%;
+    --op-d: 38%;
+    --border-r: 5px;
+}
+
+/* ========== HEADER ================ */
+
+#header {
+    height: 60px;
+    display: flex;
+}
+#menu {
+    display: flex;
+    text-align: center;
+}
+#menu a {
+    margin: 20px;
+    text-decoration: none;
+    color: var(--text);
+}
+#menu a img {
+    width: 20px;
+}
+
+#menu-icon {
+    display: none;
+    width: 30px;
+    margin: 15px;
+}
+
+#searchwrapper {
+    display: inline-block;
+    margin: 15px auto;
+}
+
+@media only screen and (max-width: 900px) {
+    #menu {
+        width: 60px;
+        height: 60px;
+        margin: 0;
+        flex-direction: column;
+    }
+    #menu a {
+        display: none;
+    }
+    #menu-icon {
+        display: block;
+    }
+    #menu:hover a,
+    #menu:focus a {
+        position: relative;
+        display: inline-block;
+        width: 70px;
+        padding: 15px;
+        margin: 0;
+        background-color: var(--bg-primary);
+        border: 1px solid var(--bg-tertionary);
+        z-index: 1000;
+    }
+}

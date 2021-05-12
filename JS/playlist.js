@@ -1,4 +1,4 @@
-import { crawler, tree } from "./crawler.js";
+import { crawler } from "./crawler.js";
 import { initSonglist, fillSongList } from "./songlist.js";
 import {
     playlists,
@@ -6,18 +6,27 @@ import {
     createPlaylist,
     addSong,
 } from "./playlistMod.js";
+import { initPlayer } from "./playerMod.js";
 ("use strict");
 
 window.onload = async function () {
-    let data = await crawler();
-    initPlaylist();
-    updatePlayslistList();
-
-    initSonglist("playlist-song-table");
-
+    // add functions to global scope so buttons with onclick can access it
     window.promptCreatePlaylist = promptCreatePlaylist;
     window.loadPlaylist = loadPlaylist;
     window.addSong = addSong;
+
+    // init crawler
+    let data = await crawler();
+
+    // init necessary modules
+    initPlaylist();
+    updatePlayslistList();
+    initSonglist("playlist-song-table");
+    // load first playlist as default
+    if (playlists.length != 0) loadPlaylist(0);
+
+    // load player
+    initPlayer();
 };
 /**
  * updates the playlist list on the website
