@@ -200,3 +200,41 @@ input[type="text"]:focus {
 #context-menu a:hover {
     color: var(--contrast);
 }
+
+/* ========== LOADER ================ */
+#loader {
+    margin: 0 auto;
+    text-align: center;
+}
+#loader h2 {
+    margin: 20px 0 5px 0;
+}
+#loader-line-container {
+    height: 5px;
+    width: 30%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+#loader-line-container div {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    background-color: var(--contrast);
+    animation-name: loader-anim;
+    animation-duration: 1s;
+    /* animation-direction: alternate; */
+    animation-timing-function: cubic-bezier(0.6, 0, 0.6, 0);
+    animation-iteration-count: infinite;
+}
+
+@keyframes loader-anim {
+    0% {
+        left: -50%;
+    }
+    50% {
+        left: 100%;
+    }
+    100% {
+        left: -50%;
+    }
+}
