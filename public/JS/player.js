@@ -1,7 +1,8 @@
-import { crawler } from "./crawler.js";
+// import { crawler } from "./crawler.js";
 import { initSonglist } from "./songlist.js";
 import { initPlayer } from "./playerMod.js";
 import { createLoader } from "./util/loader.js";
+import { crawler, find } from "./phpCrawler.js";
 ("use strict");
 
 /**
@@ -14,4 +15,5 @@ window.onload = async function () {
     loader.remove();
     initSonglist();
     initPlayer();
+    window.find = find;
 };
