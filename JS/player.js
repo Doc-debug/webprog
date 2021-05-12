@@ -3,29 +3,39 @@ import { initSonglist, songlist } from "./songlist.js";
 import { arrSort, arrShuffle, arrClone } from "./util/object.js";
 ("use strict");
 
+/**
+ * initializes everything on load
+ */
 window.onload = async function () {
     let data = await crawler();
     initSonglist();
     initPlayer();
 };
 
-let playing,
-    player,
-    playerlist,
-    playingPos,
-    currentTrack,
-    loop,
-    shuffle,
-    btnPlayPause,
-    btnLoop,
-    btnShuffle,
-    btnSkip,
-    btnBack,
-    btnMute,
-    imgPlayPause,
-    songSlider,
-    volumeSlider;
+/** @type {Audio} an audio element that is playing music*/
+let player;
+/** @type {Array} a list of all the current songs in the player*/
+let playerlist;
+/** @type {number} the current position in the playerlist*/
+let playingPos;
+/** @type {object} the current song object that is playing */
+let currentTrack;
 
+/** player control button doms */
+let btnPlayPause, btnLoop, btnShuffle, btnSkip, btnBack, btnMute;
+
+/** the svg dom element for play and pause (for switch) */
+let svgPlay, svgPause;
+
+/** @type {boolean} player booleans */
+let loop, shuffle, playing;
+
+/** player dom elements */
+let songSlider, volumeSlider, songInfo;
+
+/**
+ * Initialize all default values and set event listener
+ */
 function initPlayer() {
     //init player
     player = new Audio();
@@ -48,9 +58,12 @@ function initPlayer() {
     btnShuffle = document.getElementById("shuffle-control");
     btnLoop = document.getElementById("loop-control");
     btnMute = document.getElementById("mute-control");
+    // init song info space
+    songInfo = document.getElementById("song-info");
 
     //init playPauseImg
-    imgPlayPause = btnPlayPause.childNodes[1];
+    svgPlay = document.getElementById("play-svg");
+    svgPause = document.getElementById("pause-svg");
 
     //init songSlider
     songSlider = document.getElementById("song-slider");
@@ -104,7 +117,9 @@ function initPlayer() {
     updateSongInfo();
 }
 
-//Switch for play and pause
+/**
+ * Switch for play and pause
+ */
 function switchPlayPause() {
     if (playing) {
         audioPause();
@@ -113,21 +128,29 @@ function switchPlayPause() {
     }
 }
 
-//Set player to play
+/**
+ * Set player to play and switch icon
+ */
 function audioPlay() {
     playing = true;
     player.play();
-    imgPlayPause.src = "../img/ctrl/pause.svg";
+    svgPause.setAttribute("class", "");
+    svgPlay.setAttribute("class", "invisible");
 }
 
-//Set player to pause
+/**
+ * Set player to pause and switch icon
+ */
 function audioPause() {
     playing = false;
     player.pause();
-    imgPlayPause.src = "../img/ctrl/play.svg";
+    svgPlay.setAttribute("class", "");
+    svgPause.setAttribute("class", "invisible");
 }
 
-//Skipping song
+/**
+ * Skip the current playing song
+ */
 function audioSkip() {
     //Skip to the next song if possible else restart songlist and pause
     if (playerlist[playingPos + 1] != null) {
@@ -140,31 +163,40 @@ function audioSkip() {
         currentTrack = playerlist[playingPos];
         player.src = currentTrack["url"];
         updateSongInfo();
-        if (playing) {
+        // only pause if loop is disabled
+        if (playing && !loop) {
             audioPause();
         }
     }
 }
 
-//Got to song start or a song back
+/**
+ * Start song at the beginning or repeat the last song
+ */
 function audioBack() {
-    //Restart song or go a song back
-    if (player.currentTime < 3 || playingPos == 0) {
+    // if song timer is over 3 seconds start song from beginning
+    if (player.currentTime > 3) {
         player.currentTime = 0;
     } else {
-        currentTrack = playerlist[--playingPos];
+        // if go to last song or go to the end of the list if at the beginning
+        playingPos = playingPos == 0 ? playerlist.length - 1 : --playingPos;
+        currentTrack = playerlist[playingPos];
         player.src = currentTrack["url"];
         updateSongInfo();
-        player.play();
+        audioPlay();
     }
 }
 
-//Switches shuffle
+/**
+ * switch audio to shuffle mode
+ */
 function audioShuffle() {
     if (shuffle) {
+        // bring array back in order
         playerlist = arrSort(playerlist, "index", 1);
         playingPos = currentTrack["index"];
     } else {
+        // shuffle array
         playerlist = arrShuffle(playerlist);
         playingPos = 0;
         //Bring currentTrack to position 0
@@ -176,34 +208,55 @@ function audioShuffle() {
         }
     }
     shuffle = !shuffle;
-    //TODO svg color togglen
-}
 
-//Switching loop control
-function audioLoop() {
-    loop = !loop;
-    player.loop = loop;
-    if (loop) {
-        //ToDo svg in --contrast
+    // set button css styling to active
+    if (shuffle) {
+        btnShuffle.classList.add("active");
+    } else {
+        btnShuffle.classList.remove("active");
     }
 }
 
-//Set volume
-//@param volume from 0.0 to 1.0
+/**
+ * Switching loop control
+ */
+function audioLoop() {
+    loop = !loop;
+    player.loop = loop;
+    // set button css styling to active
+    if (loop) {
+        btnLoop.classList.add("active");
+    } else {
+        btnLoop.classList.remove("active");
+    }
+}
+
+/**
+ * Set volume
+ * @param {volume} volume from 0.0 to 1.0
+ */
 function audioVolume(volume) {
     player.volume = volume;
 }
 
+/**
+ * switches between mute audio and play audio
+ */
 function audioMuteSwitch() {
     //TODO
 }
 
+/**
+ * set song title and artist to song info dom
+ */
 function updateSongInfo() {
-    let songInfo = document.getElementById("song-info");
     songInfo.childNodes[1].innerHTML = currentTrack["title"];
     songInfo.childNodes[3].innerHTML = currentTrack["artist"];
 }
 
+/**
+ * update songs from songlist
+ */
 function updateSonglist() {
     playerlist = arrClone(songlist);
     //Index songlist

@@ -68,6 +68,10 @@ button:focus {
     user-select: none; /* Standard */
 }
 
+.invisible {
+    display: none !important;
+}
+
 .highlight {
     color: var(--contrast) !important;
 }

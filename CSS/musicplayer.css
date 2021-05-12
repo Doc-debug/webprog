@@ -154,9 +154,11 @@ Styling            - individual content styling
     stroke-width: 25;
     stroke-linecap: round;
     stroke-miterlimit: 10;
+    transition: stroke 0.5s ease;
 }
 #control button svg .fill {
     fill: var(--text);
+    transition: fill 0.5s ease;
 }
 #play-control {
     border: solid 3px var(--text);
@@ -164,9 +166,17 @@ Styling            - individual content styling
     background-color: var(--bg-secondary);
     transition: background-color 0.5s ease;
 }
-
 #play-control:hover {
     background-color: var(--bg-tertionary);
+}
+#play-svg path {
+    fill: var(--contrast);
+}
+#pause-svg line {
+    stroke: var(--contrast);
+    stroke-width: 48.0024;
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
 }
 
 #control .skip,
@@ -178,7 +188,15 @@ Styling            - individual content styling
 .extra:hover {
     opacity: 1;
 }
-
+#control .active {
+    opacity: 1;
+}
+#control .active .stroke {
+    stroke: var(--contrast);
+}
+#control .active .fill {
+    fill: var(--contrast);
+}
 /* ========== CURRENT SONGLIST ====== */
 
 #player-playlist {
