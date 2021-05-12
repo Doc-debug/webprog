@@ -27,6 +27,7 @@ let conf = {
     playerlist: [],
     playingPos: 0,
     currentTrack: null,
+    progress: 0,
     volume: 0.3,
 };
 
@@ -44,7 +45,8 @@ export function initPlayer() {
     // set current track if it hasnt been initialized yet
     if (conf.currentTrack == null) conf.currentTrack = conf.playerlist[0];
     player.src = conf.currentTrack["url"];
-    player.volume = conf.volume;
+    player.currentTime = conf.progress;
+    setMetadata(conf.currentTrack);
 
     // go to next song if the player has ended with the current one
     player.addEventListener("ended", function () {
@@ -73,8 +75,9 @@ export function initPlayer() {
 
     //init songSlider and set gradient for the progress bar color
     volumeSlider = document.getElementById("volume-control");
+    volumeSlider.value = conf.volume * 100;
     volumeSlider.oninput = function () {
-        var x = volumeSlider.value;
+        let x = volumeSlider.value;
         var sliderBackground =
             "linear-gradient(90deg, var(--contrast) " +
             x +
@@ -82,12 +85,16 @@ export function initPlayer() {
             x +
             "%)";
         volumeSlider.style.background = sliderBackground;
+        updateConf();
     };
     volumeSlider.addEventListener("mousemove", function () {
         audioVolume(volumeSlider.value / 100);
     });
+    audioVolume(conf.volume);
 
+    volumeSlider.oninput();
     updateSongInfo();
+    initNavigator();
 
     // add functions to global scope so buttons with onclick can access it
     window.audioShuffle = audioShuffle;
@@ -100,7 +107,12 @@ export function initPlayer() {
     // start playing song set in cache
     if (conf.playing) {
         if (confirm("Do you want the browser to continue play your music?")) {
-            audioPlay();
+            try {
+                audioPlay();
+            } catch (error) {
+                console.error(error);
+                conf.playing = false;
+            }
         }
     }
 }
@@ -122,6 +134,7 @@ export function switchPlayPause() {
 export function audioPlay() {
     conf.playing = true;
     player.play();
+    // set button styling
     svgPause.setAttribute("class", "");
     svgPlay.setAttribute("class", "invisible");
     updateConf();
@@ -133,6 +146,7 @@ export function audioPlay() {
 export function audioPause() {
     conf.playing = false;
     player.pause();
+    // set button styling
     svgPlay.setAttribute("class", "");
     svgPause.setAttribute("class", "invisible");
     updateConf();
@@ -144,21 +158,11 @@ export function audioPause() {
 export function audioSkip() {
     //Skip to the next song if possible else restart songlist and pause
     if (conf.playerlist[conf.playingPos + 1] != null) {
-        conf.currentTrack = conf.playerlist[++conf.playingPos];
-        player.src = conf.currentTrack["url"];
-        updateSongInfo();
-        audioPlay();
+        playSongAt(++conf.playingPos, false);
     } else {
-        conf.playingPos = 0;
-        conf.currentTrack = conf.playerlist[conf.playingPos];
-        player.src = conf.currentTrack["url"];
-        updateSongInfo();
         // only pause if loop is disabled
-        if (conf.playing && !conf.loop) {
-            audioPause();
-        }
+        playSongAt(0, false, conf.playing && !conf.loop);
     }
-    updateConf();
 }
 
 /**
@@ -169,13 +173,9 @@ export function audioBack() {
     if (player.currentTime > 3 || conf.playingPos == 0) {
         player.currentTime = 0;
     } else {
-        // if go to last song or go to the end of the list if at the beginning
-        conf.currentTrack = conf.playerlist[--conf.playingPos];
-        player.src = conf.currentTrack["url"];
-        updateSongInfo();
-        audioPlay();
+        // else go to last song
+        playSongAt(--conf.playingPos, false);
     }
-    updateConf();
 }
 
 /**
@@ -240,15 +240,15 @@ export function audioVolume(volume) {
  * switches between mute audio and play audio
  */
 export function audioMuteSwitch() {
-    //TODO
+    audioVolume(0);
 }
 
 /**
  * set song title and artist to song info dom
  */
 export function updateSongInfo() {
-    songInfo.childNodes[1].innerHTML = conf.currentTrack["title"];
-    songInfo.childNodes[3].innerHTML = conf.currentTrack["artist"];
+    songInfo.childNodes[1].innerHTML = conf.currentTrack.title;
+    songInfo.childNodes[3].innerHTML = conf.currentTrack.artist;
 }
 
 /**
@@ -266,18 +266,65 @@ export function updateSonglist() {
 /**
  * takes an index for the songlist and sets that song to the current song and plays it
  * @param {number} i the index of the song in the songlist
+ * @param {boolean} if true will fetch all songs from the current songlist
+ * @param {boolean} if the song should be played or not
  */
-export function playSongAt(i) {
-    updateSonglist();
+export function playSongAt(i, update = true, play = true) {
+    if (update) updateSonglist();
     conf.playingPos = i;
     conf.currentTrack = conf.playerlist[conf.playingPos];
-    player.src = conf.currentTrack["url"];
+    try {
+        player.src = conf.currentTrack["url"];
+    } catch (error) {
+        console.log(error, "url load");
+    }
 
+    try {
+        if (play) audioPlay();
+    } catch (error) {
+        console.log(error, "url load");
+    }
     updateSongInfo();
-    audioPlay();
+    setMetadata(conf.currentTrack);
     updateConf();
 }
 
+/**
+ * updates the config in local storage for the player
+ */
 function updateConf() {
     setObj("playerConf", conf);
+}
+
+/**
+ * sets all navigator functions like play, pause etc.
+ */
+function initNavigator() {
+    navigator.mediaSession.setActionHandler("play", function () {
+        audioPlay();
+    });
+    navigator.mediaSession.setActionHandler("pause", function () {
+        audioPause();
+    });
+    navigator.mediaSession.setActionHandler("previoustrack", function () {
+        audioBack();
+    });
+    navigator.mediaSession.setActionHandler("nexttrack", function () {
+        audioSkip();
+    });
+}
+
+/**
+ * updates all metadata for the browser
+ * @param {*} song the song object that contains all metadata
+ */
+function setMetadata(song) {
+    if ("mediaSession" in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: song.title,
+            artist: song.artist,
+            album: song.album,
+            artwork: [],
+        });
+    }
 }

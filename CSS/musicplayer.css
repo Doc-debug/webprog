@@ -100,13 +100,6 @@ Styling            - individual content styling
     padding: 0;
     flex: none;
 }
-#volume-control {
-    background: linear-gradient(
-        90deg,
-        var(--contrast) 30%,
-        var(--bg-tertionary) 30%
-    );
-}
 
 /* for smaller screens */
 @media only screen and (max-width: 900px) {
@@ -119,7 +112,6 @@ Styling            - individual content styling
     #player .song-info {
         text-align: center;
         width: 100%;
-        margin: 10px;
         flex-grow: unset;
     }
     #control {
@@ -144,6 +136,9 @@ Styling            - individual content styling
 }
 /* for super small screens */
 @media only screen and (max-width: 350px) {
+    #control {
+        width: 100%;
+    }
     #control .extra {
         display: none;
     }
