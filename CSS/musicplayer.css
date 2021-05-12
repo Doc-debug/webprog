@@ -143,13 +143,16 @@ Styling            - individual content styling
     }
 }
 /* for super small screens */
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 350px) {
     #control .extra {
         display: none;
     }
     #player .song-info {
         white-space: nowrap;
         overflow-x: scroll;
+    }
+    #control .buttons {
+        white-space: nowrap;
     }
 }
 
