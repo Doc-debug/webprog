@@ -278,10 +278,8 @@ export function playSongAt(i, update = true, play = true) {
     conf.playingPos = i;
     conf.currentTrack = conf.playerlist[conf.playingPos];
     player.src = conf.currentTrack["url"];
-    console.log("url loaded");
 
     if (play) audioPlay();
-    console.log(player.paused);
 
     updateSongInfo();
     setMetadata(conf.currentTrack);
