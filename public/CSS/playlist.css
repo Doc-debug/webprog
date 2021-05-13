@@ -64,8 +64,8 @@ Styling             - individual content styling
 }
 #playlist-list p {
     font-weight: bold;
-    opacity: var(--op-m);
     border: none;
+    cursor: pointer;
 }
 
 /* ========== PLAYLIST SONG LIST ==== */
@@ -93,9 +93,6 @@ Styling             - individual content styling
         float: left;
         border-top: none;
         border-bottom: solid var(--bg-tertionary) 1px;
-    }
-    #playlist-list p {
-        display: none;
     }
 
     #table-container {

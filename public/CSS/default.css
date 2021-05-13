@@ -84,6 +84,9 @@ button:focus {
 .op-d {
     opacity: var(--op-d) !important;
 }
+.right {
+    float: right;
+}
 /* ========== FONTS ================= */
 
 @font-face {

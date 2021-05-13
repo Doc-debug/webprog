@@ -26,7 +26,7 @@ Song list           - styling for the song table
 
 /* ========== SONG LIST ============= */
 #table-container {
-    height: calc(100% - 60px);
+    height: 100%;
     overflow: scroll;
 }
 #song-table {

@@ -1,5 +1,6 @@
 import { getObj, setObj } from "./util/localstorage.js";
 import { initctxm } from "./util/ctxm.js";
+import { splitArr } from "./util/object.js";
 import { find } from "./crawlerPHP.js";
 ("use strict");
 
@@ -8,7 +9,12 @@ import { find } from "./crawlerPHP.js";
  */
 export let playlists = [];
 /**
+ * holds all songs in their respective folder in format {name: "name", songs: []}
+ */
+export let folderPlaylists = [];
+/**
  * initializes the playlist by copying it from the local storage or creating a new one if it doesnt exist yet
+ * also creates the folder playlists
  */
 export function initPlaylist() {
     playlists = getPlaylistStorage();
@@ -16,6 +22,7 @@ export function initPlaylist() {
         playlists = [];
         updatePlaylistStorage();
     }
+    folderPlaylists = splitArr(find(""), "folder");
 }
 /**
  * Adds a playlist to the playlist list and updates the localstorage

@@ -3,6 +3,7 @@ import { createLoader } from "./util/loader.js";
 import { initSonglist, fillSongList } from "./songlist.js";
 import {
     playlists,
+    folderPlaylists,
     initPlaylist,
     createPlaylist,
     addSong,
@@ -13,7 +14,10 @@ import { initPlayer } from "./playerMod.js";
 window.onload = async function () {
     // add functions to global scope so buttons with onclick can access it
     window.promptCreatePlaylist = promptCreatePlaylist;
+    window.updatePlayslistList = updatePlayslistList;
+    window.folderPlaylistList = folderPlaylistList;
     window.loadPlaylist = loadPlaylist;
+    window.loadFolder = loadFolder;
     window.addSong = addSong;
 
     // init crawler and loader while crawler is working
@@ -25,6 +29,7 @@ window.onload = async function () {
     initPlaylist();
     updatePlayslistList();
     initSonglist("playlist-song-table");
+
     // load first playlist as default
     if (playlists.length != 0) loadPlaylist(0);
 
@@ -34,19 +39,24 @@ window.onload = async function () {
 /**
  * updates the playlist list on the website
  */
-function updatePlayslistList() {
+function updatePlayslistList(playlistArr = playlists, funct = "loadPlaylist") {
     let list = document.getElementById("playlist-list-container");
     // clear dom
     list.innerHTML = "";
     // for every playlist in playlists create a element and add to container
-    for (let i = 0; i < playlists.length; i++) {
-        const element = playlists[i];
+    for (let i = 0; i < playlistArr.length; i++) {
+        const element = playlistArr[i];
         let item = document.createElement("a");
-        item.setAttribute("onclick", "loadPlaylist(" + i + ")");
+        item.setAttribute("onclick", funct + "(" + i + ")");
         item.innerHTML = element.name;
         list.appendChild(item);
     }
 }
+
+function folderPlaylistList() {
+    updatePlayslistList(folderPlaylists, "loadFolder");
+}
+
 /**
  * creates a prompt to ask for the creation of a new playlist
  */
@@ -63,6 +73,7 @@ function promptCreatePlaylist() {
 /**
  * loads a given playlist into the table
  * @param {number} index the index of the playlist in playlists array
+ * @param {Array} an array of playlist arrays
  */
 function loadPlaylist(index) {
     if (index == -1) {
@@ -70,5 +81,18 @@ function loadPlaylist(index) {
         return;
     }
     let data = playlists[index];
+    fillSongList(data.songs);
+}
+/**
+ * loads a given folder into the table
+ * @param {number} index the index of the playlist in playlists array
+ * @param {Array} an array of playlist arrays
+ */
+function loadFolder(index) {
+    if (index == -1) {
+        fillSongList(find(""));
+        return;
+    }
+    let data = folderPlaylists[index];
     fillSongList(data.songs);
 }

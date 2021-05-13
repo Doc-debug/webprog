@@ -85,29 +85,31 @@ export function arrShuffle(array) {
 }
 
 /**
- * Takes an array of objects and splits it into subarrays based on common key name
- * [{a: 1}, {a: 1}, {a: 2}, {a: 2}] => [[{a: 1}, {a: 1}], [{a: 2}, {a: 2}]]
+ * Takes an array of songobjects and splits it into subarrays based on common key name
+ * [{a: 1}, {a: 1}, {a: 2}, {a: 2}] => [{name: 1, songs:[{a: 1}, {a: 1}]}, {name: 1, songs:[{a: 2}, {a: 2}]}]
  * @param {Array} arr the array
  * @param {string} the key name
  */
 export function splitArr(arr, tag) {
-    let data = arrSort(flattenTree(arr), tag, 1);
+    // sort arr
+    let data = arrSort(arr, tag, 1);
     let lastTagName = data[0][tag];
     let completeArr = [];
     let tempArr = [];
-
+    // check if tag is same as last object and if not create new array
     for (let i = 0; i < data.length; i++) {
         const e = data[i];
         if (e[tag] == lastTagName) {
             tempArr.push(e);
         } else {
-            completeArr.push(arrClone(tempArr));
+            completeArr.push({ name: lastTagName, songs: arrClone(tempArr) });
             tempArr = [];
             tempArr.push(e);
         }
         lastTagName = e[tag];
     }
-    completeArr.push(arrClone(tempArr));
+    completeArr.push({ name: lastTagName, songs: arrClone(tempArr) });
+    return completeArr;
 }
 
 /**
