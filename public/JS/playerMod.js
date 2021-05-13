@@ -1,6 +1,7 @@
 import { songlist } from "./songlist.js";
 import { getObj, setObj } from "./util/localstorage.js";
 import { arrSort, arrShuffle, arrClone } from "./util/object.js";
+import { secondsToMinutes, prettyTimeString } from "./util/time.js";
 ("use strict");
 
 /** @type {Audio} an audio element that is playing music*/
@@ -46,7 +47,6 @@ export function initPlayer() {
     if (conf.currentTrack == null) conf.currentTrack = conf.playerlist[0];
     player.src = conf.currentTrack["url"];
     player.currentTime = conf.progress;
-    setMetadata(conf.currentTrack);
 
     // go to next song if the player has ended with the current one
     player.addEventListener("ended", function () {
@@ -55,6 +55,10 @@ export function initPlayer() {
     // skip song if source not supported
     player.addEventListener("error", function (e) {
         audioSkip();
+    });
+    player.addEventListener("loadedmetadata", function () {
+        updateSongInfo();
+        setMetadata(conf.currentTrack);
     });
 
     // control doms
@@ -67,22 +71,17 @@ export function initPlayer() {
     //init songSlider and set gradient for the progress bar color
     songSlider = document.getElementById("song-slider");
     songSlider.oninput = function () {
-        var x = songSlider.value;
-        var sliderBackground =
-            "linear-gradient(90deg, var(--contrast) " +
-            x +
-            "%, var(--bg-tertionary)" +
-            x +
-            "%)";
-        songSlider.style.background = sliderBackground;
+        player.currentTime = (songSlider.value * player.duration) / 100;
+        updateSongProgress();
     };
+    player.addEventListener("timeupdate", updateSongProgress);
 
     //init songSlider and set gradient for the progress bar color
     volumeSlider = document.getElementById("volume-control");
     volumeSlider.value = conf.volume * 100;
     volumeSlider.oninput = function () {
         let x = volumeSlider.value;
-        var sliderBackground =
+        let sliderBackground =
             "linear-gradient(90deg, var(--contrast) " +
             x +
             "%, var(--bg-tertionary)" +
@@ -97,7 +96,6 @@ export function initPlayer() {
     audioVolume(conf.volume);
 
     volumeSlider.oninput();
-    updateSongInfo();
     initNavigator();
 
     // add functions to global scope so buttons with onclick can access it
@@ -253,6 +251,9 @@ export function audioMuteSwitch() {
 export function updateSongInfo() {
     songInfo.childNodes[1].innerHTML = conf.currentTrack.title;
     songInfo.childNodes[3].innerHTML = conf.currentTrack.artist;
+    songSlider.parentElement.children[2].innerHTML = prettyTimeString(
+        secondsToMinutes(player.duration)
+    );
 }
 
 /**
@@ -268,6 +269,26 @@ export function updateSonglist() {
 }
 
 /**
+ * Updates the sonng progess slider and the current time
+ */
+function updateSongProgress() {
+    let songLength = player.duration;
+    let time = player.currentTime;
+
+    let percProgress = (time / songLength) * 100;
+    songSlider.value = percProgress;
+    let sliderBackground =
+        "linear-gradient(90deg, var(--contrast) " +
+        percProgress +
+        "%, var(--bg-tertionary)" +
+        percProgress +
+        "%)";
+    songSlider.style.background = sliderBackground;
+    let minSec = secondsToMinutes(time);
+    songSlider.parentElement.children[1].innerHTML = prettyTimeString(minSec);
+}
+
+/**
  * takes an index for the songlist and sets that song to the current song and plays it
  * @param {number} i the index of the song in the songlist
  * @param {boolean} if true will fetch all songs from the current songlist
@@ -280,9 +301,6 @@ export function playSongAt(i, update = true, play = true) {
     player.src = conf.currentTrack["url"];
 
     if (play) audioPlay();
-
-    updateSongInfo();
-    setMetadata(conf.currentTrack);
     updateConf();
 }
 
