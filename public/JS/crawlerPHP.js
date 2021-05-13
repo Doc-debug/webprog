@@ -1,5 +1,5 @@
 import { flattenTree } from "./util/object.js";
-const ApiUrl = "./api/";
+const ApiUrl = "./api/index.php";
 
 const MusicBaseUrl = "./music";
 let tree = {};
