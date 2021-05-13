@@ -85,6 +85,32 @@ export function arrShuffle(array) {
 }
 
 /**
+ * Takes an array of objects and splits it into subarrays based on common key name
+ * [{a: 1}, {a: 1}, {a: 2}, {a: 2}] => [[{a: 1}, {a: 1}], [{a: 2}, {a: 2}]]
+ * @param {Array} arr the array
+ * @param {string} the key name
+ */
+export function splitArr(arr, tag) {
+    let data = arrSort(flattenTree(arr), tag, 1);
+    let lastTagName = data[0][tag];
+    let completeArr = [];
+    let tempArr = [];
+
+    for (let i = 0; i < data.length; i++) {
+        const e = data[i];
+        if (e[tag] == lastTagName) {
+            tempArr.push(e);
+        } else {
+            completeArr.push(arrClone(tempArr));
+            tempArr = [];
+            tempArr.push(e);
+        }
+        lastTagName = e[tag];
+    }
+    completeArr.push(arrClone(tempArr));
+}
+
+/**
  * creates a copy of an array
  * @param {array} array the array to clone
  * @returns cloned array
