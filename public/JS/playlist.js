@@ -1,4 +1,4 @@
-import { crawler } from "./crawler.js";
+import { crawler } from "./crawlerPHP.js";
 import { createLoader } from "./util/loader.js";
 import { initSonglist, fillSongList } from "./songlist.js";
 import {
@@ -18,7 +18,7 @@ window.onload = async function () {
 
     // init crawler and loader while crawler is working
     let loader = createLoader("indexing files please wait", "table-container");
-    let data = await crawler();
+    await crawler();
     loader.remove();
 
     // init necessary modules
