@@ -28,7 +28,7 @@ let conf = {
     playerlist: [],
     playingPos: 0,
     currentTrack: null,
-    progress: 0,
+    time: 0,
     volume: 0.3,
 };
 
@@ -46,7 +46,7 @@ export function initPlayer() {
     // set current track if it hasnt been initialized yet
     if (conf.currentTrack == null) conf.currentTrack = conf.playerlist[0];
     player.src = conf.currentTrack["url"];
-    player.currentTime = conf.progress;
+    player.currentTime = conf.time;
 
     // go to next song if the player has ended with the current one
     player.addEventListener("ended", function () {
@@ -81,6 +81,7 @@ export function initPlayer() {
     volumeSlider.value = conf.volume * 100;
     volumeSlider.oninput = function () {
         let x = volumeSlider.value;
+        x = isNaN(x) ? 0 : x;
         let sliderBackground =
             "linear-gradient(90deg, var(--contrast) " +
             x +
@@ -273,10 +274,12 @@ export function updateSonglist() {
  */
 function updateSongProgress() {
     let songLength = player.duration;
-    let time = player.currentTime;
+    conf.time = player.currentTime;
 
-    let percProgress = (time / songLength) * 100;
+    let percProgress = (conf.time / songLength) * 100;
     songSlider.value = percProgress;
+    percProgress = isNaN(percProgress) ? 0 : percProgress;
+
     let sliderBackground =
         "linear-gradient(90deg, var(--contrast) " +
         percProgress +
@@ -284,8 +287,9 @@ function updateSongProgress() {
         percProgress +
         "%)";
     songSlider.style.background = sliderBackground;
-    let minSec = secondsToMinutes(time);
+    let minSec = secondsToMinutes(conf.time);
     songSlider.parentElement.children[1].innerHTML = prettyTimeString(minSec);
+    updateConf();
 }
 
 /**
