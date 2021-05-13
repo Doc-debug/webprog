@@ -3,6 +3,10 @@ const ApiUrl = "./api/";
 
 const MusicBaseUrl = "./music";
 let tree = {};
+/**
+ * fetches the data from the phpcrawler api
+ * @returns the filetree structure
+ */
 export async function crawler() {
     tree = await fetch(ApiUrl).then((data) => data.json());
     return tree;

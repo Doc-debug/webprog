@@ -2,7 +2,7 @@
 import { initSonglist } from "./songlist.js";
 import { initPlayer } from "./playerMod.js";
 import { createLoader } from "./util/loader.js";
-import { crawler, find } from "./phpCrawler.js";
+import { crawler, find } from "./crawlerPHP.js";
 ("use strict");
 
 /**

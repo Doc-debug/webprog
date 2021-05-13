@@ -52,6 +52,10 @@ export function initPlayer() {
     player.addEventListener("ended", function () {
         audioSkip();
     });
+    // skip song if source not supported
+    player.addEventListener("error", function (e) {
+        audioSkip();
+    });
 
     // control doms
     songInfo = document.getElementById("song-info");
@@ -273,17 +277,12 @@ export function playSongAt(i, update = true, play = true) {
     if (update) updateSonglist();
     conf.playingPos = i;
     conf.currentTrack = conf.playerlist[conf.playingPos];
-    try {
-        player.src = conf.currentTrack["url"];
-    } catch (error) {
-        console.log(error, "url load");
-    }
+    player.src = conf.currentTrack["url"];
+    console.log("url loaded");
 
-    try {
-        if (play) audioPlay();
-    } catch (error) {
-        console.log(error, "url load");
-    }
+    if (play) audioPlay();
+    console.log(player.paused);
+
     updateSongInfo();
     setMetadata(conf.currentTrack);
     updateConf();
