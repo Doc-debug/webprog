@@ -1,4 +1,4 @@
-import { crawler } from "./crawlerPHP.js";
+import { crawler, find } from "./crawlerPHP.js";
 import { createLoader } from "./util/loader.js";
 import { initSonglist, fillSongList } from "./songlist.js";
 import {
@@ -65,6 +65,10 @@ function promptCreatePlaylist() {
  * @param {number} index the index of the playlist in playlists array
  */
 function loadPlaylist(index) {
+    if (index == -1) {
+        fillSongList(find(""));
+        return;
+    }
     let data = playlists[index];
     fillSongList(data.songs);
 }
