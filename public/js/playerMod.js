@@ -2,6 +2,7 @@ import { songlist } from "./songlist.js";
 import { getObj, setObj } from "./util/localstorage.js";
 import { arrSort, arrShuffle, arrClone } from "./util/object.js";
 import { secondsToMinutes, prettyTimeString } from "./util/time.js";
+import { Songlist } from "./songlistClass.js";
 ("use strict");
 
 /** @type {Audio} an audio element that is playing music*/
@@ -20,7 +21,7 @@ let songSlider, volumeSlider, songInfo;
  * @type {Object} holds all configurations for the player
  * is stored and loaded from local storage
  */
-let conf = {
+export let conf = {
     loop: false,
     loopOne: false,
     shuffle: false,
@@ -106,18 +107,21 @@ export function initPlayer() {
     window.audioSkip = audioSkip;
     window.audioLoop = audioLoop;
     window.audioMuteSwitch = audioMuteSwitch;
+    window.togglePList = togglePList;
 
     // start playing song set in cache
-    if (conf.playing) {
-        if (confirm("Do you want the browser to continue play your music?")) {
-            try {
-                audioPlay();
-            } catch (error) {
-                console.error(error);
-                conf.playing = false;
-            }
-        }
-    }
+    // if (conf.playing) {
+    //     if (confirm("Do you want the browser to continue play your music?")) {
+    //         try {
+    //             audioPlay();
+    //         } catch (error) {
+    //             console.error(error);
+    //             conf.playing = false;
+    //         }
+    //     }
+    // }
+    togglePList();
+    initPlayerList();
 }
 
 /**
@@ -346,4 +350,20 @@ function setMetadata(song) {
             artwork: [],
         });
     }
+}
+
+let active = false;
+/**
+ * toggle current songlist
+ */
+function togglePList() {
+    let display = active ? "" : "block";
+    document.getElementById("player-playlist").style.display = display;
+    active = !active;
+}
+
+function initPlayerList() {
+    let songlist = new Songlist("player-playlist-table");
+    songlist.createTableHead();
+    songlist.fillSongList(conf.playerlist);
 }
