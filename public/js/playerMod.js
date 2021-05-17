@@ -120,8 +120,6 @@ export function initPlayer() {
     //         }
     //     }
     // }
-    togglePList();
-    initPlayerList();
 }
 
 /**
@@ -310,6 +308,7 @@ export function playSongAt(i, update = true, play = true) {
 
     if (play) audioPlay();
     updateConf();
+    updatePlayerList();
 }
 
 /**
@@ -352,18 +351,18 @@ function setMetadata(song) {
     }
 }
 
+let currentSongList = new Songlist("player-playlist-table");
+
 let active = false;
 /**
  * toggle current songlist
  */
 function togglePList() {
-    let display = active ? "" : "block";
-    document.getElementById("player-playlist").style.display = display;
+    let height = active ? "0" : "auto";
+    document.getElementById("player-playlist").style.height = height;
     active = !active;
 }
 
-function initPlayerList() {
-    let songlist = new Songlist("player-playlist-table");
-    songlist.createTableHead();
-    songlist.fillSongList(conf.playerlist);
+function updatePlayerList() {
+    currentSongList.fillSongList(conf.playerlist.slice(conf.playingPos));
 }

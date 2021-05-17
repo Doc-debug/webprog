@@ -209,31 +209,15 @@ Styling            - individual content styling
 /* ========== CURRENT SONGLIST ====== */
 
 #player-playlist {
-    display: none;
+    height: 0;
     width: 100%;
+    transition: height 0.5s ease;
 }
 
 #visualizer {
     height: 200px;
     width: 200px;
 }
-#player-playlist table {
-    margin: 0 auto;
-    width: 90%;
-    text-align: left;
-    border-collapse: collapse;
-}
-#player-playlist table th {
-    opacity: var(--op-m);
-    padding: 15px;
-    cursor: pointer;
-}
-#player-playlist table td {
-    padding: 15px;
-    border-top: solid var(--bg-tertionary) 1px;
-}
-#player-playlist table tr:hover {
-    background-color: var(--bg-secondary);
+#player-playlist tbody tr:first-child {
     color: var(--contrast);
-    cursor: pointer;
 }

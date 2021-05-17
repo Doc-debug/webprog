@@ -7,7 +7,7 @@ import { playSongAt } from "./playerMod.js";
 ("use strict");
 
 export class Songlist {
-    constructor(listID) {
+    constructor(listID, sortable = true) {
         /**
          * @type {Array} Holds all songs from the list
          */
@@ -25,12 +25,15 @@ export class Songlist {
          */
         this.lastSortDir = -1;
 
+        this.sortable = sortable;
+
         this.table = document.getElementById(this.listID);
         this.table.innerHTML = "";
         this.thead = document.createElement("thead");
         this.tbody = document.createElement("tbody");
         this.table.appendChild(this.thead);
         this.table.appendChild(this.tbody);
+        this.createTableHead();
     }
     /**
      * initializes the songlist by filling the table with all songs and adding module functions to the global scope
@@ -57,7 +60,7 @@ export class Songlist {
             });
             row.appendChild(data);
         }
-
+        this.thead.innerHTML = "";
         this.thead.appendChild(row);
     }
 
