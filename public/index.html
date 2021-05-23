@@ -11,7 +11,9 @@
         <link rel="stylesheet" type="text/css" href="css/playlist.css" />
         <link rel="stylesheet" type="text/css" href="css/musicplayer.css" />
         <link rel="stylesheet" type="text/css" href="css/songtable.css" />
+        <link rel="stylesheet" type="text/css" href="css/settings.css" />
         <script type="module" src="js/theme.js"></script>
+        <script type="module" src="js/settings.js"></script>
         <script type="module" src="js/playlist.js"></script>
     </head>
     <body>
@@ -19,11 +21,11 @@
             <!-- header of the site on the top -->
             <div id="header">
                 <nav id="menu">
-                    <a onclick="setTheme()">
-                        <img
-                            src="img/ctrl/themeswitch.svg"
-                            alt="switch theme"
-                        />
+                    <a id="settings-btn">
+                        <!-- prettier-ignore -->
+                        <svg viewBox="0 0 500 500">
+                            <path class="stroke" d="M250,178.5c-39.5,0-71.5,32-71.5,71.5s32,71.5,71.5,71.5s71.5-32,71.5-71.5S289.5,178.5,250,178.5z M410.8,250c0-12.1-1.4-23.9-4-35.2l46.7-41.1l-35.7-61.9l-59,20c-17.3-15.9-37.9-28.2-60.9-35.4l-12.2-60.9h-71.5l-12.2,60.9c-23,7.2-43.6,19.5-60.9,35.4l-59-20l-35.7,61.9l46.7,41.1c-2.5,11.3-4,23.1-4,35.2c0,12.1,1.4,23.9,4,35.2l-46.7,41.1l35.7,61.9l59-20c17.3,15.9,37.9,28.2,60.9,35.4l12.2,60.9h71.5l12.2-60.9c23-7.2,43.6-19.5,60.9-35.4l59,20l35.7-61.9l-46.7-41.1C409.4,273.9,410.8,262.1,410.8,250z"/>
+                        </svg>
                     </a>
                 </nav>
 
@@ -150,6 +152,67 @@
                     class="slider no-select"
                     id="volume-control"
                 />
+            </div>
+        </div>
+        <!-- the settings page that can be opened by the button in the top left -->
+        <div id="settings-container">
+            <!-- prettier-ignore -->
+            <a id="settings-close-btn">
+                <svg viewBox="0 0 500 500">
+                    <path class="stroke" d="M250,178.5c-39.5,0-71.5,32-71.5,71.5s32,71.5,71.5,71.5s71.5-32,71.5-71.5S289.5,178.5,250,178.5z M410.8,250c0-12.1-1.4-23.9-4-35.2l46.7-41.1l-35.7-61.9l-59,20c-17.3-15.9-37.9-28.2-60.9-35.4l-12.2-60.9h-71.5l-12.2,60.9c-23,7.2-43.6,19.5-60.9,35.4l-59-20l-35.7,61.9l46.7,41.1c-2.5,11.3-4,23.1-4,35.2c0,12.1,1.4,23.9,4,35.2l-46.7,41.1l35.7,61.9l59-20c17.3,15.9,37.9,28.2,60.9,35.4l12.2,60.9h71.5l12.2-60.9c23-7.2,43.6-19.5,60.9-35.4l59,20l35.7-61.9l-46.7-41.1C409.4,273.9,410.8,262.1,410.8,250z"/>
+                </svg>
+            </a>
+            <div id="settings-body">
+                <h1>Settings</h1>
+                <h2>Preferences</h2>
+                <div class="setting">
+                    <p>language</p>
+                    <select id="language-select">
+                        <option value="english">english</option>
+                        <option value="german">german</option>
+                        <option value="spanish">spanish</option>
+                    </select>
+                </div>
+                <h2>Personalize</h2>
+                <div class="setting">
+                    <p>theme</p>
+                    <select id="theme-select">
+                        <option value="0">dark</option>
+                        <option value="1">light</option>
+                        <option value="2">custom</option>
+                    </select>
+                </div>
+                <div class="setting">
+                    <p>primary background</p>
+                    <input type="color" id="custom-theme-pri-bg" />
+                </div>
+                <div class="setting">
+                    <p>secondary background</p>
+                    <input type="color" id="custom-theme-sec-bg" />
+                </div>
+                <div class="setting">
+                    <p>tertionary background</p>
+                    <input type="color" id="custom-theme-ter-bg" />
+                </div>
+                <div class="setting">
+                    <p>contrast color</p>
+                    <input type="color" id="custom-theme-contrast" />
+                </div>
+                <div class="setting">
+                    <p>text color</p>
+                    <input type="color" id="custom-theme-text" />
+                </div>
+                <h2>Performance</h2>
+                <div class="setting">
+                    <p>crawler</p>
+                    <select id="crawler-select">
+                        <option value="local(JS IFrame)">
+                            local(JS IFrame)
+                        </option>
+                        <option value="server(PHP)">server(PHP)</option>
+                    </select>
+                </div>
+                <button class="critical">Erase all local data</button>
             </div>
         </div>
     </body>

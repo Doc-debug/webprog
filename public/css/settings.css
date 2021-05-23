@@ -1,0 +1,77 @@
+/**
+* @author Gruppe 8
+* @version 1.0
+*/
+
+/* Table of Contents
+Constants          - variable declaration for colors 
+Styling             - individual content styling 
+    Content         - the main content (without the player)
+*/
+
+/* ========== CONSTANTS ============= */
+
+:root {
+    --bg-primary: #1e2025;
+    --bg-secondary: #212328;
+    --bg-tertionary: #3e3f42;
+    --text: #ffffffde;
+    --contrast: #e74c3c;
+    --border-r: 5px;
+
+    --op-h: 87%;
+    --op-m: 60%;
+    --op-d: 38%;
+    --border-r: 5px;
+}
+
+/* ========== CONTENT =============== */
+
+#settings-container {
+    position: fixed;
+    top: -100%;
+    height: 100%;
+    width: 100%;
+    z-index: 999999;
+    background-color: var(--bg-primary);
+    transition: top 0.5s ease;
+    overflow: auto;
+}
+#settings-close-btn {
+    display: inline-block;
+    padding: 15px;
+}
+#settings-close-btn svg {
+    height: 30px;
+}
+#settings-body {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#settings-container h2:after {
+    content: " ";
+    display: block;
+    opacity: var(--op-m);
+    border: 0.5px solid var(--text);
+}
+
+.setting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#settings-body button {
+    border: solid 1px var(--text);
+    border-radius: 100px;
+    color: var(--text);
+    margin: 20px auto;
+    padding: 10px 20px;
+}
+
+#settings-body .critical {
+    color: var(--contrast);
+    border: solid 1px var(--contrast);
+    width: 100%;
+}

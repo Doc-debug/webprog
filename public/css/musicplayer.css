@@ -162,18 +162,6 @@ Styling            - individual content styling
     position: relative;
     width: 50%;
 }
-#player button svg .stroke {
-    fill: none;
-    stroke: var(--text);
-    stroke-width: 30;
-    stroke-linecap: round;
-    stroke-miterlimit: 10;
-    transition: stroke 0.5s ease;
-}
-#player button svg .fill {
-    fill: var(--text);
-    transition: fill 0.5s ease;
-}
 #play-control {
     border: solid 3px var(--text);
     border-radius: 100%;

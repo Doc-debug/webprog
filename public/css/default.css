@@ -29,6 +29,9 @@ a {
     color: var(--contrast);
     cursor: pointer;
 }
+h2 {
+    font-weight: normal;
+}
 button {
     background: none;
     border: none;
@@ -159,6 +162,25 @@ button:focus {
     cursor: pointer;
 }
 
+/* ========== COLOR PICKER ========== */
+
+input[type="color"] {
+    -webkit-appearance: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 100%;
+    width: 27px;
+    height: 27px;
+    background-color: var(--bg-tertionary);
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 100%;
+}
+
 /* ========== SELECT ================ */
 
 select {
@@ -245,4 +267,20 @@ input[type="text"]:focus {
     100% {
         left: -50%;
     }
+}
+
+/* ========== SVG =================== */
+
+.stroke {
+    fill: none;
+    stroke: var(--text);
+    stroke-width: 30;
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+    transition: stroke 0.5s ease;
+}
+
+.fill {
+    fill: var(--text);
+    transition: fill 0.5s ease;
 }

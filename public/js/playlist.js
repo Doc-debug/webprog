@@ -13,7 +13,7 @@ import { initPlayer } from "./playerMod.js";
 
 let songlist;
 
-window.onload = async function () {
+window.addEventListener("load", async function () {
     // add functions to global scope so buttons with onclick can access it
     window.loadFolder = loadFolder;
     window.addSong = addSong;
@@ -36,7 +36,7 @@ window.onload = async function () {
 
     // load player
     initPlayer(songlist);
-};
+});
 /**
  * updates the playlist list on the website
  */
