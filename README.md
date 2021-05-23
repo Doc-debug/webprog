@@ -4,7 +4,6 @@ Please download the php server from the following source and unpack it in the ro
 
 [http://kiwwi.net/projects/webprog/files/phpserverwebprog.zip](http://kiwwi.net/projects/webprog/files/phpserverwebprog.zip)
 
-dont forget to change the root directory at Apache24/conf/httpd.conf
 
 File Structure should be as following:
 
@@ -22,3 +21,8 @@ File Structure should be as following:
     ...
 .gitignore
 ```
+
+open Apache24/conf/httpd.conf
+in line 4 
+edit the path of SRVROOT to the absolute path to the Apache24 folder
+e.g.: 'Define SRVROOT "C:\Users\max\webprogrammieren\webprog\Apache24"'
