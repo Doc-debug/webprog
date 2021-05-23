@@ -23,6 +23,9 @@ File Structure should be as following:
 ```
 
 open Apache24/conf/httpd.conf
+
 in line 4 
+
 edit the path of SRVROOT to the absolute path to the Apache24 folder
+
 e.g.: 'Define SRVROOT "C:\Users\max\webprogrammieren\webprog\Apache24"'
