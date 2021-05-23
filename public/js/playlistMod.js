@@ -74,8 +74,7 @@ export function ctxmPlaylists(ele, song) {
         let dom = document.createElement("a");
         dom.innerHTML = playlist.name;
         dom.addEventListener("click", function () {
-            let songs = find(song);
-            if (songs.length == 1) addSong(i, songs[0]);
+            addSong(i, song);
             container.style.display = "none";
         });
         container.appendChild(dom);

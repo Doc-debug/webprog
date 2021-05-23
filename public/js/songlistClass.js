@@ -3,15 +3,19 @@ import { arrSort } from "./util/object.js";
 import { find } from "./crawlerPHP.js";
 import { initctxm } from "./util/ctxm.js";
 import { ctxmPlaylists } from "./playlistMod.js";
-import { playSongAt } from "./playerMod.js";
+import { playSongAt, playNext } from "./playerMod.js";
 ("use strict");
 
 export class Songlist {
-    constructor(listID, sortable = true) {
+    constructor(listID, sortable = true, local = false) {
         /**
          * @type {Array} Holds all songs from the list
          */
         this.songlist = [];
+        /**
+         * @type {Array} Holds all songs from the list if the searchbar is in use
+         */
+        this.tempSonglist = [];
         /**
          * @type {string} the id of the table. This can be changed on initialization if it differes from the original one "song-table-body"
          */
@@ -24,7 +28,14 @@ export class Songlist {
          * @type {number} the previously used sorting direction
          */
         this.lastSortDir = -1;
-
+        /**
+         * @type {boolean} if items in the list should be treated as absolute or local
+         * (the current songlist eg only shows the current song and all following. here we select songs with a local index)
+         */
+        this.local = local;
+        /**
+         * @type {boolean} if the items in the table should be sortable
+         */
         this.sortable = sortable;
 
         this.table = document.getElementById(this.listID);
@@ -35,11 +46,6 @@ export class Songlist {
         this.table.appendChild(this.tbody);
         this.createTableHead();
     }
-    /**
-     * initializes the songlist by filling the table with all songs and adding module functions to the global scope
-     * @param {string} listID the id string of the list
-     */
-    initSonglist() {}
 
     createTableHead() {
         let row = document.createElement("tr");
@@ -55,9 +61,10 @@ export class Songlist {
             const col = cols[i];
             let data = document.createElement("th");
             data.innerHTML = col.name;
-            data.addEventListener("mousedown", function () {
-                that.sortTag(col.sort);
-            });
+            if (this.sortable)
+                data.addEventListener("mousedown", function () {
+                    that.sortTag(col.sort);
+                });
             row.appendChild(data);
         }
         this.thead.innerHTML = "";
@@ -71,15 +78,11 @@ export class Songlist {
      * @param {number} sortDir the sorting direction. Should be either 1 or -1
      * @param {boolean} overwriteSongList if the songlist should be updated when the function is called
      */
-    fillSongList(
-        songs = songlist,
-        sortingTag = null,
-        sortDir = 1,
-        overwriteSongList = true
-    ) {
+    fill(songs = songlist, sortingTag = null, sortDir = 1, updateTemp = true) {
         let that = this;
         if (sortingTag != null) songs = arrSort(songs, sortingTag, sortDir);
-        if (overwriteSongList) this.songlist = songs;
+        this.songlist = songs;
+        if (updateTemp) this.tempSonglist = this.songlist;
 
         // get table element
         this.tbody.innerHTML = "";
@@ -91,7 +94,7 @@ export class Songlist {
             link.innerHTML = "...";
             link.addEventListener("click", function () {
                 // calls context menu when clicked
-                that.ctxmSonglist(link, song.title);
+                that.ctxmSonglist(link, song);
             });
             options.appendChild(link);
             let length = row.insertCell(0);
@@ -107,9 +110,10 @@ export class Songlist {
             artist.innerHTML = song.artist;
             let title = row.insertCell(0);
             title.innerHTML = song.title;
+            let localInex = this.local;
             title.addEventListener("click", function () {
                 // calls context menu when clicked
-                playSongAt(index);
+                playSongAt(index, true, true, localInex);
             });
         });
     }
@@ -123,7 +127,7 @@ export class Songlist {
         let sortDir = this.lastSort == tag ? this.lastSortDir * -1 : 1;
         this.lastSortDir = sortDir;
         this.lastSort = tag;
-        this.fillSongList(this.songlist, tag, sortDir);
+        this.fill(this.songlist, tag, sortDir);
     }
 
     /**
@@ -133,7 +137,7 @@ export class Songlist {
         let input = document.getElementById("searchbar").value;
         let tag = document.getElementById("searchtag").value;
 
-        fillSongList(find(input, tag, songlist), null, 1, false);
+        this.fill(find(input, tag, this.tempSonglist), null, 1, false);
     }
 
     /**
@@ -153,8 +157,12 @@ export class Songlist {
         container.appendChild(addToPlaylist);
 
         // create second ctxm option play song
-        let play = document.createElement("a");
-        play.innerHTML = "play song";
-        container.appendChild(play);
+        let playNextBtn = document.createElement("a");
+        playNextBtn.innerHTML = "play next";
+        playNextBtn.addEventListener("click", function () {
+            playNext(song);
+            container.style.display = "none";
+        });
+        container.appendChild(playNextBtn);
     }
 }

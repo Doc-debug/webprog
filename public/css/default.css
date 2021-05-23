@@ -17,6 +17,8 @@ Styling             - preset styling for certain elements
 /* ========== RESET ================= */
 
 body {
+    height: 100%;
+    width: 100%;
     margin: 0;
     background-color: #1e2025;
     background-color: var(--bg-primary);
@@ -86,6 +88,9 @@ button:focus {
 }
 .right {
     float: right;
+}
+.rotate {
+    transform: rotate(180deg);
 }
 /* ========== FONTS ================= */
 

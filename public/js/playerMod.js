@@ -1,4 +1,3 @@
-import { songlist } from "./songlist.js";
 import { getObj, setObj } from "./util/localstorage.js";
 import { arrSort, arrShuffle, arrClone } from "./util/object.js";
 import { secondsToMinutes, prettyTimeString } from "./util/time.js";
@@ -8,6 +7,12 @@ import { Songlist } from "./songlistClass.js";
 /** @type {Audio} an audio element that is playing music*/
 let player;
 
+/** @type {Songlist} class that holds all songs in the table */
+let songlist;
+
+/** @type {Songlist} class that holds all current displayed songs */
+let currentSongList;
+
 /** player control button doms */
 let btnLoop, btnShuffle;
 
@@ -15,7 +20,7 @@ let btnLoop, btnShuffle;
 let svgPlay, svgPause;
 
 /** player dom elements */
-let songSlider, volumeSlider, songInfo;
+let songSlider, volumeSlider, songInfo, btnMute;
 
 /**
  * @type {Object} holds all configurations for the player
@@ -31,43 +36,28 @@ export let conf = {
     currentTrack: null,
     time: 0,
     volume: 0.3,
+    volumeUnmute: 0.3,
 };
 
 /**
  * Initialize all default values and set event listener
  */
-export function initPlayer() {
+export function initPlayer(songlistObj) {
+    // init the current songlist table
+    currentSongList = new Songlist("player-playlist-table", false, true);
+    songlist = songlistObj;
     // get player data from local storage
     let cache = getObj("playerConf");
     if (cache != null) conf = cache;
     //init player
     player = new Audio();
     updateSonglist();
+    initDoms();
 
     // set current track if it hasnt been initialized yet
     if (conf.currentTrack == null) conf.currentTrack = conf.playerlist[0];
     player.src = conf.currentTrack["url"];
     player.currentTime = conf.time;
-
-    // go to next song if the player has ended with the current one
-    player.addEventListener("ended", function () {
-        audioSkip();
-    });
-    // skip song if source not supported
-    player.addEventListener("error", function (e) {
-        audioSkip();
-    });
-    player.addEventListener("loadedmetadata", function () {
-        updateSongInfo();
-        setMetadata(conf.currentTrack);
-    });
-
-    // control doms
-    songInfo = document.getElementById("song-info");
-    btnShuffle = document.getElementById("shuffle-control");
-    btnLoop = document.getElementById("loop-control");
-    svgPlay = document.getElementById("play-svg");
-    svgPause = document.getElementById("pause-svg");
 
     //init songSlider and set gradient for the progress bar color
     songSlider = document.getElementById("song-slider");
@@ -99,27 +89,6 @@ export function initPlayer() {
 
     volumeSlider.oninput();
     initNavigator();
-
-    // add functions to global scope so buttons with onclick can access it
-    window.audioShuffle = audioShuffle;
-    window.audioBack = audioBack;
-    window.switchPlayPause = switchPlayPause;
-    window.audioSkip = audioSkip;
-    window.audioLoop = audioLoop;
-    window.audioMuteSwitch = audioMuteSwitch;
-    window.togglePList = togglePList;
-
-    // start playing song set in cache
-    // if (conf.playing) {
-    //     if (confirm("Do you want the browser to continue play your music?")) {
-    //         try {
-    //             audioPlay();
-    //         } catch (error) {
-    //             console.error(error);
-    //             conf.playing = false;
-    //         }
-    //     }
-    // }
 }
 
 /**
@@ -139,6 +108,8 @@ export function switchPlayPause() {
 export function audioPlay() {
     conf.playing = true;
     player.play();
+    // visualizer has to be init here cause chrome needs it to be playing when creating the analyzer ctx
+    initSongVisualizer();
     // set button styling
     svgPause.setAttribute("class", "");
     svgPlay.setAttribute("class", "invisible");
@@ -245,7 +216,14 @@ export function audioVolume(volume) {
  * switches between mute audio and play audio
  */
 export function audioMuteSwitch() {
-    audioVolume(0);
+    if (conf.volume != 0) {
+        conf.volumeUnmute = conf.volume;
+        audioVolume(0);
+        btnMute.classList.add("op-d");
+    } else {
+        audioVolume(conf.volumeUnmute);
+        btnMute.classList.remove("op-d");
+    }
 }
 
 /**
@@ -263,7 +241,7 @@ export function updateSongInfo() {
  * update songs from songlist
  */
 export function updateSonglist() {
-    conf.playerlist = arrClone(songlist);
+    conf.playerlist = arrClone(songlist.songlist);
     //Index songlist
     for (let i = 0; i < conf.playerlist.length; i++) {
         conf.playerlist[i]["index"] = i;
@@ -297,17 +275,24 @@ function updateSongProgress() {
 /**
  * takes an index for the songlist and sets that song to the current song and plays it
  * @param {number} i the index of the song in the songlist
- * @param {boolean} if true will fetch all songs from the current songlist
- * @param {boolean} if the song should be played or not
+ * @param {boolean} update if true will fetch all songs from the current songlist
+ * @param {boolean} play if the song should be played or not
+ * @param {boolean} localIndex if the given index should be added to the current playing song or if its absolute from the whole list
  */
-export function playSongAt(i, update = true, play = true) {
+export function playSongAt(i, update = true, play = true, localIndex = false) {
     if (update) updateSonglist();
-    conf.playingPos = i;
+    conf.playingPos = localIndex ? conf.playingPos + i : i;
     conf.currentTrack = conf.playerlist[conf.playingPos];
+
     player.src = conf.currentTrack["url"];
 
     if (play) audioPlay();
     updateConf();
+    updatePlayerList();
+}
+
+export function playNext(song) {
+    conf.playerlist.splice(conf.playingPos + 1, 0, song);
     updatePlayerList();
 }
 
@@ -337,6 +322,61 @@ function initNavigator() {
 }
 
 /**
+ * gets all the dom elements and creates eventlistener
+ */
+function initDoms() {
+    // control doms
+    songInfo = document.getElementById("song-info");
+    svgPlay = document.getElementById("play-svg");
+    svgPause = document.getElementById("pause-svg");
+    btnShuffle = document.getElementById("shuffle-control");
+    btnLoop = document.getElementById("loop-control");
+    btnMute = document.getElementById("mute-control");
+    let btnPlay = document.getElementById("play-control");
+    let btnBack = document.getElementById("back-control");
+    let btnSkip = document.getElementById("skip-control");
+    let expand = document.getElementById("expand-player-list");
+
+    btnShuffle.addEventListener("click", () => {
+        audioShuffle();
+    });
+    btnLoop.addEventListener("click", () => {
+        audioLoop();
+    });
+    btnPlay.addEventListener("click", () => {
+        switchPlayPause();
+    });
+    btnBack.addEventListener("click", () => {
+        audioBack();
+    });
+    btnSkip.addEventListener("click", () => {
+        audioSkip();
+    });
+    btnMute.addEventListener("click", () => {
+        audioMuteSwitch();
+    });
+    expand.addEventListener("click", () => {
+        togglePList();
+    });
+    songInfo.addEventListener("click", () => {
+        togglePList();
+    });
+
+    // go to next song if the player has ended with the current one
+    player.addEventListener("ended", function () {
+        audioSkip();
+    });
+    // skip song if source not supported
+    player.addEventListener("error", function (e) {
+        audioSkip();
+    });
+    player.addEventListener("loadedmetadata", function () {
+        updateSongInfo();
+        setMetadata(conf.currentTrack);
+    });
+}
+
+/**
  * updates all metadata for the browser
  * @param {*} song the song object that contains all metadata
  */
@@ -351,18 +391,78 @@ function setMetadata(song) {
     }
 }
 
-let currentSongList = new Songlist("player-playlist-table");
-
 let active = false;
 /**
  * toggle current songlist
  */
 function togglePList() {
-    let height = active ? "0" : "auto";
-    document.getElementById("player-playlist").style.height = height;
+    let playerDOM = document.getElementById("player");
+    let arrow = document.getElementById("expand-player-list");
+    let container = document.getElementById("player-playlist");
+    if (active) {
+        playerDOM.classList.remove("songlist-active");
+        arrow.classList.remove("rotate");
+        setTimeout(() => {
+            container.style.display = "none";
+        }, 500);
+    } else {
+        playerDOM.classList.add("songlist-active");
+        arrow.classList.add("rotate");
+        container.style.display = "block";
+        updatePlayerList();
+    }
+
     active = !active;
 }
 
+/**
+ * updates the songs in the current "played songs" list
+ */
 function updatePlayerList() {
-    currentSongList.fillSongList(conf.playerlist.slice(conf.playingPos));
+    currentSongList.fill(conf.playerlist.slice(conf.playingPos));
+}
+
+let ctx;
+function initSongVisualizer() {
+    if (ctx != undefined) return;
+    ctx = new AudioContext();
+    let audioSrc = ctx.createMediaElementSource(player);
+    let analyser = ctx.createAnalyser();
+    audioSrc.connect(analyser);
+    analyser.connect(ctx.destination);
+
+    // define how many bar bars there are
+    let bufferSize = 256;
+    analyser.fftSize = bufferSize;
+    let frequencyData = new Uint8Array(analyser.frequencyBinCount);
+
+    // get canvas element
+    let canvas = document.getElementById("visualizer");
+    let canvasCtx = canvas.getContext("2d");
+    let width = canvas.width;
+    let height = canvas.height;
+
+    var barWidth = (width / bufferSize) * 2.5;
+    var barHeight;
+    var x = 0;
+    // loop
+    function renderFrame() {
+        requestAnimationFrame(renderFrame);
+        x = 0;
+        // update data in frequencyData
+        analyser.getByteFrequencyData(frequencyData);
+        // render frame based on values in frequencyData
+        // console.log(frequencyData);
+
+        canvasCtx.clearRect(0, 0, width, height);
+
+        canvasCtx.fillStyle = "#e74c3c";
+        for (var i = 0; i < bufferSize; i++) {
+            // set the position and height for each bar
+            barHeight = frequencyData[i];
+            canvasCtx.fillRect(x, height - barHeight, barWidth, barHeight);
+            x += barWidth + 1;
+        }
+    }
+    renderFrame();
 }

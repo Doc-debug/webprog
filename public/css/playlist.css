@@ -52,7 +52,7 @@ Styling             - individual content styling
 #playlist-list {
     width: 200px;
     background-color: var(--bg-secondary);
-    overflow: scroll;
+    overflow-y: auto;
 }
 #playlist-list a,
 #playlist-list p {
@@ -71,7 +71,7 @@ Styling             - individual content styling
 /* ========== PLAYLIST SONG LIST ==== */
 #table-container {
     width: calc(100% - 60px);
-    overflow: scroll;
+    overflow: auto;
 }
 /* ========== LAYOUT MOBILE ========= */
 
@@ -97,6 +97,5 @@ Styling             - individual content styling
 
     #table-container {
         width: 100%;
-        overflow: scroll;
     }
 }

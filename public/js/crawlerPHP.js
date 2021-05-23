@@ -31,6 +31,7 @@ export function find(title, tag = null, customList = tree) {
         return list.filter(
             (ele) =>
                 tag in ele &&
+                ele[tag] != null &&
                 ele[tag].toLowerCase().includes(title.toLowerCase())
         );
     }
