@@ -4,7 +4,6 @@
 */
 
 /* Table of Contents
-Constants          - variable declaration for colors 
 Styling            - individual content styling 
     Player         - music player controls
         songinfo
@@ -13,21 +12,6 @@ Styling            - individual content styling
     Current slist  - a list containing the current list of songs that is played
 */
 
-/* ========== CONSTANTS ============= */
-
-:root {
-    --bg-primary: #1e2025;
-    --bg-secondary: #212328;
-    --bg-tertionary: #3e3f42;
-    --text: #ffffffde;
-    --contrast: #e74c3c;
-    --border-r: 5px;
-
-    --op-h: 87%;
-    --op-m: 60%;
-    --op-d: 38%;
-    --border-r: 5px;
-}
 /* ========== PLAYER ================ */
 #player {
     position: fixed;

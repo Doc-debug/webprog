@@ -4,25 +4,8 @@
 */
 
 /* Table of Contents
-Constants           - variable declaration for colors 
 Song list           - styling for the song table
 */
-
-/* ========== CONSTANTS ============= */
-
-:root {
-    --bg-primary: #1e2025;
-    --bg-secondary: #212328;
-    --bg-tertionary: #3e3f42;
-    --text: #ffffffde;
-    --contrast: #e74c3c;
-    --border-r: 5px;
-
-    --op-h: 87%;
-    --op-m: 60%;
-    --op-d: 38%;
-    --border-r: 5px;
-}
 
 /* ========== SONG LIST ============= */
 #table-container {
