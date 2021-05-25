@@ -140,6 +140,11 @@ export class Songlist {
         this.fill(find(input, tag, this.tempSonglist), null, 1, false);
     }
 
+    setListTitle(name) {
+        let title = document.getElementById("playlist-title");
+        title.innerHTML = name;
+    }
+
     /**
      * opens the context menu to offer options (add to playlist, play song)
      * @param {dom} ele the clicked object to spawn context menu at the same position

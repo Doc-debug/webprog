@@ -47,6 +47,10 @@ Styling             - individual content styling
     display: flex;
     height: calc(100% - 60px);
 }
+
+#playlist-title {
+    text-align: center;
+}
 /* ========== PLAYLIST LIST ========= */
 
 #playlist-list {

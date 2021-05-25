@@ -47,6 +47,7 @@ Styling             - individual content styling
 #settings-body {
     max-width: 500px;
     margin: 0 auto;
+    padding: 0 30px;
 }
 
 #settings-container h2:after {

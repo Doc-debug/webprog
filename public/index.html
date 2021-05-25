@@ -57,6 +57,23 @@
                     <div id="playlist-list-container"></div>
                 </div>
                 <div id="table-container">
+                    <div id="playlist-title-container">
+                        <h2 id="playlist-title">test playlist</h2>
+                        <div id="playlist-options">
+                            <a id="playlist-option-rename">
+                                <!-- prettier-ignore -->
+                                <svg viewBox="0 0 500 500">
+                                    <path class="fill" d="M292.9,187.9l19.2,19.2L123.3,395.8h-19.2v-19.2L292.9,187.9 M367.9,62.5c-5.2,0-10.6,2.1-14.6,6l-38.1,38.1l78.1,78.1l38.1-38.1c8.1-8.1,8.1-21.3,0-29.4l-48.8-48.8C378.5,64.4,373.3,62.5,367.9,62.5z M292.9,129L62.5,359.4v78.1h78.1L371,207.1C371,207.1,292.9,129,292.9,129z"/>
+                                </svg>
+                            </a>
+                            <a id="playlist-option-delete">
+                                <!-- prettier-ignore -->
+                                <svg viewBox="0 0 500 500">
+                                    <path class="fill" d="M333.3,187.5v208.3H166.7V187.5H333.3 M302.1,62.5H197.9l-20.8,20.8h-72.9V125h291.7V83.3h-72.9L302.1,62.5z M375,145.8H125v250c0,22.9,18.8,41.7,41.7,41.7h166.7c22.9,0,41.7-18.8,41.7-41.7V145.8z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
                     <table id="song-table" class="song-table"></table>
                 </div>
             </div>
@@ -212,7 +229,9 @@
                         <option value="server(PHP)">server(PHP)</option>
                     </select>
                 </div>
-                <button class="critical">Erase all local data</button>
+                <button id="setting-delete-localstorage" class="critical">
+                    Erase all local data
+                </button>
             </div>
         </div>
     </body>

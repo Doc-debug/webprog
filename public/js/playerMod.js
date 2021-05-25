@@ -423,7 +423,12 @@ function updatePlayerList() {
 }
 
 let ctx;
+/**
+ * creates an audiocontext and analyzer to visualize the sound data in a canvas
+ * @returns if song visualizer has already been created
+ */
 function initSongVisualizer() {
+    // prevent visualizer from being created multiple times
     if (ctx != undefined) return;
     ctx = new AudioContext();
     let audioSrc = ctx.createMediaElementSource(player);
@@ -439,24 +444,34 @@ function initSongVisualizer() {
     // get canvas element
     let canvas = document.getElementById("visualizer");
     let canvasCtx = canvas.getContext("2d");
+
+    // set fix values for canvas size since it might otherwise be initialized wrong
+    canvas.width = window.innerWidth >= 1000 ? 1000 : window.innerWidth;
+    canvas.height = 200;
+
     let width = canvas.width;
     let height = canvas.height;
 
+    // calculate barchart bar dimensions
     var barWidth = (width / bufferSize) * 2.5;
     var barHeight;
     var x = 0;
-    // loop
+    /**
+     * takes the frequency data from the analyser object and visualizes it as a bar chart in the canvas
+     */
     function renderFrame() {
         requestAnimationFrame(renderFrame);
         x = 0;
         // update data in frequencyData
         analyser.getByteFrequencyData(frequencyData);
-        // render frame based on values in frequencyData
-        // console.log(frequencyData);
 
+        // render frame based on values in frequencyData
         canvasCtx.clearRect(0, 0, width, height);
 
-        canvasCtx.fillStyle = "#e74c3c";
+        // get contrast color variable from css
+        canvasCtx.fillStyle = getComputedStyle(
+            document.documentElement
+        ).getPropertyValue("--contrast");
         for (var i = 0; i < bufferSize; i++) {
             // set the position and height for each bar
             barHeight = frequencyData[i];

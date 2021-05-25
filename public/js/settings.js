@@ -11,11 +11,17 @@ let settingsEnabled = false;
 function initEventListeners() {
     let openSettings = document.getElementById("settings-btn");
     let closeSettings = document.getElementById("settings-close-btn");
+    let deleteLocalStorageBtn = document.getElementById(
+        "setting-delete-localstorage"
+    );
     openSettings.addEventListener("click", () => {
         toggleSettings(true);
     });
     closeSettings.addEventListener("click", () => {
         toggleSettings(false);
+    });
+    deleteLocalStorageBtn.addEventListener("click", () => {
+        resetLocalStorage();
     });
 }
 
@@ -35,22 +41,22 @@ let themes = [
         "--bg-primary": "#1e2025",
         "--bg-secondary": "#212328",
         "--bg-tertionary": "#3e3f42",
-        "--text": "#ffffffde",
+        "--text": "#ffffff",
         "--contrast": "#e74c3c",
     },
     {
         "--bg-primary": "#ffffff",
         "--bg-secondary": "#f2f3f5",
         "--bg-tertionary": "#e3e5e8",
-        "--text": "#000000de",
+        "--text": "#000000",
         "--contrast": "#e74c3c",
     },
     {
-        "--bg-primary": "#880033",
-        "--bg-secondary": "#0000ff",
-        "--bg-tertionary": "#ff0000",
-        "--text": "#000000",
-        "--contrast": "#00ff00",
+        "--bg-primary": "#1e2025",
+        "--bg-secondary": "#212328",
+        "--bg-tertionary": "#3e3f42",
+        "--text": "#ffffff",
+        "--contrast": "#e74c3c",
     },
 ];
 
@@ -120,4 +126,15 @@ function updateCustomTheme(key, hex) {
     themes[2][key] = hex;
     setObj("themeCustom", themes[2]);
     if (currentTheme == 2) setTheme(2);
+}
+
+// Performance options
+
+function resetLocalStorage() {
+    let confirmation = confirm(
+        "are you sure you want to reset the local storage? This includes all your playlists and personalization settings!"
+    );
+    if (confirmation) {
+        window.localStorage.clear();
+    }
 }
