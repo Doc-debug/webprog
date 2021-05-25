@@ -110,7 +110,7 @@ export function ctxmPlaylists(ele, song) {
         if (name == null) return;
         // if no name was given set name to "new Playlist"
         else if (name == "") name = "new Playlist";
-        createPlaylist(name, find(song));
+        createPlaylist(name, [song]);
     });
     container.appendChild(dom);
 }
