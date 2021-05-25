@@ -91,6 +91,7 @@ export function arrShuffle(array) {
  * @param {string} the key name
  */
 export function splitArr(arr, tag) {
+    if (arr.length <= 0) return [];
     // sort arr
     let data = arrSort(arr, tag, 1);
     let lastTagName = data[0][tag];

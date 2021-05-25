@@ -8,7 +8,14 @@ let tree = {};
  * @returns the filetree structure
  */
 export async function crawler() {
-    tree = await fetch(ApiUrl).then((data) => data.json());
+    try {
+        tree = await fetch(ApiUrl).then((data) => data.json());
+    } catch (error) {
+        alert(
+            "The crawler did not respond properly. \nThis usually happens when PHP was not correctly configured. Please be sure that you are running this project on a PHP8 Server"
+        );
+        tree = {};
+    }
     return tree;
 }
 

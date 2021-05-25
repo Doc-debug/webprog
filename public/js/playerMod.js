@@ -41,6 +41,7 @@ export let conf = {
 
 /**
  * Initialize all default values and set event listener
+ * @param {Songlist} songlistObj the table in the background where songs might be copied from
  */
 export function initPlayer(songlistObj) {
     // init the current songlist table
@@ -55,9 +56,15 @@ export function initPlayer(songlistObj) {
     initDoms();
 
     // set current track if it hasnt been initialized yet
-    if (conf.currentTrack == null) conf.currentTrack = conf.playerlist[0];
-    player.src = conf.currentTrack["url"];
-    player.currentTime = conf.time;
+    if (conf.currentTrack == null && conf.playerlist.length > 0)
+        conf.currentTrack = conf.playerlist[0];
+
+    if (conf.currentTrack) {
+        player.src = conf.currentTrack["url"];
+        player.currentTime = conf.time;
+    }
+    // reset playing since google blocks attempts to autoplay music
+    conf.playing = false;
 
     //init songSlider and set gradient for the progress bar color
     songSlider = document.getElementById("song-slider");
@@ -291,6 +298,10 @@ export function playSongAt(i, update = true, play = true, localIndex = false) {
     updatePlayerList();
 }
 
+/**
+ * inserts a song in the next position of the current played songs list
+ * @param {songObj} song the song object that should be inserted
+ */
 export function playNext(song) {
     conf.playerlist.splice(conf.playingPos + 1, 0, song);
     updatePlayerList();

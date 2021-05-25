@@ -52,11 +52,11 @@ let themes = [
         "--contrast": "#e74c3c",
     },
     {
-        "--bg-primary": "#1e2025",
-        "--bg-secondary": "#212328",
-        "--bg-tertionary": "#3e3f42",
+        "--bg-primary": "#000000",
+        "--bg-secondary": "#0d0d0d",
+        "--bg-tertionary": "#1a1a1a",
         "--text": "#ffffff",
-        "--contrast": "#e74c3c",
+        "--contrast": "#e32b2b",
     },
 ];
 
