@@ -1,9 +1,11 @@
 import { getObj, setObj } from "./util/localstorage.js";
+import { initImpressum, toggleImpressum } from "./impressum.js";
 ("use strict");
 
 window.addEventListener("load", function () {
     initEventListeners();
     initTheme();
+    initImpressum();
 });
 
 let settingsEnabled = false;
@@ -17,6 +19,7 @@ function initEventListeners() {
     let deleteLocalStorageBtn = document.getElementById(
         "setting-delete-localstorage"
     );
+    let impressumBtn = document.getElementById("impressum");
     openSettings.addEventListener("click", () => {
         toggleSettings(true);
     });
@@ -25,6 +28,9 @@ function initEventListeners() {
     });
     deleteLocalStorageBtn.addEventListener("click", () => {
         resetLocalStorage();
+    });
+    impressumBtn.addEventListener("click", () => {
+        toggleImpressum();
     });
 }
 
