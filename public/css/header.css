@@ -26,6 +26,10 @@ Styling             - individual content styling
 #settings-btn svg {
     height: 100%;
 }
+#settings-btn:hover {
+    transform: rotate(180deg);
+    transition: transform 0.5s ease;
+}
 
 #searchwrapper {
     display: inline-block;

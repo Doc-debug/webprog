@@ -8,6 +8,9 @@ window.addEventListener("load", function () {
 
 let settingsEnabled = false;
 
+/**
+ * initializes all needed eventlistener
+ */
 function initEventListeners() {
     let openSettings = document.getElementById("settings-btn");
     let closeSettings = document.getElementById("settings-close-btn");
@@ -25,6 +28,10 @@ function initEventListeners() {
     });
 }
 
+/**
+ * closes or opens the settings panel
+ * @param {boolean} open if the settings should be opened or closed
+ */
 function toggleSettings(open = null) {
     if (open == null) settingsEnabled = !settingsEnabled;
     else settingsEnabled = open;
@@ -35,7 +42,9 @@ function toggleSettings(open = null) {
     settingsDOM.style.top = pos;
 }
 
-// theme functions
+/**
+ * standard theme colors [dark, light, custom]
+ */
 let themes = [
     {
         "--bg-primary": "#1e2025",
@@ -130,6 +139,9 @@ function updateCustomTheme(key, hex) {
 
 // Performance options
 
+/**
+ * deletes all items in the local storage (with confirm prompt)
+ */
 function resetLocalStorage() {
     let confirmation = confirm(
         "are you sure you want to reset the local storage? This includes all your playlists and personalization settings!"

@@ -1,188 +1,116 @@
-import { crawler, find } from "./crawlerPHP.js";
-import { createLoader } from "./util/loader.js";
-import { Songlist } from "./songlistClass.js";
-import {
-    playlists,
-    folderPlaylists,
-    initPlaylist,
-    createPlaylist,
-    addSong,
-    deletePlaylist,
-    renamePlaylist,
-} from "./playlistMod.js";
-import { initPlayer } from "./playerMod.js";
+import { getObj, setObj } from "./util/localstorage.js";
+import { initctxm } from "./util/ctxm.js";
+import { splitArr } from "./util/object.js";
+import { find } from "./crawlerPHP.js";
 ("use strict");
 
-let songlist;
-
 /**
- * the index of the current playlist
+ * holds all playlists in format {name: "name", songs: []}
  */
-let currentPlaylist = null;
-
-window.addEventListener("load", async function () {
-    // add functions to global scope so buttons with onclick can access it
-    window.loadFolder = loadFolder;
-    window.addSong = addSong;
-
-    // init crawler and loader while crawler is working
-    let loader = createLoader("indexing files please wait", "table-container");
-    await crawler();
-    loader.remove();
-
-    // init necessary modules
-    initPlaylist();
-    updatePlayslistList();
-    songlist = new Songlist("song-table");
-
-    // load eventlisteners
-    initEventListener();
-
-    loadPlaylist(-1);
-    // load first playlist as default
-
-    // load player
-    initPlayer(songlist);
-});
+export let playlists = [];
 /**
- * updates the playlist list on the website
+ * holds all songs in their respective folder in format {name: "name", songs: []}
  */
-function updatePlayslistList(playlistArr = playlists, funct = loadPlaylist) {
-    let list = document.getElementById("playlist-list-container");
-    // clear dom
-    list.innerHTML = "";
-    // for every playlist in playlists create a element and add to container
-    for (let i = 0; i < playlistArr.length; i++) {
-        const element = playlistArr[i];
-        let item = document.createElement("a");
-        item.addEventListener("click", () => {
-            funct(i);
+export let folderPlaylists = [];
+/**
+ * initializes the playlist by copying it from the local storage or creating a new one if it doesnt exist yet
+ * also creates the folder playlists
+ */
+export function initPlaylist() {
+    playlists = getPlaylistStorage();
+    if (playlists == null) {
+        playlists = [];
+        updatePlaylistStorage();
+    }
+    folderPlaylists = splitArr(find(""), "folder");
+}
+/**
+ * Adds a playlist to the playlist list and updates the localstorage
+ * @param {string} name the name of the playlist
+ * @param {array} songlist an optional array of songs that should be inserted. Will be empty otherwise
+ */
+export function createPlaylist(name, songlist = []) {
+    let playlist = {
+        name: name,
+        songs: songlist,
+    };
+    playlists.push(playlist);
+    updatePlaylistStorage();
+}
+/**
+ * deletes a playlist at a given index
+ * @param {number} index the index of the playlist item in "playlists" array
+ */
+export function deletePlaylist(index) {
+    if (index > -1) {
+        playlists.splice(index, 1);
+        updatePlaylistStorage();
+    }
+}
+/**
+ * renames a playlist at a given position with a given name
+ * @param {number} index the index of the playlist item in the playlists array
+ * @param {string} newName the new name for the playlist
+ */
+export function renamePlaylist(index, newName) {
+    if (index > -1) {
+        playlists[index].name = newName;
+        updatePlaylistStorage();
+    }
+}
+/**
+ * updates the playlist in the local storage
+ */
+export function updatePlaylistStorage() {
+    setObj("playlists", playlists);
+}
+/**
+ * uses the local storage and getobj to get the playlist array
+ * @returns the playlists array
+ */
+export function getPlaylistStorage() {
+    return getObj("playlists");
+}
+/**
+ * adds a song to the playlists array
+ * @param {int} playlistIndex the playlist index in the playlists array
+ * @param {object} song a song object from the crawler
+ */
+export function addSong(playlistIndex, song) {
+    playlists[playlistIndex].songs.push(song);
+    updatePlaylistStorage();
+}
+/**
+ * Opens a context menu that can be used to add a song to a playlist
+ * @param {dom} ele the clicked object to spawn context menu at the same position
+ * @param {string} song the song title that should be added to the playlist
+ */
+export function ctxmPlaylists(ele, song) {
+    // if playlists is empty try to get it from local storage
+    if (playlists.length == 0) initPlaylist();
+    // if still empty create empty ctxm body
+    let container = initctxm(ele);
+    for (let i = 0; i < playlists.length; i++) {
+        const playlist = playlists[i];
+        let dom = document.createElement("a");
+        dom.innerHTML = playlist.name;
+        dom.addEventListener("click", function () {
+            addSong(i, song);
+            container.style.display = "none";
         });
-        item.innerHTML = element.name;
-        list.appendChild(item);
+        container.appendChild(dom);
     }
-}
-
-/**
- * updates the playlist list with folder names on the website
- */
-function folderPlaylistList() {
-    updatePlayslistList(folderPlaylists, loadFolder);
-}
-
-/**
- * creates a prompt to ask for the creation of a new playlist
- */
-function promptCreatePlaylist() {
-    let name = prompt("What name should your new playlist have?");
-    // return if user pressed cancel
-    if (name == null) return;
-    // if no name was given set name to "new Playlist"
-    else if (name == "") name = "new Playlist";
-    createPlaylist(name);
-    updatePlayslistList();
-}
-
-/**
- * loads a given playlist into the table
- * @param {number} index the index of the playlist in playlists array
- * @param {Array} an array of playlist arrays
- */
-function loadPlaylist(index) {
-    if (index == -1) {
-        songlist.fill(find(""));
-        songlist.setListTitle("All songs");
-        togglePlaylistOptions(false);
-        return;
-    }
-    let data = playlists[index];
-    songlist.fill(data.songs);
-    songlist.setListTitle(data.name);
-    currentPlaylist = index;
-    togglePlaylistOptions(true);
-}
-/**
- * loads a given folder into the table
- * @param {number} index the index of the playlist in playlists array
- * @param {Array} an array of playlist arrays
- */
-function loadFolder(index) {
-    if (index == -1) {
-        songlist.fill(find(""));
-        return;
-    }
-    let data = folderPlaylists[index];
-    songlist.fill(data.songs);
-    songlist.setListTitle(data.name);
-    currentPlaylist = null;
-    togglePlaylistOptions(false);
-}
-
-function togglePlaylistOptions(on) {
-    let options = document.getElementById("playlist-options");
-    if (on) {
-        options.style.display = "";
-    } else {
-        options.style.display = "none";
-    }
-}
-
-/**
- * initializes all event listener
- */
-function initEventListener() {
-    let loadAllSongs = document.getElementById("load-all-songs");
-    let selectPlaylistsBtn = document.getElementById("select-playlists-btn");
-    let selectFoldersBtn = document.getElementById("select-folders-btn");
-    let addPlaylist = document.getElementById("addplaylist");
-    let searchbar = document.getElementById("searchbar");
-    let searchtag = document.getElementById("searchtag");
-    let renamePLBtn = document.getElementById("playlist-option-rename");
-    let deletePLBtn = document.getElementById("playlist-option-delete");
-
-    loadAllSongs.addEventListener("click", () => {
-        loadPlaylist(-1);
+    // button to add a new playlist
+    let dom = document.createElement("a");
+    dom.classList.add("op-m");
+    dom.innerHTML = "new playlist +";
+    dom.addEventListener("click", function () {
+        let name = prompt("What name should your new playlist have?");
+        // return if user pressed cancel
+        if (name == null) return;
+        // if no name was given set name to "new Playlist"
+        else if (name == "") name = "new Playlist";
+        createPlaylist(name, [song]);
     });
-    selectPlaylistsBtn.addEventListener("click", () => {
-        updatePlayslistList();
-        selectPlaylistsBtn.classList.add("highlight");
-        selectFoldersBtn.classList.remove("highlight");
-    });
-    selectFoldersBtn.addEventListener("click", () => {
-        folderPlaylistList();
-        selectFoldersBtn.classList.add("highlight");
-        selectPlaylistsBtn.classList.remove("highlight");
-    });
-    addPlaylist.addEventListener("click", () => {
-        promptCreatePlaylist();
-    });
-
-    searchbar.addEventListener("keyup", function () {
-        songlist.searchbarUpdate();
-    });
-    searchtag.addEventListener("change", function () {
-        songlist.searchbarUpdate();
-    });
-    renamePLBtn.addEventListener("click", () => {
-        if (currentPlaylist != null) {
-            let newName = prompt("How do you want to name this playlist?");
-            if (newName != null && newName != "") {
-                renamePlaylist(currentPlaylist, newName);
-                updatePlayslistList();
-                songlist.setListTitle(newName);
-            }
-        }
-    });
-    deletePLBtn.addEventListener("click", () => {
-        if (currentPlaylist != null) {
-            let confirmation = confirm(
-                "Are you sure you want to permanently delete this playlist?"
-            );
-            if (confirmation) {
-                deletePlaylist(currentPlaylist);
-                updatePlayslistList();
-                loadPlaylist(-1);
-            }
-        }
-    });
+    container.appendChild(dom);
 }

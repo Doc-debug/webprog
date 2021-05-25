@@ -27,6 +27,9 @@ Styling             - individual content styling
 #settings-close-btn svg {
     height: 30px;
 }
+#settings-close-btn:hover path {
+    stroke: var(--contrast);
+}
 #settings-body {
     max-width: 500px;
     margin: 0 auto;
