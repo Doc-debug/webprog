@@ -4,62 +4,69 @@
 */
 
 /* Table of Contents
-Constants           - variable declaration for colors 
 Song list           - styling for the song table
 */
-
-/* ========== CONSTANTS ============= */
-
-:root {
-    --bg-primary: #1e2025;
-    --bg-secondary: #212328;
-    --bg-tertionary: #3e3f42;
-    --text: #ffffffde;
-    --contrast: #e74c3c;
-    --border-r: 5px;
-
-    --op-h: 87%;
-    --op-m: 60%;
-    --op-d: 38%;
-    --border-r: 5px;
-}
 
 /* ========== SONG LIST ============= */
 #table-container {
     height: 100%;
     overflow: scroll;
 }
-#song-table {
+.song-table {
     margin: 0 auto;
     width: 90%;
     max-width: 1000px;
     text-align: left;
     border-collapse: collapse;
 }
-#song-table th {
+.song-table th {
     opacity: var(--op-m);
     padding: 15px;
     cursor: pointer;
 }
-#song-table tbody tr:hover {
+.song-table tbody tr:hover {
     background-color: var(--bg-secondary);
     color: var(--contrast);
     cursor: pointer;
 }
-#song-table td {
+.song-table td {
     padding: 15px;
     border-top: solid var(--bg-tertionary) 1px;
 }
 @media only screen and (max-width: 1000px) {
-    #song-table td:nth-child(4),
-    #song-table th:nth-child(4) {
+    .song-table td:nth-child(4),
+    .song-table th:nth-child(4) {
         display: none;
     }
 }
 
 @media only screen and (max-width: 700px) {
-    #song-table td:nth-child(3),
-    #song-table th:nth-child(3) {
+    .song-table td:nth-child(3),
+    .song-table th:nth-child(3) {
         display: none;
     }
+}
+
+/* ========== PLAYLIST TITLE ======== */
+
+#playlist-title-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#playlist-title {
+    margin: 15px;
+}
+
+#playlist-options {
+    display: flex;
+}
+#playlist-options a {
+    margin: 15px;
+    width: 25px;
+}
+#playlist-option-delete path {
+    fill: var(--contrast);
 }

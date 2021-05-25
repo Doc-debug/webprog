@@ -38,6 +38,27 @@ export function createPlaylist(name, songlist = []) {
     updatePlaylistStorage();
 }
 /**
+ * deletes a playlist at a given index
+ * @param {number} index the index of the playlist item in "playlists" array
+ */
+export function deletePlaylist(index) {
+    if (index > -1) {
+        playlists.splice(index, 1);
+        updatePlaylistStorage();
+    }
+}
+/**
+ * renames a playlist at a given position with a given name
+ * @param {number} index the index of the playlist item in the playlists array
+ * @param {string} newName the new name for the playlist
+ */
+export function renamePlaylist(index, newName) {
+    if (index > -1) {
+        playlists[index].name = newName;
+        updatePlaylistStorage();
+    }
+}
+/**
  * updates the playlist in the local storage
  */
 export function updatePlaylistStorage() {
@@ -74,8 +95,7 @@ export function ctxmPlaylists(ele, song) {
         let dom = document.createElement("a");
         dom.innerHTML = playlist.name;
         dom.addEventListener("click", function () {
-            let songs = find(song);
-            if (songs.length == 1) addSong(i, songs[0]);
+            addSong(i, song);
             container.style.display = "none";
         });
         container.appendChild(dom);

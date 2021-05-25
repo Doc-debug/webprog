@@ -11,29 +11,25 @@
         <link rel="stylesheet" type="text/css" href="css/playlist.css" />
         <link rel="stylesheet" type="text/css" href="css/musicplayer.css" />
         <link rel="stylesheet" type="text/css" href="css/songtable.css" />
-        <script type="module" src="js/theme.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/settings.css" />
+        <script type="module" src="js/settings.js"></script>
         <script type="module" src="js/playlist.js"></script>
     </head>
-    <body>
+    <body class="no-select">
         <div id="content">
             <!-- header of the site on the top -->
             <div id="header">
                 <nav id="menu">
-                    <a onclick="setTheme()">
-                        <img
-                            src="img/ctrl/themeswitch.svg"
-                            alt="switch theme"
-                        />
+                    <a id="settings-btn">
+                        <!-- prettier-ignore -->
+                        <svg viewBox="0 0 500 500">
+                            <path class="stroke" d="M250,178.5c-39.5,0-71.5,32-71.5,71.5s32,71.5,71.5,71.5s71.5-32,71.5-71.5S289.5,178.5,250,178.5z M410.8,250c0-12.1-1.4-23.9-4-35.2l46.7-41.1l-35.7-61.9l-59,20c-17.3-15.9-37.9-28.2-60.9-35.4l-12.2-60.9h-71.5l-12.2,60.9c-23,7.2-43.6,19.5-60.9,35.4l-59-20l-35.7,61.9l46.7,41.1c-2.5,11.3-4,23.1-4,35.2c0,12.1,1.4,23.9,4,35.2l-46.7,41.1l35.7,61.9l59-20c17.3,15.9,37.9,28.2,60.9,35.4l12.2,60.9h71.5l12.2-60.9c23-7.2,43.6-19.5,60.9-35.4l59,20l35.7-61.9l-46.7-41.1C409.4,273.9,410.8,262.1,410.8,250z"/>
+                        </svg>
                     </a>
                 </nav>
 
                 <div id="searchwrapper">
-                    <input
-                        type="text"
-                        id="searchbar"
-                        onkeyup="searchbarUpdate()"
-                        placeholder="Search.."
-                    />
+                    <input type="text" id="searchbar" placeholder="Search.." />
 
                     <select name="searchtag" id="searchtag">
                         <option value="all">all</option>
@@ -47,43 +43,49 @@
             <!-- content of the site, holding the playlist list and song list  -->
             <div id="content-container">
                 <div id="playlist-list">
-                    <a onclick="loadPlaylist(-1)">all songs</a>
+                    <a id="load-all-songs">all songs</a>
                     <a
-                        ><span onclick="updatePlayslistList()">playlists</span>
-                        <span onclick="folderPlaylistList()" class="right"
+                        ><span id="select-playlists-btn" class="highlight"
+                            >playlists</span
+                        >
+                        <span id="select-folders-btn" class="right"
                             >folders</span
                         ></a
                     >
-                    <a
-                        id="addplaylist"
-                        class="op-m"
-                        onclick="promptCreatePlaylist()"
-                        >Add Playlist +
-                    </a>
+                    <a id="addplaylist" class="op-m">Add Playlist + </a>
                     <div id="playlist-list-container"></div>
                 </div>
                 <div id="table-container">
-                    <table id="song-table">
-                        <thead>
-                            <tr>
-                                <th onclick="sortTag('title')">Title</th>
-                                <th onclick="sortTag('artist')">Artist</th>
-                                <th onclick="sortTag('album')">Album</th>
-                                <th onclick="sortTag('folder')">Folder</th>
-                                <th onclick="sortTag('length')">Length</th>
-                            </tr>
-                        </thead>
-                        <tbody id="song-table-body"></tbody>
-                    </table>
+                    <div id="playlist-title-container">
+                        <h2 id="playlist-title">test playlist</h2>
+                        <div id="playlist-options">
+                            <a id="playlist-option-rename">
+                                <!-- prettier-ignore -->
+                                <svg viewBox="0 0 500 500">
+                                    <path class="fill" d="M292.9,187.9l19.2,19.2L123.3,395.8h-19.2v-19.2L292.9,187.9 M367.9,62.5c-5.2,0-10.6,2.1-14.6,6l-38.1,38.1l78.1,78.1l38.1-38.1c8.1-8.1,8.1-21.3,0-29.4l-48.8-48.8C378.5,64.4,373.3,62.5,367.9,62.5z M292.9,129L62.5,359.4v78.1h78.1L371,207.1C371,207.1,292.9,129,292.9,129z"/>
+                                </svg>
+                            </a>
+                            <a id="playlist-option-delete">
+                                <!-- prettier-ignore -->
+                                <svg viewBox="0 0 500 500">
+                                    <path class="fill" d="M333.3,187.5v208.3H166.7V187.5H333.3 M302.1,62.5H197.9l-20.8,20.8h-72.9V125h291.7V83.3h-72.9L302.1,62.5z M375,145.8H125v250c0,22.9,18.8,41.7,41.7,41.7h166.7c22.9,0,41.7-18.8,41.7-41.7V145.8z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <table id="song-table" class="song-table"></table>
                 </div>
             </div>
         </div>
 
         <!--The Player at the bottom of the page that holds all controls-->
         <div id="player">
+            <svg id="expand-player-list" viewBox="0 0 500 194.4">
+                <polyline points="72.1,143.4 248.5,49.4 427.9,145 " />
+            </svg>
             <div id="player-playlist">
-                <div id="visualizer"></div>
-                <table></table>
+                <canvas id="visualizer"></canvas>
+                <table id="player-playlist-table" class="song-table"></table>
             </div>
             <div class="song-info no-select" id="song-info">
                 <span class="title"></span>
@@ -107,7 +109,7 @@
                 <!-- control buttons in the middle of the player -->
                 <!-- prettier-ignore -->
                 <div class="buttons no-select">
-                    <button id="shuffle-control" class="ctrl-btn extra" onclick="audioShuffle()">
+                    <button id="shuffle-control" class="ctrl-btn extra">
                         <svg x="0px" y="0px" viewBox="0 0 500 500">
                             <path class="fill" d="M241.3,276.8c-9.3,10.9-19.3,21.2-30.9,29.9c-21.6,16.2-45.6,24.1-73.2,24.1h-29.5c-6.2,0-11.2-5-11.2-11.2c0-6.2,5-11.2,11.2-11.2h29.5c41.3,0,65.9-21.3,88.2-47.5L241.3,276.8z"/>
                             <path class="fill" d="M372.2,179.5c0,6.2-5,11.2-11.2,11.2c-41,0-65.5,21.1-87.8,47.1L257.4,222c9.2-10.7,19.1-20.9,30.5-29.5c21.6-16.2,45.5-24.1,73.1-24.1C367.2,168.4,372.2,173.4,372.2,179.5z"/>
@@ -116,13 +118,13 @@
                             <path class="fill" d="M414,312l-46.8-27c-1.9-1.1-4.4,0.3-4.4,2.5v54.1c0,2.2,2.4,3.6,4.4,2.5l46.8-27C416,315.9,416,313.2,414,312z"/>
                         </svg>
                     </button>
-                    <button id="back-control" class="ctrl-btn skip" onclick="audioBack()">
+                    <button id="back-control" class="ctrl-btn skip">
                         <svg x="0px" y="0px" viewBox="0 0 500 500">
                             <polygon class="stroke" points="250,250 460,371.2 460,128.8 		"/>
                             <polygon class="stroke" points="40,250 250,371.2 250,128.8 		"/>
                         </svg>
                     </button>
-                    <button id="play-control" class="ctrl-btn" onclick="switchPlayPause()">
+                    <button id="play-control" class="ctrl-btn">
                         <svg id="play-svg" class="" x="0px" y="0px" viewBox="0 0 500 500">
                             <path d="M421,250c0,0,8.2-17.7-133.7-102.1c-125.3-74.5-143.6-58-143.6-58s-18.9,0-18.9,160.1s18.9,160.1,18.9,160.1s19.3,14.8,145.7-58.1C435.5,267.8,421,250,421,250z"/>
                         </svg>
@@ -131,13 +133,13 @@
                             <line x1="311" y1="101.1" x2="311" y2="399.2"/>
                         </svg>
                     </button>
-                    <button id="skip-control" class="ctrl-btn skip" onclick="audioSkip()">
+                    <button id="skip-control" class="ctrl-btn skip">
                         <svg x="0px" y="0px" viewBox="0 0 500 500">
                             <polygon class="stroke" points="250,250 40,128.8 40,371.2 		"/>
                             <polygon class="stroke" points="460,250 250,128.8 250,371.2 		"/>
                         </svg>
                     </button>
-                    <button id="loop-control" class="ctrl-btn extra" onclick="audioLoop()">
+                    <button id="loop-control" class="ctrl-btn extra">
                         <svg x="0px" y="0px" viewBox="0 0 500 500">
                             <path class="stroke" d="M351.5,320.3c38.7,0,70.3-31.7,70.3-70.3l0,0c0-38.7-31.7-70.3-70.3-70.3h-88.6"/>
                             <path class="stroke" d="M148.5,179.7c-38.7,0-70.3,31.7-70.3,70.3l0,0c0,38.7,31.7,70.3,70.3,70.3h88.6"/>
@@ -149,12 +151,14 @@
             </div>
             <!-- volume control on the right side of the container -->
             <div class="no-select" id="volume-container">
-                <button
-                    class="buttons"
-                    id="mute-control"
-                    onclick="audioMuteSwitch()"
-                >
-                    <img src="img/ctrl/sound.svg" />
+                <button class="buttons" id="mute-control">
+                    <!-- prettier-ignore -->
+                    <svg viewBox="0 0 1000 1000">
+                        <polygon class="stroke" points="500,233 500,767 296.5,627.5 173,627.5 173,372.5 297.3,372.5 "/>
+                        <path class="stroke" d="M559.6,402.5c0,0,47.2,20.9,47.2,97.5c0,73.5-47.2,97.5-47.2,97.5"/>
+                        <path class="stroke" d="M617.6,354c0,0,70.7,31.3,70.7,146c0,110.1-70.7,146-70.7,146"/>
+                        <path class="stroke" d="M666.8,292.2c0,0,100.6,44.5,100.6,207.8c0,156.6-100.6,207.8-100.6,207.8"/>
+                    </svg>
                 </button>
                 <input
                     type="range"
@@ -164,6 +168,69 @@
                     class="slider no-select"
                     id="volume-control"
                 />
+            </div>
+        </div>
+        <!-- the settings page that can be opened by the button in the top left -->
+        <div id="settings-container">
+            <!-- prettier-ignore -->
+            <a id="settings-close-btn">
+                <svg viewBox="0 0 500 500">
+                    <path class="stroke" d="M250,178.5c-39.5,0-71.5,32-71.5,71.5s32,71.5,71.5,71.5s71.5-32,71.5-71.5S289.5,178.5,250,178.5z M410.8,250c0-12.1-1.4-23.9-4-35.2l46.7-41.1l-35.7-61.9l-59,20c-17.3-15.9-37.9-28.2-60.9-35.4l-12.2-60.9h-71.5l-12.2,60.9c-23,7.2-43.6,19.5-60.9,35.4l-59-20l-35.7,61.9l46.7,41.1c-2.5,11.3-4,23.1-4,35.2c0,12.1,1.4,23.9,4,35.2l-46.7,41.1l35.7,61.9l59-20c17.3,15.9,37.9,28.2,60.9,35.4l12.2,60.9h71.5l12.2-60.9c23-7.2,43.6-19.5,60.9-35.4l59,20l35.7-61.9l-46.7-41.1C409.4,273.9,410.8,262.1,410.8,250z"/>
+                </svg>
+            </a>
+            <div id="settings-body">
+                <h1>Settings</h1>
+                <h2>Preferences</h2>
+                <div class="setting">
+                    <p>language</p>
+                    <select id="language-select">
+                        <option value="english">english</option>
+                        <option value="german">german</option>
+                        <option value="spanish">spanish</option>
+                    </select>
+                </div>
+                <h2>Personalize</h2>
+                <div class="setting">
+                    <p>theme</p>
+                    <select id="theme-select">
+                        <option value="0">dark</option>
+                        <option value="1">light</option>
+                        <option value="2">custom</option>
+                    </select>
+                </div>
+                <div class="setting">
+                    <p>primary background</p>
+                    <input type="color" id="custom-theme-pri-bg" />
+                </div>
+                <div class="setting">
+                    <p>secondary background</p>
+                    <input type="color" id="custom-theme-sec-bg" />
+                </div>
+                <div class="setting">
+                    <p>tertionary background</p>
+                    <input type="color" id="custom-theme-ter-bg" />
+                </div>
+                <div class="setting">
+                    <p>contrast color</p>
+                    <input type="color" id="custom-theme-contrast" />
+                </div>
+                <div class="setting">
+                    <p>text color</p>
+                    <input type="color" id="custom-theme-text" />
+                </div>
+                <h2>Performance</h2>
+                <div class="setting">
+                    <p>crawler</p>
+                    <select id="crawler-select">
+                        <option value="local(JS IFrame)">
+                            local(JS IFrame)
+                        </option>
+                        <option value="server(PHP)">server(PHP)</option>
+                    </select>
+                </div>
+                <button id="setting-delete-localstorage" class="critical">
+                    Erase all local data
+                </button>
             </div>
         </div>
     </body>

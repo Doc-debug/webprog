@@ -4,7 +4,6 @@
 */
 
 /* Table of Contents
-Constants           - variable declaration for colors 
 Styling             - individual content styling 
     Content         - the main content (without the player)
     Content cont    - the container holding the playlist list and the playlist songlist
@@ -12,22 +11,6 @@ Styling             - individual content styling
     Pl songlist     - a table containing songs from a selected playlist
     Layout mobile   - media query for small screens to realign content
 */
-
-/* ========== CONSTANTS ============= */
-
-:root {
-    --bg-primary: #1e2025;
-    --bg-secondary: #212328;
-    --bg-tertionary: #3e3f42;
-    --text: #ffffffde;
-    --contrast: #e74c3c;
-    --border-r: 5px;
-
-    --op-h: 87%;
-    --op-m: 60%;
-    --op-d: 38%;
-    --border-r: 5px;
-}
 
 /* ========== CONTENT =============== */
 
@@ -47,12 +30,16 @@ Styling             - individual content styling
     display: flex;
     height: calc(100% - 60px);
 }
+
+#playlist-title {
+    text-align: center;
+}
 /* ========== PLAYLIST LIST ========= */
 
 #playlist-list {
     width: 200px;
     background-color: var(--bg-secondary);
-    overflow: scroll;
+    overflow-y: auto;
 }
 #playlist-list a,
 #playlist-list p {
@@ -71,7 +58,7 @@ Styling             - individual content styling
 /* ========== PLAYLIST SONG LIST ==== */
 #table-container {
     width: calc(100% - 60px);
-    overflow: scroll;
+    overflow: auto;
 }
 /* ========== LAYOUT MOBILE ========= */
 
@@ -97,6 +84,5 @@ Styling             - individual content styling
 
     #table-container {
         width: 100%;
-        overflow: scroll;
     }
 }

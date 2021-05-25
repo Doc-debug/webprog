@@ -4,26 +4,9 @@
 */
 
 /* Table of Contents
-Constants          - variable declaration for colors 
 Styling             - individual content styling 
     Header          - the header containing navbar and searchbar
 */
-
-/* ========== CONSTANTS ============= */
-
-:root {
-    --bg-primary: #1e2025;
-    --bg-secondary: #212328;
-    --bg-tertionary: #3e3f42;
-    --text: #ffffffde;
-    --contrast: #e74c3c;
-    --border-r: 5px;
-
-    --op-h: 87%;
-    --op-m: 60%;
-    --op-d: 38%;
-    --border-r: 5px;
-}
 
 /* ========== HEADER ================ */
 
@@ -35,19 +18,13 @@ Styling             - individual content styling
     display: flex;
     text-align: center;
 }
-#menu a {
-    margin: 20px;
+#settings-btn {
+    padding: 15px;
     text-decoration: none;
-    color: var(--text);
+    z-index: 999999;
 }
-#menu a img {
-    width: 20px;
-}
-
-#menu-icon {
-    display: none;
-    width: 30px;
-    margin: 15px;
+#settings-btn svg {
+    height: 100%;
 }
 
 #searchwrapper {
