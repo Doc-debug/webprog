@@ -186,6 +186,8 @@ export function audioShuffle() {
     }
     conf.shuffle = !conf.shuffle;
 
+    updatePlayerList();
+
     // set button css styling to active
     if (conf.shuffle) {
         btnShuffle.classList.add("active");

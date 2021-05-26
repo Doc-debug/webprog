@@ -47,7 +47,7 @@ Styling             - individual content styling
     color: var(--text);
     padding: 15px;
     margin: 0;
-    border-top: solid var(--bg-tertionary) 1px;
+    border-bottom: solid var(--bg-tertionary) 1px;
 }
 #playlist-list p {
     font-weight: bold;

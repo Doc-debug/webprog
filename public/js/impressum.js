@@ -33,6 +33,35 @@ export function initImpressum() {
     page.addObj("a", "j.naubert@ostfalia.de", [
         ["href", "mailto:j.naubert@ostfalia.de"],
     ]);
+    page.addObj("br", "");
+
+    page.addObj("h2", "Sources and websites that helped us");
+
+    page.addObj("a", "Google Fonts", [
+        ["href", "https://fonts.google.com/"],
+        ["target", "_blank"],
+    ]);
+    page.addObj("br", "");
+
+    page.addObj("a", "Github ❤", [
+        ["href", "https://github.com/"],
+        ["target", "_blank"],
+    ]);
+    page.addObj("br", "");
+
+    page.addObj("a", "audio visualization guide", [
+        [
+            "href",
+            "https://www.patrick-wied.at/blog/how-to-create-audio-visualizations-with-javascript-html",
+        ],
+        ["target", "_blank"],
+    ]);
+    page.addObj("br", "");
+
+    page.addObj("a", "learnxinyminutes", [
+        ["href", "https://learnxinyminutes.com/docs/php/"],
+        ["target", "_blank"],
+    ]);
 }
 
 export function toggleImpressum() {
