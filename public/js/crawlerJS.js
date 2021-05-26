@@ -22,7 +22,7 @@ let iframes = [];
  * will initialize the crawler
  * @returns a promise with the tree structure. This can be awaited
  */
-export async function crawler() {
+export async function crawlerJS() {
     // gets the file structure from the cache
     let cache = getObj("tree");
     if (cache != null) {

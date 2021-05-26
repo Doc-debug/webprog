@@ -35,9 +35,11 @@ Styling             - individual content styling
     transition: transform 0.5s ease;
 }
 #settings-body {
+    height: calc(100% - 60px);
     max-width: 500px;
     margin: 0 auto;
     padding: 0 30px;
+    overflow: auto;
 }
 
 #settings-container h2:after {
@@ -65,4 +67,8 @@ Styling             - individual content styling
     color: var(--contrast);
     border: solid 1px var(--contrast);
     width: 100%;
+}
+
+#settings-body .info-text {
+    margin-top: 0;
 }

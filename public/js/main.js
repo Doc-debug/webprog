@@ -1,4 +1,4 @@
-import { crawler, find } from "./crawlerPHP.js";
+import { crawler, find } from "./crawlerMain.js";
 import { pageLoader, pageLoaderClose } from "./util/loader.js";
 import { Songlist } from "./songlistClass.js";
 import {
@@ -21,14 +21,13 @@ let songlist;
 let currentPlaylist = null;
 
 window.addEventListener("load", async function () {
+    pageLoader();
     // add functions to global scope so buttons with onclick can access it
     window.loadFolder = loadFolder;
     window.addSong = addSong;
 
     // init crawler and loader while crawler is working
-    pageLoader();
     await crawler();
-    pageLoaderClose();
 
     // init necessary modules
     initPlaylist();
@@ -43,6 +42,7 @@ window.addEventListener("load", async function () {
 
     // load player
     initPlayer(songlist);
+    pageLoaderClose();
 });
 /**
  * updates the playlist list on the website

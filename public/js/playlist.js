@@ -1,7 +1,7 @@
 import { getObj, setObj } from "./util/localstorage.js";
 import { initctxm } from "./util/ctxm.js";
 import { splitArr } from "./util/object.js";
-import { find } from "./crawlerPHP.js";
+import { find } from "./crawlerMain.js";
 ("use strict");
 
 /**

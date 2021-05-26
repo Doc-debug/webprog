@@ -1,4 +1,5 @@
 import { opacityAnim, strokeAnim, destroy } from "./svganim.js";
+import { getSetting } from "../settings.js";
 
 /**
  * creates a loader that can be added to any parent dom object
@@ -29,6 +30,10 @@ export function createLoader(message, parentID) {
 }
 
 export function pageLoader() {
+    if (!getSetting("pageloader")) return;
+
+    document.getElementById("page-loader").style.display = "flex";
+
     opacityAnim("page-loader-outer-circle", 1, 0);
     opacityAnim("page-loader-triangle", 1, 0);
     opacityAnim("page-loader-title", 1, 0);
