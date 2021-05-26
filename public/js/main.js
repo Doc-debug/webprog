@@ -1,5 +1,5 @@
 import { crawler, find } from "./crawlerPHP.js";
-import { createLoader } from "./util/loader.js";
+import { pageLoader, pageLoaderClose } from "./util/loader.js";
 import { Songlist } from "./songlistClass.js";
 import {
     playlists,
@@ -26,9 +26,9 @@ window.addEventListener("load", async function () {
     window.addSong = addSong;
 
     // init crawler and loader while crawler is working
-    let loader = createLoader("indexing files please wait", "table-container");
+    pageLoader();
     await crawler();
-    loader.remove();
+    pageLoaderClose();
 
     // init necessary modules
     initPlaylist();
