@@ -139,19 +139,22 @@ function initEventListener() {
     let searchtag = document.getElementById("searchtag");
     let renamePLBtn = document.getElementById("playlist-option-rename");
     let deletePLBtn = document.getElementById("playlist-option-delete");
+    let addplaylistBtn = document.getElementById("addplaylist");
 
     loadAllSongs.addEventListener("click", () => {
         loadPlaylist(-1);
     });
     selectPlaylistsBtn.addEventListener("click", () => {
         updatePlayslistList();
-        selectPlaylistsBtn.classList.add("highlight");
-        selectFoldersBtn.classList.remove("highlight");
+        selectPlaylistsBtn.classList.add("active");
+        selectFoldersBtn.classList.remove("active");
+        addplaylistBtn.style.display = "block";
     });
     selectFoldersBtn.addEventListener("click", () => {
         folderPlaylistList();
-        selectFoldersBtn.classList.add("highlight");
-        selectPlaylistsBtn.classList.remove("highlight");
+        selectFoldersBtn.classList.add("active");
+        selectPlaylistsBtn.classList.remove("active");
+        addplaylistBtn.style.display = "none";
     });
     addPlaylist.addEventListener("click", () => {
         promptCreatePlaylist();

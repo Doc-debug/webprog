@@ -49,8 +49,10 @@
         <div id="content-container">
             <div id="playlist-list">
                 <a id="load-all-songs">all songs</a>
-                <a><span id="select-playlists-btn" class="highlight">playlists</span>
-                    <span id="select-folders-btn" class="right">folders</span></a>
+                <div id="playlist-folder-switch">
+                    <a id="select-playlists-btn" class="active">playlists</a>
+                    <a id="select-folders-btn" class="right">folders</a>
+                </div>
                 <a id="addplaylist" class="op-m">Add Playlist + </a>
                 <div id="playlist-list-container"></div>
             </div>
