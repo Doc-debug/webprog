@@ -1,9 +1,11 @@
 # webprog
+## please insert all project files into a php environment
 
+
+## if you are having trouble you can download our php server which is already configured
 Please download the php server from the following source and unpack it in the root directory
 
 [http://kiwwi.net/projects/webprog/files/phpserverwebprog.zip](http://kiwwi.net/projects/webprog/files/phpserverwebprog.zip)
-
 
 File Structure should be as following:
 
