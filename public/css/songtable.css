@@ -10,7 +10,7 @@ Song list           - styling for the song table
 /* ========== SONG LIST ============= */
 #table-container {
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
 }
 .song-table {
     margin: 0 auto;
