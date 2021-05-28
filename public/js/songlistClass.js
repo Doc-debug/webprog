@@ -1,9 +1,9 @@
 import { pad } from "./util/convert.js";
 import { arrSort } from "./util/object.js";
-import { find } from "./crawlerPHP.js";
+import { find } from "./crawlerMain.js";
 import { initctxm } from "./util/ctxm.js";
-import { ctxmPlaylists } from "./playlistMod.js";
-import { playSongAt, playNext } from "./playerMod.js";
+import { ctxmPlaylists } from "./playlist.js";
+import { playSongAt, playNext } from "./musicplayer.js";
 ("use strict");
 
 export class Songlist {
@@ -47,6 +47,9 @@ export class Songlist {
         this.createTableHead();
     }
 
+    /**
+     * creates the table header with sort functionality
+     */
     createTableHead() {
         let row = document.createElement("tr");
         let that = this;

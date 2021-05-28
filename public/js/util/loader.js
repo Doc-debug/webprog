@@ -1,3 +1,6 @@
+import { opacityAnim, strokeAnim, destroy } from "./svganim.js";
+import { getSetting } from "../settings.js";
+
 /**
  * creates a loader that can be added to any parent dom object
  * @param {string} message the text above the loader
@@ -24,4 +27,23 @@ export function createLoader(message, parentID) {
     document.getElementById(parentID).appendChild(container);
 
     return container;
+}
+
+export function pageLoader() {
+    if (!getSetting("pageloader")) return;
+
+    document.getElementById("page-loader").style.display = "flex";
+
+    opacityAnim("page-loader-outer-circle", 1, 0);
+    opacityAnim("page-loader-triangle", 1, 0);
+    opacityAnim("page-loader-title", 1, 0);
+    opacityAnim("page-loader-subtitle", 1, 0, true, 0.5);
+    opacityAnim("page-loader-circle-ring", 1, 0);
+    strokeAnim("page-loader-circle-ring", 1, 1);
+}
+
+export function pageLoaderClose() {
+    strokeAnim("page-loader-circle-ring", 1, 1);
+    opacityAnim("page-loader", 0.4, 2.5, false);
+    destroy("page-loader", 3);
 }

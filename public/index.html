@@ -1,21 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Music Player Pro</title>
+        <title>radia music player</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/png" href="img/brand/favicon.png" />
         <link rel="stylesheet" type="text/css" href="css/default.css" />
         <link rel="stylesheet" type="text/css" href="css/header.css" />
-        <link rel="stylesheet" type="text/css" href="css/playlist.css" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
         <link rel="stylesheet" type="text/css" href="css/musicplayer.css" />
         <link rel="stylesheet" type="text/css" href="css/songtable.css" />
         <link rel="stylesheet" type="text/css" href="css/settings.css" />
+        <link rel="stylesheet" type="text/css" href="css/pagegen.css" />
+        <link rel="stylesheet" type="text/css" href="css/pageloader.css" />
         <script type="module" src="js/settings.js"></script>
-        <script type="module" src="js/playlist.js"></script>
+        <script type="module" src="js/main.js"></script>
     </head>
     <body class="no-select">
+        <!-- page loader animation -->
+        <div id="page-loader">
+            <!-- prettier-ignore -->
+            <svg viewBox="0 0 1000 1000" id="page-loader-logo">
+                <circle id="page-loader-outer-circle" style="opacity:0" cx="500" cy="500" r="500"/>
+                <path id="page-loader-circle-ring" style="opacity: 0" d="M500,83.7c229.9,0,416.3,186.4,416.3,416.3S729.9,916.3,500,916.3S83.7,729.9,83.7,500S270.1,83.7,500,83.7"/>
+                <path id="page-loader-triangle" style="opacity:0" d="M701.3,475.3L418,311.7c-19-11-42.8,2.7-42.8,24.7v327.1c0,22,23.8,35.7,42.8,24.7l283.3-163.6C720.3,513.7,720.3,486.3,701.3,475.3z"/>
+            </svg>
+            <h1 id="page-loader-title" style="opacity: 0">Radia</h1>
+            <h2 id="page-loader-subtitle" style="opacity: 0">
+                music webplayer
+            </h2>
+        </div>
         <div id="content">
             <!-- header of the site on the top -->
             <div id="header">
@@ -44,14 +59,12 @@
             <div id="content-container">
                 <div id="playlist-list">
                     <a id="load-all-songs">all songs</a>
-                    <a
-                        ><span id="select-playlists-btn" class="highlight"
-                            >playlists</span
+                    <div id="playlist-folder-switch">
+                        <a id="select-playlists-btn" class="active"
+                            >playlists</a
                         >
-                        <span id="select-folders-btn" class="right"
-                            >folders</span
-                        ></a
-                    >
+                        <a id="select-folders-btn" class="right">folders</a>
+                    </div>
                     <a id="addplaylist" class="op-m">Add Playlist + </a>
                     <div id="playlist-list-container"></div>
                 </div>
@@ -175,19 +188,22 @@
             <!-- prettier-ignore -->
             <a id="settings-close-btn">
                 <svg viewBox="0 0 500 500">
-                    <path class="stroke" d="M250,178.5c-39.5,0-71.5,32-71.5,71.5s32,71.5,71.5,71.5s71.5-32,71.5-71.5S289.5,178.5,250,178.5z M410.8,250c0-12.1-1.4-23.9-4-35.2l46.7-41.1l-35.7-61.9l-59,20c-17.3-15.9-37.9-28.2-60.9-35.4l-12.2-60.9h-71.5l-12.2,60.9c-23,7.2-43.6,19.5-60.9,35.4l-59-20l-35.7,61.9l46.7,41.1c-2.5,11.3-4,23.1-4,35.2c0,12.1,1.4,23.9,4,35.2l-46.7,41.1l35.7,61.9l59-20c17.3,15.9,37.9,28.2,60.9,35.4l12.2,60.9h71.5l12.2-60.9c23-7.2,43.6-19.5,60.9-35.4l59,20l35.7-61.9l-46.7-41.1C409.4,273.9,410.8,262.1,410.8,250z"/>
+                    <path class="fill" d="M84,430.8c-4,0-7.7-1.5-10.5-4.3s-4.3-6.5-4.3-10.5s1.5-7.7,4.3-10.5L229,250L73.5,94.5c-5.8-5.8-5.8-15.2,0-21c2.8-2.8,6.5-4.3,10.5-4.3s7.7,1.5,10.5,4.3L250,229L405.5,73.5c2.8-2.8,6.5-4.3,10.5-4.3s7.7,1.5,10.5,4.3s4.3,6.5,4.3,10.5s-1.5,7.7-4.3,10.5L271,250l155.5,155.5c5.8,5.8,5.8,15.2,0,21c-2.8,2.8-6.5,4.3-10.5,4.3s-7.7-1.5-10.5-4.3L250,271L94.5,426.5C91.7,429.3,88,430.8,84,430.8z"/>
                 </svg>
             </a>
             <div id="settings-body">
                 <h1>Settings</h1>
+                <a id="impressum">About us</a>
                 <h2>Preferences</h2>
                 <div class="setting">
                     <p>language</p>
                     <select id="language-select">
                         <option value="english">english</option>
-                        <option value="german">german</option>
-                        <option value="spanish">spanish</option>
                     </select>
+                </div>
+                <div class="setting">
+                    <p>enable loading animation</p>
+                    <input type="checkbox" id="loading-anim-checkbox" />
                 </div>
                 <h2>Personalize</h2>
                 <div class="setting">
@@ -198,6 +214,7 @@
                         <option value="2">custom</option>
                     </select>
                 </div>
+                <h3>Set colors for custom theme</h3>
                 <div class="setting">
                     <p>primary background</p>
                     <input type="color" id="custom-theme-pri-bg" />
@@ -222,11 +239,18 @@
                 <div class="setting">
                     <p>crawler</p>
                     <select id="crawler-select">
-                        <option value="local(JS IFrame)">
-                            local(JS IFrame)
-                        </option>
-                        <option value="server(PHP)">server(PHP)</option>
+                        <option value="0">server(PHP)</option>
+                        <option value="1">local(JS IFrame)</option>
                     </select>
+                </div>
+                <p class="info-text">
+                    Since the JS crawler downloads all songs to search for ID3
+                    tags this might have a severe impact on your data usage
+                </p>
+                <h2>Admin tools</h2>
+                <div class="setting">
+                    <p>logging</p>
+                    <input type="checkbox" id="logging-checkbox" />
                 </div>
                 <button id="setting-delete-localstorage" class="critical">
                     Erase all local data

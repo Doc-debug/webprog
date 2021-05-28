@@ -1,22 +1,29 @@
 import { flattenTree } from "./util/object.js";
-const ApiUrl = "./api/index.php";
+import { getObj, setObj } from "./util/localstorage.js";
+import { crawlerPHP } from "./crawlerPHP.js";
+import { crawlerJS } from "./crawlerJS.js";
+import { log } from "./util/logger.js";
+("use strict");
 
-const MusicBaseUrl = "./music";
 let tree = {};
 /**
  * fetches the data from the phpcrawler api
  * @returns the filetree structure
  */
-export async function crawlerPHP() {
-    try {
-        tree = await fetch(ApiUrl).then((data) => data.json());
-    } catch (error) {
-        alert(
-            "The crawler did not respond properly. \nThis usually happens when PHP was not correctly configured. Please be sure that you are running this project on a PHP8 Server"
-        );
-        tree = {};
+export async function crawler() {
+    let crawler = getObj("settings").crawler;
+    if (crawler == null) {
+        crawler = 0; // set crawler to php for default
+        setObj("crawler", crawler);
     }
-    return tree;
+
+    if (crawler == 0) {
+        tree = await crawlerPHP();
+        log("crawler initialized!");
+    } else {
+        tree = await crawlerJS();
+        log("crawler initialized!");
+    }
 }
 
 /**

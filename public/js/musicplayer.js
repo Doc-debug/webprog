@@ -2,6 +2,7 @@ import { getObj, setObj } from "./util/localstorage.js";
 import { arrSort, arrShuffle, arrClone } from "./util/object.js";
 import { secondsToMinutes, prettyTimeString } from "./util/time.js";
 import { Songlist } from "./songlistClass.js";
+import { log } from "./util/logger.js";
 ("use strict");
 
 /** @type {Audio} an audio element that is playing music*/
@@ -41,6 +42,7 @@ export let conf = {
 
 /**
  * Initialize all default values and set event listener
+ * @param {Songlist} songlistObj the table in the background where songs might be copied from
  */
 export function initPlayer(songlistObj) {
     // init the current songlist table
@@ -55,9 +57,15 @@ export function initPlayer(songlistObj) {
     initDoms();
 
     // set current track if it hasnt been initialized yet
-    if (conf.currentTrack == null) conf.currentTrack = conf.playerlist[0];
-    player.src = conf.currentTrack["url"];
-    player.currentTime = conf.time;
+    if (conf.currentTrack == null && conf.playerlist.length > 0)
+        conf.currentTrack = conf.playerlist[0];
+
+    if (conf.currentTrack) {
+        player.src = conf.currentTrack["url"];
+        player.currentTime = conf.time;
+    }
+    // reset playing since google blocks attempts to autoplay music
+    conf.playing = false;
 
     //init songSlider and set gradient for the progress bar color
     songSlider = document.getElementById("song-slider");
@@ -114,6 +122,7 @@ export function audioPlay() {
     svgPause.setAttribute("class", "");
     svgPlay.setAttribute("class", "invisible");
     updateConf();
+    log("audio started");
 }
 
 /**
@@ -126,6 +135,7 @@ export function audioPause() {
     svgPlay.setAttribute("class", "");
     svgPause.setAttribute("class", "invisible");
     updateConf();
+    log("audio paused");
 }
 
 /**
@@ -135,9 +145,11 @@ export function audioSkip() {
     //Skip to the next song if possible else restart songlist and pause
     if (conf.playerlist[conf.playingPos + 1] != null) {
         playSongAt(++conf.playingPos, false);
+        log("skipped song");
     } else {
         // only pause if loop is disabled
         playSongAt(0, false, conf.playing && !conf.loop);
+        log("current songlist restarted");
     }
 }
 
@@ -148,9 +160,11 @@ export function audioBack() {
     // if song timer is over 3 seconds start song from beginning
     if (player.currentTime > 3 || conf.playingPos == 0) {
         player.currentTime = 0;
+        log("rewinded song");
     } else {
         // else go to last song
         playSongAt(--conf.playingPos, false);
+        log("playing last song");
     }
 }
 
@@ -162,6 +176,7 @@ export function audioShuffle() {
         // bring array back in order
         conf.playerlist = arrSort(conf.playerlist, "index", 1);
         conf.playingPos = conf.currentTrack["index"];
+        log("song list unshuffled");
     } else {
         // shuffle array
         conf.playerlist = arrShuffle(conf.playerlist);
@@ -176,8 +191,11 @@ export function audioShuffle() {
                 break;
             }
         }
+        log("song list shuffled");
     }
     conf.shuffle = !conf.shuffle;
+
+    updatePlayerList();
 
     // set button css styling to active
     if (conf.shuffle) {
@@ -201,6 +219,7 @@ export function audioLoop() {
         btnLoop.classList.remove("active");
     }
     updateConf();
+    log("toggled loop");
 }
 
 /**
@@ -220,9 +239,11 @@ export function audioMuteSwitch() {
         conf.volumeUnmute = conf.volume;
         audioVolume(0);
         btnMute.classList.add("op-d");
+        log("audio muted");
     } else {
         audioVolume(conf.volumeUnmute);
         btnMute.classList.remove("op-d");
+        log("audio unmuted");
     }
 }
 
@@ -291,9 +312,14 @@ export function playSongAt(i, update = true, play = true, localIndex = false) {
     updatePlayerList();
 }
 
+/**
+ * inserts a song in the next position of the current played songs list
+ * @param {songObj} song the song object that should be inserted
+ */
 export function playNext(song) {
     conf.playerlist.splice(conf.playingPos + 1, 0, song);
     updatePlayerList();
+    log("inserted song '" + song.title + "' as next in query");
 }
 
 /**

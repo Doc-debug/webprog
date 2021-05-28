@@ -47,9 +47,6 @@ button:focus {
     color: var(--text);
     background: var(--contrast);
 }
-::-webkit-scrollbar {
-    display: none;
-}
 
 /* ========== CONSTANTS ============= */
 
@@ -121,6 +118,21 @@ button:focus {
     font-display: swap;
 }
 
+/* ========== SCROLLBAR =============*/
+
+::-webkit-scrollbar {
+    display: block;
+    width: 5px;
+    height: 5px;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--bg-tertionary);
+    border-radius: 100px;
+}
+::-webkit-scrollbar-corner {
+    background: none;
+}
+
 /* ========== Slider =================*/
 .slider {
     -webkit-appearance: none;
@@ -179,6 +191,30 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 input[type="color"]::-webkit-color-swatch {
     border: none;
     border-radius: 100%;
+}
+
+/* ========== CHECKBOX ============== */
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background: var(--bg-tertionary);
+    border-radius: 5px;
+    border: 2px solid var(--bg-tertionary);
+    transition: background 0.5s ease;
+}
+input[type="checkbox"]:checked {
+    background: var(--contrast);
+}
+input[type="checkbox"]:checked:after {
+    content: "";
+    border-left: 3px var(--bg-tertionary) solid;
+    border-bottom: 3px var(--bg-tertionary) solid;
+    transform: rotate(-50deg) translate(-2px, 3px);
+    height: 4px;
+    width: 10px;
+    display: block;
 }
 
 /* ========== SELECT ================ */
