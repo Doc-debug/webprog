@@ -123,7 +123,10 @@ button:focus {
 ::-webkit-scrollbar {
     display: block;
     width: 5px;
+<<<<<<< HEAD
     height: 5px;
+=======
+>>>>>>> 3758a99a34d142b18c6fa4c92a9afdbfd16b5d06
 }
 ::-webkit-scrollbar-thumb {
     background: var(--bg-tertionary);
