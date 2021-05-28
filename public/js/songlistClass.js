@@ -4,10 +4,11 @@ import { find } from "./crawlerMain.js";
 import { initctxm } from "./util/ctxm.js";
 import { ctxmPlaylists } from "./playlist.js";
 import { playSongAt, playNext } from "./musicplayer.js";
+import { hasClass } from "./util/css.js";
 ("use strict");
 
 export class Songlist {
-    constructor(listID, sortable = true, local = false) {
+    constructor(listID, sortable = true, local = false, selectable = true) {
         /**
          * @type {Array} Holds all songs from the list
          */
@@ -16,6 +17,14 @@ export class Songlist {
          * @type {Array} Holds all songs from the list if the searchbar is in use
          */
         this.tempSonglist = [];
+        /**
+         * @type {Array} a list with all currently selected titles
+         */
+        this.selectList = {};
+        /**
+         * @type {number} the index of the last selected row
+         */
+        this.lastSelectIndex = null;
         /**
          * @type {string} the id of the table. This can be changed on initialization if it differes from the original one "song-table-body"
          */
@@ -37,6 +46,10 @@ export class Songlist {
          * @type {boolean} if the items in the table should be sortable
          */
         this.sortable = sortable;
+        /**
+         * @type {boolean} if row items are selectable
+         */
+        this.selectable = selectable;
 
         this.table = document.getElementById(this.listID);
         this.table.innerHTML = "";
@@ -92,6 +105,11 @@ export class Songlist {
         // for each object in array create a row and cells with song details
         songs.forEach((song, index) => {
             let row = this.tbody.insertRow();
+            if (this.selectable) {
+                row.addEventListener("click", function (e) {
+                    that.toggleActive(e, this, song, index);
+                });
+            }
             let options = row.insertCell(0);
             let link = document.createElement("a");
             link.innerHTML = "...";
@@ -143,6 +161,10 @@ export class Songlist {
         this.fill(find(input, tag, this.tempSonglist), null, 1, false);
     }
 
+    /**
+     * updates the title above the table
+     * @param {string} name the title name
+     */
     setListTitle(name) {
         let title = document.getElementById("playlist-title");
         title.innerHTML = name;
@@ -172,5 +194,73 @@ export class Songlist {
             container.style.display = "none";
         });
         container.appendChild(playNextBtn);
+    }
+
+    toggleActive(event, rowObj, song, index) {
+        if (event.ctrlKey) {
+            let add = !(index in this.selectList);
+            this.toggleSelect(rowObj, song, index, add);
+        } else if (event.shiftKey) {
+            this.unselectAll();
+            this.lastSelectIndex = this.lastSelectIndex ?? 0;
+            this.selectBetween(this.lastSelectIndex, index);
+        } else {
+            let add = !(index in this.selectList);
+            this.unselectAll();
+            this.toggleSelect(rowObj, song, index, add);
+        }
+    }
+
+    selectBetween(start, end) {
+        // find lower and upper end of selection
+        let lower = Math.min(start, end);
+        let upper = Math.max(start, end) + 1;
+        // get selected range of songs
+        let songs = this.songlist.slice(lower, upper);
+        // get all row DOMs in that range
+        let rows = [...document.querySelectorAll("#song-table tbody tr")];
+        rows = rows.slice(lower, upper);
+
+        for (let i = 0; i < rows.length; i++) {
+            const relI = i + lower;
+            this.toggleSelect(rows[i], songs[i], relI, true, false);
+        }
+    }
+
+    /**
+     * deselects all selected items on the table
+     */
+    unselectAll() {
+        this.selectList = {};
+        var activeItems = document.querySelectorAll(
+            "#song-table tbody tr.active-table-item"
+        );
+        for (let i = 0; i < activeItems.length; i++) {
+            const item = activeItems[i];
+            item.classList.remove("active-table-item");
+        }
+    }
+
+    /**
+     * sets one row on the table to active or not
+     * @param {dom} obj the dom object
+     * @param {songobj} song the song object
+     * @param {number} index the index of the row
+     * @param {boolean} add if the row should be set to active or inactive
+     * @param {boolean} saveLastIndex if the last index should be stored
+     */
+    toggleSelect(obj, song, index, add, saveLastIndex = true) {
+        if (!add) {
+            obj.classList.remove("active-table-item");
+            delete this.selectList[index];
+            this.lastSelectIndex = null;
+        } else {
+            obj.classList.add("active-table-item");
+            this.selectList[index] = {
+                song: song,
+                obj: obj,
+            };
+            if (saveLastIndex) this.lastSelectIndex = index;
+        }
     }
 }

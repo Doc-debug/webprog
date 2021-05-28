@@ -46,7 +46,7 @@ export let conf = {
  */
 export function initPlayer(songlistObj) {
     // init the current songlist table
-    currentSongList = new Songlist("player-playlist-table", false, true);
+    currentSongList = new Songlist("player-playlist-table", false, true, false);
     songlist = songlistObj;
     // get player data from local storage
     let cache = getObj("playerConf");
@@ -316,7 +316,7 @@ export function playSongAt(i, update = true, play = true, localIndex = false) {
  * inserts a song in the next position of the current played songs list
  * @param {songObj} song the song object that should be inserted
  */
-export function playNext(song) {
+export function playNext(songs) {
     conf.playerlist.splice(conf.playingPos + 1, 0, song);
     updatePlayerList();
     log("inserted song '" + song.title + "' as next in query");

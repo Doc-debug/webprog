@@ -24,6 +24,9 @@ Song list           - styling for the song table
     padding: 15px;
     cursor: pointer;
 }
+.song-table tbody tr {
+    transition: background-color 0.5s ease;
+}
 .song-table tbody tr:hover {
     background-color: var(--bg-secondary);
     color: var(--contrast);
@@ -33,6 +36,11 @@ Song list           - styling for the song table
     padding: 15px;
     border-top: solid var(--bg-tertionary) 1px;
 }
+
+.song-table tr.active-table-item {
+    background-color: var(--bg-tertionary) !important;
+}
+
 @media only screen and (max-width: 1000px) {
     .song-table td:nth-child(4),
     .song-table th:nth-child(4) {
