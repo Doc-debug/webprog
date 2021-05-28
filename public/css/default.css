@@ -47,9 +47,6 @@ button:focus {
     color: var(--text);
     background: var(--contrast);
 }
-::-webkit-scrollbar {
-    display: none;
-}
 
 /* ========== CONSTANTS ============= */
 
@@ -119,6 +116,17 @@ button:focus {
     font-weight: bold;
     font-style: normal;
     font-display: swap;
+}
+
+/* ========== SCROLLBAR =============*/
+
+::-webkit-scrollbar {
+    display: block;
+    width: 5px;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--bg-tertionary);
+    border-radius: 100px;
 }
 
 /* ========== Slider =================*/
