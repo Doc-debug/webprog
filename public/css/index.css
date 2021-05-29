@@ -91,6 +91,7 @@ Styling             - individual content styling
     #playlist-folder-switch a.active {
         color: var(--contrast);
         background-color: inherit;
+        transition: color 0.5s ease;
     }
     #playlist-list {
         flex: none;
