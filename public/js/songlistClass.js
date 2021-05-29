@@ -4,6 +4,7 @@ import { find } from "./crawlerMain.js";
 import { initctxm, closectxm } from "./util/ctxm.js";
 import { ctxmPlaylists } from "./playlist.js";
 import { playSongAt, playNext } from "./musicplayer.js";
+import { hasClass } from "./util/css.js";
 ("use strict");
 
 export class Songlist {
@@ -134,11 +135,19 @@ export class Songlist {
             let row = this.tbody.insertRow();
             if (this.selectable) {
                 row.addEventListener("click", function (e) {
-                    that.toggleActive(e, this, song, index);
+                    if (
+                        hasClass(e.target, "song-list-title") ||
+                        hasClass(e.target, "song-list-link")
+                    ) {
+                        that.unselectAll();
+                    } else {
+                        that.toggleActive(e, this, song, index);
+                    }
                 });
             }
             let options = row.insertCell(0);
             let link = document.createElement("a");
+            link.classList.add("song-list-link");
             link.innerHTML = "...";
             link.addEventListener("click", function () {
                 // calls context menu when clicked
@@ -146,17 +155,22 @@ export class Songlist {
             });
             options.appendChild(link);
             let length = row.insertCell(0);
+            length.classList.add("song-list-length");
             length.innerHTML =
                 pad(Math.floor(parseInt(song.length) / 60)) +
                 ":" +
                 pad(parseInt(song.length) % 60);
             let folder = row.insertCell(0);
             folder.innerHTML = song.folder;
+            folder.classList.add("song-list-folder");
             let album = row.insertCell(0);
             album.innerHTML = song.album;
+            album.classList.add("song-list-album");
             let artist = row.insertCell(0);
             artist.innerHTML = song.artist;
+            artist.classList.add("song-list-artist");
             let title = row.insertCell(0);
+            title.classList.add("song-list-title");
             title.innerHTML = song.title;
             let localInex = this.local;
             title.addEventListener("click", function () {
