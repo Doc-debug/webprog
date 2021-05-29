@@ -68,12 +68,15 @@ Song list           - styling for the song table
     margin: 15px;
 }
 
-#playlist-options {
+#playlist-options,
+#other-table-options {
     display: flex;
 }
-#playlist-options a {
+#playlist-options a,
+#other-table-options a {
     margin: 15px;
     width: 25px;
+    height: 25px;
 }
 #playlist-option-delete path {
     fill: var(--contrast);

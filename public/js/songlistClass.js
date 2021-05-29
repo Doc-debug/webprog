@@ -1,10 +1,9 @@
 import { pad } from "./util/convert.js";
-import { arrSort } from "./util/object.js";
+import { arrSort, isEmpty } from "./util/object.js";
 import { find } from "./crawlerMain.js";
-import { initctxm } from "./util/ctxm.js";
+import { initctxm, closectxm } from "./util/ctxm.js";
 import { ctxmPlaylists } from "./playlist.js";
 import { playSongAt, playNext } from "./musicplayer.js";
-import { hasClass } from "./util/css.js";
 ("use strict");
 
 export class Songlist {
@@ -58,6 +57,34 @@ export class Songlist {
         this.table.appendChild(this.thead);
         this.table.appendChild(this.tbody);
         this.createTableHead();
+
+        // get current object to pass instance to eventlistener
+        let that = this;
+        // when clicking somewhere except table items itself or the "add selected button" deselect everything
+        document.addEventListener("mousedown", function (e) {
+            if (e.target.id == "table-container") {
+                that.unselectAll();
+                that.updateAddSelectBtn();
+            }
+        });
+
+        // init the eventlistener for the "add selected songs to playlist" button
+        this.addSelectedBtn = document.getElementById("table-add-selected");
+        this.addSelectedBtn.addEventListener("mousedown", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            // convert the selectList into a useable array with only songs
+            let songs = [];
+
+            for (const id in that.selectList) {
+                if (Object.hasOwnProperty.call(that.selectList, id)) {
+                    const song = that.selectList[id].song;
+                    songs.push(song);
+                }
+            }
+            // call context menu
+            ctxmPlaylists(this, songs);
+        });
     }
 
     /**
@@ -182,7 +209,8 @@ export class Songlist {
         let addToPlaylist = document.createElement("a");
         addToPlaylist.innerHTML = "add to playlist";
         addToPlaylist.addEventListener("click", function () {
-            ctxmPlaylists(ele, song);
+            closectxm();
+            ctxmPlaylists(ele, [song]);
         });
         container.appendChild(addToPlaylist);
 
@@ -196,6 +224,13 @@ export class Songlist {
         container.appendChild(playNextBtn);
     }
 
+    /**
+     * differentiates between shift click, ctrl click or normal when clicking on a row and filters appropriately
+     * @param {event} event eventlistener event
+     * @param {DOM} rowObj row DOM of the table
+     * @param {songObj} song a song object containing title, artist, url...
+     * @param {number} index the index of the song inside the table
+     */
     toggleActive(event, rowObj, song, index) {
         if (event.ctrlKey) {
             let add = !(index in this.selectList);
@@ -208,6 +243,19 @@ export class Songlist {
             let add = !(index in this.selectList);
             this.unselectAll();
             this.toggleSelect(rowObj, song, index, add);
+        }
+
+        this.updateAddSelectBtn();
+    }
+
+    /**
+     * toggles the visibility of the add selected button
+     */
+    updateAddSelectBtn() {
+        if (!isEmpty(this.selectList)) {
+            this.addSelectedBtn.style.display = "block";
+        } else {
+            this.addSelectedBtn.style.display = "none";
         }
     }
 
@@ -231,14 +279,13 @@ export class Songlist {
      * deselects all selected items on the table
      */
     unselectAll() {
-        this.selectList = {};
-        var activeItems = document.querySelectorAll(
-            "#song-table tbody tr.active-table-item"
-        );
-        for (let i = 0; i < activeItems.length; i++) {
-            const item = activeItems[i];
-            item.classList.remove("active-table-item");
+        for (const id in this.selectList) {
+            if (Object.hasOwnProperty.call(this.selectList, id)) {
+                const rowObj = this.selectList[id].obj;
+                rowObj.classList.remove("active-table-item");
+            }
         }
+        this.selectList = {};
     }
 
     /**
@@ -249,16 +296,16 @@ export class Songlist {
      * @param {boolean} add if the row should be set to active or inactive
      * @param {boolean} saveLastIndex if the last index should be stored
      */
-    toggleSelect(obj, song, index, add, saveLastIndex = true) {
+    toggleSelect(rowDOM, song, index, add, saveLastIndex = true) {
         if (!add) {
-            obj.classList.remove("active-table-item");
+            rowDOM.classList.remove("active-table-item");
             delete this.selectList[index];
             this.lastSelectIndex = null;
         } else {
-            obj.classList.add("active-table-item");
+            rowDOM.classList.add("active-table-item");
             this.selectList[index] = {
                 song: song,
-                obj: obj,
+                obj: rowDOM,
             };
             if (saveLastIndex) this.lastSelectIndex = index;
         }

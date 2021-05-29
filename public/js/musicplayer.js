@@ -2,7 +2,7 @@ import { getObj, setObj } from "./util/localstorage.js";
 import { arrSort, arrShuffle, arrClone } from "./util/object.js";
 import { secondsToMinutes, prettyTimeString } from "./util/time.js";
 import { Songlist } from "./songlistClass.js";
-import { log } from "./util/logger.js";
+import { log, err } from "./util/logger.js";
 ("use strict");
 
 /** @type {Audio} an audio element that is playing music*/
@@ -96,7 +96,11 @@ export function initPlayer(songlistObj) {
     audioVolume(conf.volume);
 
     volumeSlider.oninput();
-    initNavigator();
+    try {
+        initNavigator();
+    } catch (error) {
+        err("could not init visualizer. Not supported by your browser");
+    }
 }
 
 /**
@@ -116,8 +120,12 @@ export function switchPlayPause() {
 export function audioPlay() {
     conf.playing = true;
     player.play();
-    // visualizer has to be init here cause chrome needs it to be playing when creating the analyzer ctx
-    initSongVisualizer();
+    try {
+        // visualizer has to be init here cause chrome needs it to be playing when creating the analyzer ctx
+        initSongVisualizer();
+    } catch (error) {
+        err("could not init visualizer. Not supported by your browser");
+    }
     // set button styling
     svgPause.setAttribute("class", "");
     svgPlay.setAttribute("class", "invisible");
@@ -316,7 +324,7 @@ export function playSongAt(i, update = true, play = true, localIndex = false) {
  * inserts a song in the next position of the current played songs list
  * @param {songObj} song the song object that should be inserted
  */
-export function playNext(songs) {
+export function playNext(song) {
     conf.playerlist.splice(conf.playingPos + 1, 0, song);
     updatePlayerList();
     log("inserted song '" + song.title + "' as next in query");
