@@ -131,3 +131,18 @@ export function arrClone(array) {
 export function objClone(obj) {
     return JSON.parse(JSON.stringify(obj));
 }
+
+/**
+ * checks if a given object is empty (obj == {})
+ * @param {Object} obj object to check
+ * @returns boolean
+ */
+export function isEmpty(obj) {
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+            return false;
+        }
+    }
+
+    return JSON.stringify(obj) === JSON.stringify({});
+}

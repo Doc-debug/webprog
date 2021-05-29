@@ -1,5 +1,5 @@
 import { getObj, setObj } from "./util/localstorage.js";
-import { initctxm } from "./util/ctxm.js";
+import { initctxm, closectxm } from "./util/ctxm.js";
 import { splitArr } from "./util/object.js";
 import { find } from "./crawlerMain.js";
 ("use strict");
@@ -76,27 +76,31 @@ export function getPlaylistStorage() {
  * @param {int} playlistIndex the playlist index in the playlists array
  * @param {object} song a song object from the crawler
  */
-export function addSong(playlistIndex, song) {
-    playlists[playlistIndex].songs.push(song);
+export function addSong(playlistIndex, songs) {
+    for (let i = 0; i < songs.length; i++) {
+        const song = songs[i];
+        playlists[playlistIndex].songs.push(song);
+    }
     updatePlaylistStorage();
 }
 /**
  * Opens a context menu that can be used to add a song to a playlist
  * @param {dom} ele the clicked object to spawn context menu at the same position
- * @param {string} song the song title that should be added to the playlist
+ * @param {Array} songs list of song elements that should be added to the playlist
  */
-export function ctxmPlaylists(ele, song) {
+export function ctxmPlaylists(ele, songs) {
     // if playlists is empty try to get it from local storage
     if (playlists.length == 0) initPlaylist();
     // if still empty create empty ctxm body
     let container = initctxm(ele);
+    if (!container) return;
     for (let i = 0; i < playlists.length; i++) {
         const playlist = playlists[i];
         let dom = document.createElement("a");
         dom.innerHTML = playlist.name;
         dom.addEventListener("click", function () {
-            addSong(i, song);
-            container.style.display = "none";
+            addSong(i, songs);
+            closectxm();
         });
         container.appendChild(dom);
     }
@@ -110,7 +114,8 @@ export function ctxmPlaylists(ele, song) {
         if (name == null) return;
         // if no name was given set name to "new Playlist"
         else if (name == "") name = "new Playlist";
-        createPlaylist(name, [song]);
+        createPlaylist(name, songs);
+        closectxm();
     });
     container.appendChild(dom);
 }

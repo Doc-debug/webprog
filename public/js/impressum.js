@@ -28,8 +28,8 @@ export function initImpressum() {
         "p",
         "If you are running into problems or just want to express how you feel about Radia don't hesitate to contact us:"
     );
-    page.addObj("a", "f.schröder@ostfalia.de<br>", [
-        ["href", "mailto:f.schröder@ostfalia.de"],
+    page.addObj("a", "fa.schroeder@ostfalia.de<br>", [
+        ["href", "mailto:fa.schroeder@ostfalia.de"],
     ]);
     page.addObj("a", "p.kontny@ostfalia.de<br>", [
         ["href", "mailto:p.kontny@ostfalia.de"],

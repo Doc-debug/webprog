@@ -2,7 +2,7 @@ import { getObj, setObj } from "./util/localstorage.js";
 import { arrSort, arrShuffle, arrClone } from "./util/object.js";
 import { secondsToMinutes, prettyTimeString } from "./util/time.js";
 import { Songlist } from "./songlistClass.js";
-import { log } from "./util/logger.js";
+import { log, err } from "./util/logger.js";
 ("use strict");
 
 /** @type {Audio} an audio element that is playing music*/
@@ -46,7 +46,7 @@ export let conf = {
  */
 export function initPlayer(songlistObj) {
     // init the current songlist table
-    currentSongList = new Songlist("player-playlist-table", false, true);
+    currentSongList = new Songlist("player-playlist-table", false, true, false);
     songlist = songlistObj;
     // get player data from local storage
     let cache = getObj("playerConf");
@@ -96,7 +96,11 @@ export function initPlayer(songlistObj) {
     audioVolume(conf.volume);
 
     volumeSlider.oninput();
-    initNavigator();
+    try {
+        initNavigator();
+    } catch (error) {
+        err("could not init visualizer. Not supported by your browser");
+    }
 }
 
 /**
@@ -116,8 +120,12 @@ export function switchPlayPause() {
 export function audioPlay() {
     conf.playing = true;
     player.play();
-    // visualizer has to be init here cause chrome needs it to be playing when creating the analyzer ctx
-    initSongVisualizer();
+    try {
+        // visualizer has to be init here cause chrome needs it to be playing when creating the analyzer ctx
+        initSongVisualizer();
+    } catch (error) {
+        err("could not init visualizer. Not supported by your browser");
+    }
     // set button styling
     svgPause.setAttribute("class", "");
     svgPlay.setAttribute("class", "invisible");

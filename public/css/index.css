@@ -74,7 +74,7 @@ Styling             - individual content styling
 /* ========== PLAYLIST SONG LIST ==== */
 #table-container {
     width: calc(100% - 60px);
-    padding-bottom: 70px;
+    padding-bottom: 5em;
     overflow: auto;
 }
 /* ========== LAYOUT MOBILE ========= */
@@ -91,6 +91,7 @@ Styling             - individual content styling
     #playlist-folder-switch a.active {
         color: var(--contrast);
         background-color: inherit;
+        transition: color 0.5s ease;
     }
     #playlist-list {
         flex: none;

@@ -4,6 +4,10 @@
  */
 let initialized = false;
 /**
+ * if the ctxm is currently open/visible rightn now. To prevent to call it twice
+ */
+let active = false;
+/**
  * the dom element of the container for the context menu
  */
 let container = null;
@@ -13,6 +17,8 @@ let container = null;
  * @returns the container dom
  */
 export function initctxm(ele) {
+    if (active) return null;
+    active = true;
     if (!initialized) initialize();
     let pos = ele.getBoundingClientRect();
     // check if ctxm is outside window and move to left if true (120 = ctxm width)
@@ -38,8 +44,13 @@ function initialize() {
     // when clicking somewhere except the container itself the container will be hidden
     document.addEventListener("mousedown", function (e) {
         if (!container.contains(e.target)) {
-            container.style.display = "none";
+            closectxm();
         }
     });
     initialized = true;
+}
+
+export function closectxm() {
+    container.style.display = "none";
+    active = false;
 }
