@@ -3,6 +3,7 @@ import { arrSort, arrShuffle, arrClone } from "./util/object.js";
 import { secondsToMinutes, prettyTimeString } from "./util/time.js";
 import { Songlist } from "./songlistClass.js";
 import { log, err } from "./util/logger.js";
+import { isMobile } from "./util/css.js";
 ("use strict");
 
 /** @type {Audio} an audio element that is playing music*/
@@ -75,27 +76,33 @@ export function initPlayer(songlistObj) {
     };
     player.addEventListener("timeupdate", updateSongProgress);
 
-    //init songSlider and set gradient for the progress bar color
-    volumeSlider = document.getElementById("volume-control");
-    volumeSlider.value = conf.volume * 100;
-    volumeSlider.oninput = function () {
-        let x = volumeSlider.value;
-        x = isNaN(x) ? 0 : x;
-        let sliderBackground =
-            "linear-gradient(90deg, var(--contrast) " +
-            x +
-            "%, var(--bg-tertionary)" +
-            x +
-            "%)";
-        volumeSlider.style.background = sliderBackground;
-        updateConf();
-    };
-    volumeSlider.addEventListener("mousemove", function () {
-        audioVolume(volumeSlider.value / 100);
-    });
-    audioVolume(conf.volume);
-
-    volumeSlider.oninput();
+    // only setup volume slider if not on mobile
+    if (!isMobile()) {
+        //init songSlider and set gradient for the progress bar color
+        volumeSlider = document.getElementById("volume-control");
+        volumeSlider.value = conf.volume * 100;
+        volumeSlider.oninput = function () {
+            let x = volumeSlider.value;
+            x = isNaN(x) ? 0 : x;
+            let sliderBackground =
+                "linear-gradient(90deg, var(--contrast) " +
+                x +
+                "%, var(--bg-tertionary)" +
+                x +
+                "%)";
+            volumeSlider.style.background = sliderBackground;
+            updateConf();
+        };
+        volumeSlider.addEventListener("mousemove", function () {
+            audioVolume(volumeSlider.value / 100);
+        });
+        audioVolume(conf.volume);
+        volumeSlider.oninput();
+    } else {
+        // hide volume slider if mobile
+        volumeSlider = document.getElementById("volume-control");
+        volumeSlider.style.display = "none";
+    }
     try {
         initNavigator();
     } catch (error) {
