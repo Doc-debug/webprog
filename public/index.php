@@ -85,10 +85,10 @@
                 <table id="song-table" class="song-table"></table>
             </div>
         </div>
-    </div>
 
-    <!-- load music player (bottom of the page) -->
-    <?php include('include/player.php'); ?>
+        <!-- load music player (bottom of the page) -->
+        <?php include('include/player.php'); ?>
+    </div>
     <!-- load the settings page -->
     <?php include('include/settings.php'); ?>
 
