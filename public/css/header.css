@@ -23,6 +23,8 @@ Styling             - individual content styling
     padding: 15px;
     text-decoration: none;
     width: 30px;
+    background-color: var(--bg-secondary);
+    border-radius: 100%;
     z-index: 999999;
 }
 #settings-btn svg {
