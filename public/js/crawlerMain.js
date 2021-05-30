@@ -19,10 +19,10 @@ export async function crawler() {
 
     if (crawler == 0) {
         tree = await crawlerPHP();
-        log("crawler initialized!");
+        log("PHP crawler initialized!");
     } else {
         tree = await crawlerJS();
-        log("crawler initialized!");
+        log("JS crawler initialized!");
     }
 }
 

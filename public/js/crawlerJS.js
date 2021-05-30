@@ -23,15 +23,22 @@ let iframes = [];
  * @returns a promise with the tree structure. This can be awaited
  */
 export async function crawlerJS() {
-    // gets the file structure from the cache
-    let cache = getObj("tree");
-    if (cache != null) {
-        tree = cache;
-        // resolve if cache has been found
-        promise.resolve(tree);
+    try {
+        // gets the file structure from the cache
+        let cache = getObj("tree");
+        if (cache != null) {
+            tree = cache;
+            // resolve if cache has been found
+            promise.resolve(tree);
+        }
+        await createframe();
+        return promise;
+    } catch (error) {
+        alert(
+            "The crawler did not work properly. \nPlease check if your webserver has Directory Listing enabled. Or try the PHPcrawler (Settings > Performance > Crawler)"
+        );
+        tree = {};
     }
-    await createframe();
-    return promise;
 }
 
 /**
@@ -71,8 +78,17 @@ async function getData(iframe, src) {
     let treeTemp = {};
     // a list of folders that will be used for recursive call
     let folders = [];
-    // get all list items from iframe
-    let files = iframe.contentDocument.body.getElementsByTagName("li");
+    let files;
+    try {
+        // get all list items from iframe
+        files = iframe.contentDocument.body.getElementsByTagName("li");
+    } catch (error) {
+        alert(
+            "The crawler could not find any Files. \nPlease check if your webserver has Directory Listing enabled. \nOr try the PHPcrawler (Settings > Performance > Crawler)"
+        );
+        tree = {};
+        return;
+    }
     for (const file of files) {
         let name = file.getElementsByTagName("a")[0].innerHTML.slice(1);
         name = decodeHTMLEntities(name);
