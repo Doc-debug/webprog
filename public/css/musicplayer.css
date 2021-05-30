@@ -219,6 +219,12 @@ Styling            - individual content styling
     align-items: flex-end;
 }
 
+#player-playlist-table.song-table tbody tr:hover {
+    background-color: var(--bg-primary);
+    color: var(--text);
+    cursor: pointer;
+}
+
 #player-playlist tbody tr:first-child {
     color: var(--contrast);
 }
