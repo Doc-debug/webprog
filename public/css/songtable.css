@@ -25,7 +25,8 @@ Song list           - styling for the song table
     cursor: pointer;
 }
 .song-table tbody tr {
-    transition: background-color 0.5s ease;
+    transition: background-color 0.3s ease, color 0.3s ease,
+        box-shadow 0.5s ease;
 }
 .song-table tbody tr:hover {
     background-color: var(--bg-secondary);
@@ -39,6 +40,7 @@ Song list           - styling for the song table
 
 .song-table tr.active-table-item {
     background-color: var(--bg-tertionary) !important;
+    box-shadow: #00000090 0 0 7px 0px;
 }
 
 @media only screen and (max-width: 1000px) {

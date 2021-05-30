@@ -29,21 +29,33 @@ export function createLoader(message, parentID) {
     return container;
 }
 
+/**
+ * contains all instructions for the loading animation
+ * @returns if disabled
+ */
 export function pageLoader() {
-    if (!getSetting("pageloader")) return;
+    let loader = document.getElementById("page-loader");
+    if (!getSetting("pageloader")) {
+        loader.remove();
+        return;
+    }
+    loader.style.display = "flex";
 
-    document.getElementById("page-loader").style.display = "flex";
-
+    opacityAnim("page-loader-circle-ring", 1, 0);
     opacityAnim("page-loader-outer-circle", 1, 0);
     opacityAnim("page-loader-triangle", 1, 0);
-    opacityAnim("page-loader-title", 1, 0);
-    opacityAnim("page-loader-subtitle", 1, 0, true, 0.5);
-    opacityAnim("page-loader-circle-ring", 1, 0);
-    strokeAnim("page-loader-circle-ring", 1, 1);
+    opacityAnim("page-loader-title", 1.5, 0.3);
+    opacityAnim("page-loader-subtitle", 1.5, 0.6, true, 0.5);
 }
 
+/**
+ * removes the animation when the animation is done
+ * @returns if disabled
+ */
 export function pageLoaderClose() {
-    strokeAnim("page-loader-circle-ring", 1, 1);
-    opacityAnim("page-loader", 0.4, 2.5, false);
-    destroy("page-loader", 3);
+    let loader = document.getElementById("page-loader");
+    if (!loader) return;
+    strokeAnim("page-loader-circle-ring", 1, 2);
+    opacityAnim("page-loader", 0.4, 3, false);
+    destroy("page-loader", 3.5);
 }

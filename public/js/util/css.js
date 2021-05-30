@@ -1,9 +1,20 @@
 ("use strict");
 
-// thanks to https://jaketrent.com/post/addremove-classes-raw-javascript
+/**
+ * check if the current device is mobile or not
+ * since user agent sniffing is not the best practice please be carful where to use this
+ * @returns true or false
+ */
+export function isMobile() {
+    return /Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+    );
+}
 
 /**
  * checks if a given dom element contains a class
+ * thanks to https://jaketrent.com/post/addremove-classes-raw-javascript
+ *
  * @param {DOM} el the element to check
  * @param {String} className the class name
  * @returns

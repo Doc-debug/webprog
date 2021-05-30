@@ -1,3 +1,11 @@
+/**
+ * creates a stroke animation that will fill out the stroke from a starting point to an end point
+ * @param {string} id id of the DOM element
+ * @param {number} seconds the length of the animation
+ * @param {number} delay the delay of the animation start
+ * @param {number} startoff the starting point of the stroke
+ * @param {number} endoff the ending point of the stroke
+ */
 export function strokeAnim(
     id,
     seconds = 1,
@@ -23,6 +31,14 @@ export function strokeAnim(
         path.style.strokeDashoffset = endoff;
     }, delay * 1000);
 }
+/**
+ * creates an animation for the opacity of a DOM object
+ * @param {string} id the id of the DOM element
+ * @param {number} seconds the animation time in seconds
+ * @param {number} delay the delay of the animation start
+ * @param {boolean} fadein if the animation should fadein or out
+ * @param {number} amount the amount to which the opacity should be changed
+ */
 export function opacityAnim(
     id,
     seconds = 1,

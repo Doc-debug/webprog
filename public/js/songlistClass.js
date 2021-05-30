@@ -147,9 +147,9 @@ export class Songlist {
             }
             let options = row.insertCell(0);
             let link = document.createElement("a");
-            link.classList.add("song-list-link");
+            options.classList.add("song-list-link");
             link.innerHTML = "...";
-            link.addEventListener("click", function () {
+            options.addEventListener("click", function () {
                 // calls context menu when clicked
                 that.ctxmSonglist(link, song);
             });
