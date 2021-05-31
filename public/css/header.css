@@ -11,9 +11,12 @@ Styling             - individual content styling
 /* ========== HEADER ================ */
 
 #header {
+    position: relative;
     height: 60px;
     display: flex;
     background-color: var(--bg-secondary);
+    box-shadow: var(--shadow) 0 0 6px;
+    transition: box-shadow 0.5s ease;
 }
 #menu {
     display: flex;
@@ -46,4 +49,9 @@ Styling             - individual content styling
 #searchtag {
     width: 25%;
     box-sizing: border-box;
+}
+@media only screen and (max-width: 800px) {
+    #header {
+        box-shadow: none;
+    }
 }

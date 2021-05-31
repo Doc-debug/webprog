@@ -22,7 +22,7 @@ export function initctxm(ele) {
     if (!initialized) initialize();
     let pos = ele.getBoundingClientRect();
     // check if ctxm is outside window and move to left if true (120 = ctxm width)
-    let offset = pos.x + 120 - window.innerWidth;
+    let offset = pos.x + 140 - window.innerWidth;
     offset = offset > 0 ? 120 : 0;
 
     container.innerHTML = "";

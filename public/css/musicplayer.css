@@ -26,6 +26,7 @@ Styling            - individual content styling
     z-index: 1000;
     height: 100px;
     transition: height 0.5s ease;
+    box-shadow: var(--shadow) 0 0 6px;
 }
 
 .songlist-active {

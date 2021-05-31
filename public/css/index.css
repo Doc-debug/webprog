@@ -44,6 +44,7 @@ Styling             - individual content styling
     min-width: 200px;
     background-color: var(--bg-secondary);
     overflow-y: auto;
+    box-shadow: var(--shadow) 0 0 6px;
 }
 #playlist-list a,
 #playlist-list p {

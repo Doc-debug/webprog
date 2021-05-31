@@ -56,6 +56,7 @@ button:focus {
     --bg-tertionary: #3e3f42;
     --text: #ffffffde;
     --contrast: #e74c3c;
+    --shadow: black;
 
     --op-h: 87%;
     --op-m: 60%;
