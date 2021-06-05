@@ -3,13 +3,17 @@
 * @version 1.0
 */
 
+/* Description
+Holds styling for the player module (bottom)
+*/
+
 /* Table of Contents
-Styling            - individual content styling 
-    Player         - music player controls
-        songinfo
-        control
-        volume
-    Current slist  - a list containing the current list of songs that is played
+Player          - music player controls
+    songinfo
+    control
+    volume
+SVG styling     - styling for the svg icons of the buttons
+Current slist   - a list containing the current list of songs that are being played and the visualizer
 */
 
 /* ========== PLAYER ================ */
@@ -26,6 +30,7 @@ Styling            - individual content styling
     z-index: 1000;
     height: 100px;
     transition: height 0.5s ease;
+    box-shadow: var(--shadow) 0 0 6px;
 }
 
 .songlist-active {
@@ -35,6 +40,7 @@ Styling            - individual content styling
 #player .song-info {
     width: 160px;
     margin: 0 20px;
+    cursor: pointer;
 }
 
 /* ********** control *************** */

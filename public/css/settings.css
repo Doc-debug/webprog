@@ -3,12 +3,15 @@
 * @version 1.0
 */
 
-/* Table of Contents
-Styling             - individual content styling 
-    Content         - the main content (without the player)
+/* Description
+Holds the styling for the settings page
 */
 
-/* ========== CONTENT =============== */
+/* Table of Contents
+Settings             - Styling for the settings module
+*/
+
+/* ========== SETTINGS ============== */
 
 #settings-container {
     position: fixed;

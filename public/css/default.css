@@ -8,10 +8,15 @@ Custom Reset        - Resetting default Styles
 Constants           - variable declaration for colors and other values that are used more often
 Fonts               - Sets default fonts for the webpage
 Styling             - preset styling for certain elements
+    Scrollbar
+    Slider
+    Color Picker
+    Checkbox
     Select
     Searchbar
     Context Menu
-
+    Loader
+    SVG
 */
 
 /* ========== RESET ================= */
@@ -56,6 +61,7 @@ button:focus {
     --bg-tertionary: #3e3f42;
     --text: #ffffffde;
     --contrast: #e74c3c;
+    --shadow: black;
 
     --op-h: 87%;
     --op-m: 60%;
@@ -118,6 +124,7 @@ button:focus {
     font-display: swap;
 }
 
+/* ========== OBJ STYLING ===========*/
 /* ========== SCROLLBAR =============*/
 
 ::-webkit-scrollbar {

@@ -437,14 +437,19 @@ let active = false;
  * toggle current songlist
  */
 function togglePList() {
+    active = !active;
     let playerDOM = document.getElementById("player");
     let arrow = document.getElementById("expand-player-list");
     let container = document.getElementById("player-playlist");
-    if (active) {
+    if (!active) {
         playerDOM.classList.remove("songlist-active");
         arrow.classList.remove("rotate");
+        // delay display to make animation smoother
         setTimeout(() => {
-            container.style.display = "none";
+            // prevent timeout from firing after rapid close > open action
+            if (!active) {
+                container.style.display = "none";
+            }
         }, 500);
     } else {
         playerDOM.classList.add("songlist-active");
@@ -452,8 +457,6 @@ function togglePList() {
         container.style.display = "block";
         updatePlayerList();
     }
-
-    active = !active;
 }
 
 /**

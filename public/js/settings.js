@@ -3,6 +3,9 @@ import { toggleLogging } from "./util/logger.js";
 import { initImpressum, toggleImpressum } from "./impressum.js";
 ("use strict");
 
+/**
+ * init all necessary settings when the page is loading
+ */
 window.addEventListener("load", function () {
     let localSettings = getObj("settings");
     settings = localSettings ?? settings;
@@ -12,6 +15,9 @@ window.addEventListener("load", function () {
     initImpressum();
 });
 
+/**
+ * @type {object} holds all default settings and will be replaced if the localstorage is not null
+ */
 let settings = {
     crawler: 0,
     logging: false,

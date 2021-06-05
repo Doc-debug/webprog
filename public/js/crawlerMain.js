@@ -7,7 +7,7 @@ import { log } from "./util/logger.js";
 
 let tree = {};
 /**
- * fetches the data from the phpcrawler api
+ * Depending on the settings this will either use the JS or the PHP crawler to get the music file data
  * @returns the filetree structure
  */
 export async function crawler() {

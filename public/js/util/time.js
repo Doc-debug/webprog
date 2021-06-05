@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- *
+ * converts a given number of seconds into and array of minutes and seconds
  * @param {number} seconds
  * @returns and array of minutes and seconds in format [minutes, seconds]
  */

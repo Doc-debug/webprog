@@ -3,13 +3,18 @@
 * @version 1.0
 */
 
+/* Description
+Holds the main content styling for the index.html file
+*/
+
 /* Table of Contents
-Styling             - individual content styling 
-    Content         - the main content (without the player)
-    Content cont    - the container holding the playlist list and the playlist songlist
-    Playlist list   - a list displaying all playlists
-    Pl songlist     - a table containing songs from a selected playlist
-    Layout mobile   - media query for small screens to realign content
+Content         - the main content (without the player)
+Content 
+container       - the container holding the playlist list and the playlist songlist
+Playlist list   - a list displaying all playlists
+Playlist 
+songlist        - a table containing songs from a selected playlist
+Layout mobile   - media query for small screens to realign content
 */
 
 /* ========== CONTENT =============== */
@@ -44,6 +49,7 @@ Styling             - individual content styling
     min-width: 200px;
     background-color: var(--bg-secondary);
     overflow-y: auto;
+    box-shadow: var(--shadow) 0 0 6px;
 }
 #playlist-list a,
 #playlist-list p {
