@@ -143,6 +143,7 @@ export class Songlist {
             let row = this.tbody.insertRow();
             if (this.selectable) {
                 row.addEventListener("click", function (e) {
+                    console.log(e.target);
                     if (
                         hasClass(e.target, "song-list-title") ||
                         hasClass(e.target, "song-list-link")
@@ -156,6 +157,7 @@ export class Songlist {
             let options = row.insertCell(0);
             let link = document.createElement("a");
             options.classList.add("song-list-link");
+            link.classList.add("song-list-link");
             link.innerHTML = "...";
             options.addEventListener("click", function () {
                 // calls context menu when clicked
