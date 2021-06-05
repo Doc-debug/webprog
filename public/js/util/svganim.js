@@ -60,6 +60,11 @@ export function opacityAnim(
         }, delay * 1000 + seconds * 1000);
     }
 }
+/**
+ * destroys a dom object after a specified delay
+ * @param {String} id of the DOM object
+ * @param {Number} delay the delay of the deletion
+ */
 export function destroy(id, delay = 0) {
     setTimeout(() => {
         document.getElementById(id).remove();

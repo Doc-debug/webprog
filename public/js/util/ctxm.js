@@ -50,6 +50,9 @@ function initialize() {
     initialized = true;
 }
 
+/**
+ * closes the context menu
+ */
 export function closectxm() {
     container.style.display = "none";
     active = false;

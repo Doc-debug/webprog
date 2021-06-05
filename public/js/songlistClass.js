@@ -7,7 +7,15 @@ import { playSongAt, playNext } from "./musicplayer.js";
 import { hasClass } from "./util/css.js";
 ("use strict");
 
+/** Class containing a DOM table with all songs and selection, search and sorting feature */
 export class Songlist {
+    /**
+     *
+     * @param {String} listID the html id of the table DOM
+     * @param {Boolean} sortable if the table should be sortable
+     * @param {Boolean} local if items in the list should be treated as absolute or local
+     * @param {Boolean} selectable if the table should be selectable
+     */
     constructor(listID, sortable = true, local = false, selectable = true) {
         /**
          * @type {Array} Holds all songs from the list

@@ -1,4 +1,9 @@
+/** Class for creating a fullpage overlay that can be closed */
 export class Page {
+    /**
+     * Init all default objects like close button and contentbox
+     * @param {Number} zIndex the z-index of the page
+     */
     constructor(zIndex = 1) {
         this.page = document.createElement("div");
         this.page.classList.add("pagegen-page");
@@ -21,12 +26,24 @@ export class Page {
         this.active = false;
     }
 
+    /**
+     * toggle the visibility state of the page
+     * @param {boolean} state if the page is visible or not
+     */
     toggle(state = null) {
         if (state != null) this.active = state;
         else this.active = !this.active;
         this.page.style.top = this.active ? "0px" : "";
     }
 
+    /**
+     * adds a DOM object to the page
+     *
+     * @param {String} type dom type
+     * @param {String} innerHTML content of the dom
+     * @param {Array} attr 2d array containing attributes and their value (this could have been done in an object but it is easier to parse this way)
+     * the structure is: [[key1, value1],[key2, value2],[key3, value3]]
+     */
     addObj(type, innerHTML, attr = []) {
         let obj = document.createElement(type);
         attr.forEach((ele) => {

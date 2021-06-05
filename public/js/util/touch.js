@@ -1,3 +1,7 @@
+/** Class for recognition of different touch events
+ *  this is actually not used anywhere.
+ *  It could be useful if we where to continue with this project
+ */
 export class TouchEvent {
     /**
      *

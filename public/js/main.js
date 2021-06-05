@@ -118,6 +118,10 @@ function loadFolder(index) {
     togglePlaylistOptions(false);
 }
 
+/**
+ * toggles the playlist options on or off
+ * @param {boolean} on the state of the playlist options
+ */
 function togglePlaylistOptions(on) {
     let options = document.getElementById("playlist-options");
     if (on) {
