@@ -19,13 +19,13 @@
 Dies ist die Dokumentation zum Projekt im Modul 'Web-Programmieren'. Dabei wurde uns die Aufgabe gegeben einen Webmusikspieler zu erstellen. Der Musikspieler soll offline funktionieren und mit HTML, CSS, JavaScript und PHP geschrieben sein. Dabei sollen keine Drittanbieter-Bibliotheken oder ähnliches benutzt werden.
 
 \section{Entwicklungsprozess}
-Zu Beginn des Projekts haben wir uns gemeinsam zusammengesetzt und zu eine Kick-off Meeting getroffen. In diesem Meeting haben wir unsere Aufgaben, Kooperationswerkzeuge definiert. Als Kooperationswerkzeug haben wir uns auf Discord für die Kommunikation und Git als repository für den Code geeinigt. Die Aufgaben haben wir kategorisiert und in Git zu Meilensteinen zu geordnet. Dort konnten wir dann Schritt für Schritt den Entwicklungsstand unseres Musikspielers festhalten. Dies hat auch dazu geführt, dass wir immer wussten, wie viel Zeit uns bleibt und konnten so den Zeitraum für das Projekt sehr gut abschätzen. Die einzelnen Aufgaben haben wir als Issues in die Meilensteine gepackt.\\
-Zusätzlich haben wir ein Mockup erstellt, welches im späteren Verlauf erklärt wird. Dies sollte uns erst einmal eine grobe Richtung geben, wie wir unseren Musikspieler strukturieren möchten.
+Zu Beginn des Projekts haben wir uns gemeinsam zusammengesetzt und zu einem Kick-off Meeting getroffen. In diesem Meeting haben wir unsere Aufgaben und Kooperationswerkzeuge definiert. Für die Zusammenarbeit haben wir uns auf Discord für die Kommunikation und Git als Repository für den Code geeinigt. Die Aufgaben haben wir kategorisiert und in Git zu Meilensteinen zu geordnet. Dort konnten wir dann Schritt für Schritt den Entwicklungsstand unseres Musikspielers festhalten. Dies hat auch dazu geführt, dass wir immer wussten, wie viel Zeit uns bleibt und konnten so den Zeitraum für das Projekt sehr gut abschätzen. Die einzelnen Aufgaben haben wir als Issues in die Meilensteine eingefügt.\\
+Zusätzlich haben wir ein Mockup erstellt, welches im späteren Verlauf dieses Dokumentes weiter ausgeführt wird. Dies sollte uns erst einmal eine grobe Richtung geben, wie wir unseren Musikspieler strukturieren möchten.
 
 \newpage
 \section{Design}
 \subsection{Farbauswahl}
-Unser Prozess zu der Farbauswahl hat bei dem Kick off Meeting angefangen. Wir haben uns mehrere Beispiele angeschaut, um uns zu erkundigen, welchen Wirkung Farben auf uns Menschen haben. Da einzelne Farben mit bestimmte Kategorien oder Emotionen assoziiert werden, haben wir uns zu unserem Thema überlegt, welche Branche oder auch Zielgruppe wir erreichen möchten. Dabei sind wir gemeinsam auf den Schluss gekommen, wir möchten es Modern und verspielt wirken lassen und auch aus der Masse hervorstechen. Dafür kamen nur wenige Farbkombinationen zur Auswahl. 
+Unser Prozess zu der Farbauswahl hat bei dem Kick off Meeting angefangen. Wir haben uns mehrere Beispiele angeschaut, um uns zu erkundigen, welchen Wirkung Farben auf uns Menschen haben. Da einzelne Farben mit bestimmten Kategorien oder Emotionen assoziiert werden, haben wir uns zu unserem Thema überlegt, welche Branche oder auch Zielgruppe wir erreichen möchten. Dabei sind wir gemeinsam auf den Schluss gekommen, dass wir eine Moderne und verspielte Applikation erstellen wollen, welche aus der Masse hervorsticht. Dafür kamen nur wenige Farbkombinationen zur Auswahl. 
 \begin{itemize}
     \item Schwarz
     \item Weiß
@@ -35,9 +35,9 @@ Unser Prozess zu der Farbauswahl hat bei dem Kick off Meeting angefangen. Wir ha
     \item Orange
 \end{itemize}
 
- \noindent Das Problem bei der Auswahl war, wie wollen wir den Musikspieler verspielt wirken lassen. Dabei haben wir uns entschieden beide Farben Orange und Gelb zu vermischen, um so das verspielte gut darstellen konnten und wir somit unseren Kontrast gefunden hatten. Da Weiß und Schwarz als Kontrast auch sehr gut mit Orange passen und es gut zu lesen ist, haben wir diese Farben für den Text oder für den Hintergrund genommen. Blau und Grün sind für die vorgegebenen Designs ausgeschieden, weil Blau einfach zu kalt wirkt und Grün weil wir keine Anwendung geschrieben haben, die mit Natur, Umwelt oder Gesundheit in Verbindung gebracht werden soll. 
- Je nach Designauswahl wollen wir diese Farben aber auch nicht explizit beschränken, sondern der User sollte selber entscheiden können was ihm gefällt, wenn man die Anwendung z.B. als tägliche Anwendung verwenden möchte.
- Damit hatten wir unsere Farbpallette zusammengestellt und haben daraufhin 2 Standard Designs entworfen einmal den Dark Mode mit Schwarz Abstufungen und Light Mode mit Weiße Abstufungen.
+ \noindent Die Aufgabe die uns nun bevorstand, war eine gute Kombination zu finden, welche besonders verspielt wirkt und doch nicht an Seriosität verliert. Dabei haben wir uns entschieden die beiden Farben Orange und Gelb zu vermischen, was uns einen guten auffälligen Farbton lieferte. Da Weiß und Schwarz als Kontrast auch sehr gut mit Orange passen und die Kombination gut zu lesen ist, haben wir diese Farben für den Text oder für den Hintergrund genommen. Blau und Grün sind für die vorgegebenen Designs ausgeschieden, weil Blau einfach zu kalt wirkt und Grün, weil unsere Anwendung nicht mit Natur, Umwelt oder Gesundheit in Verbindung steht. 
+ Je nach Designauswahl wollten wir diese Farben aber auch nicht explizit beschränken, sondern dem User selber auch die Entscheidung überlassen die Applikation an die eigenen Präferenzen anzupassen.
+ Damit hatten wir unsere Farbpallette zusammengestellt und entworfen basierend darauf 2 Standard Designs, welche den Dark Mode mit Schwarz Abstufungen und Light Mode mit Weiße Abstufungen ausmachten.
  \begin{figure}[t]
  \centering
  \includegraphics[width=8cm,height=6cm]{img/Farben.jpg}
@@ -47,20 +47,20 @@ Unser Prozess zu der Farbauswahl hat bei dem Kick off Meeting angefangen. Wir ha
 
 \newpage
 \subsection{Schriftart}
-Wie zuvor bei der Farbbetrachtung, haben wir hier unter der beachtung, dass wir einheitlich bleiben auch uns bei der Schriftart überlegt es modern wirken zu lassen auf den User. Dafür haben wir uns die modernsten oder meist verwendeten Schriftarten angeschaut und sind für uns zu einer Sans-serif Schrift gekommen, da diese als aktuell, modern zählt und in der Technologie viel verwendet werden. Ebenfalls ermöglicht es ein angenehmes lesen. Wir hatten am ende zwei mögliche Kandidaten Roboto und Source Sans Pro. Beide Schriftarten eigneten sich gut, doch unsere Wahl war Roboto. Roboto ist zu der aktuellen Zeit bei der Erstellung der Planung häufiger genutzt und somit konnten wir uns entscheiden.
+Wie zuvor bei der Farbbetrachtung, haben wir hier auch, besonders unter der Beachtung der Einheitlichkeit, bei der Schriftart Wert darauf gelegt, es auf den User modern wirken zu lassen. Dafür haben wir die modernsten und meist verwendeten Webschriftarten verglichen und beschlossen somit eine Sans-serif Schrift zu nutzen, da diese als aktuell und modern zählt und in der Technologie weit verbreitet sind. Ebenfalls ermöglicht es ein angenehmes lesen auf Weboberflächen. Wir hatten am Ende die Kandidaten Roboto und Source Sans Pro. Beide Schriftarten eigneten sich gut, jedoch stach Roboto leicht hervor, da Roboto weiter verbreitet ist und sich besser für jegliche Form von Texten (Überschriften, Fließtexte, etc.) verwenden lässt.
 
 \subsection{Branding}
-Der Prozess für die Entwicklung eines Brandings haben wir so durchgeführt. Erst mal haben wir Themen gemeinsam besprochen was wir für Kategorien über den Namen vermitteln möchten und was sich nach Musik anhört. Als Beispiele sind da Begriffe gefallen, wie z.B. Anlage, Musikspieler, Radio, Streamingplatformen für Musik. Anhand dieser Kategorien hat sich jeder Begriffe einfallen lassen und hat diese notiert. Am Ende haben wir alle gemeinsam unsere Überlegungen gesammelt und abgestimmt. Unsere Wahl viel hierbei auf Radia, welches sehr nach Radio aber auch leicht verspielt klingt, was sich auch bei der Farbauswahl wiederspiegelt.
+Der Prozess für die Entwicklung eines Brandings haben wir wie folgt durchgeführt. Zuerst besprachen wir in der Gruppe, welche Themen und Kategorien durch den Namen vermittelt werden sollten und was für Namen in den Kontext Musik gut passen könnten. Als Beispiele sind dabei Begriffe gefallen, wie z.B. Anlage, Musikspieler, Radio, Streamingplatformen für Musik. Mithilfe dieser Begriffe Schöpften wir Neologismen, um somit eine Verbundenheit zur Musik und einen guten Wiedererkennungswert herzustellen. Am Ende sammelten wir gemeinsam unsere Überlegungen und stimmten ab. Unsere Wahl viel hierbei auf Radia, welches sehr an das Wort Radio erinnert und gleichzeitig ein wenig verspielt klingt, was auch mit der Farbauswahl gut passt.
 \newpage
 \subsection{Barrierefreiheit}
 Die Barrierefreiheit haben wir durch verschiedene Punkte hergestellt. 
 \begin{itemize}
     \item Wir haben die verwendeten Buttons größer gestaltet, sodass die Verwendung durch die Maus an einem Rechner und gleichzeitig auch für die Touchversion leichter zu treffen sind.
-    \item Für Personen mit Farbblindheit oder auch direkte Schwächen beim sehen, können sich die Farben selber anpassen und durch das Highlighten von angewählten Elementen können die Kontraste besser wahrgenommen werden, da jeder Benutzer sich die Farben auf ihre eigenen Bedürfnisse konfigurieren können.
+    \item Für Personen mit Farbblindheit oder Sehschwächen, sind Farben selbst konfigurierbar um den Kontrast zwischen unterschiedlichen Bereichen der eigenen Präferenz anzupassen.
 \end{itemize}
 
 \section{Layout}
-Wie in dem Entwicklungsprozess beschrieben, haben wir beim Kick off Meeting ein Mockup entwickelt, da wir unsere Anwendung im Design es somit durchdachter und einfacher anhand des Mockups entwickeln konnten. Bei dem Layout wollten wir eine Gruppierung der Elemente haben, sodass wir Steuerelemente für den Musikspieler unten haben für das leichtere Erreichen was auch bei der Touchversion hilfreich ist. Die Liederliste centered, ebenfall für die leichtere Bedienung, da man diese Listen am zweit meisten verwendet und ganz oben ein Block mit Elementen, zum wechseln zwischen Funktionen. Das Design haben wir erst grob modern Entwickelt. Das Design ist aber für uns auch eine Grundstruktur gewesen. Wir wollen auch bei dem Layout erreichen 'as simple as possible, but not simpler' damit wollten wir uns auf wirklich das nötigste Beschränken, wie man auch an der Mockup Abbildung sieht, ist alles sehr reduziert. Die Farben aus dem Design hatten wir erst mal uns frei Überlegt um einen ersten Eindruck zu bekommen, wie dieser Aufbau wirkt.\\
+Wie in dem Entwicklungsprozess beschrieben, haben wir beim Kick off Meeting ein Mockup entwickelt, um uns in dem Entwicklungsprozess an dieser Idee orientieren zu können. In diesem Mockup erstellten wir einfache Objektgruppen, welche die Hauptmodule unseres Designs ausmachten. Diese Module bestanden aus dem Player, der Liederliste und einer Navigationsleiste. Den Player richteten wir unten aus, damit dieser besonders auch auf Mobilgeräten nah an der Hand liegt und somit einfach zu bedienen ist. Die Liederliste wurde Zentriert angeordnet. Ebenfall für die leichtere Bedienung, da man diese Liste am zweit meisten nutzt und da sie, um möglichst viel Informationen zu liefern, den meisten Platz benötigt. Zuletzt richteten wir ganz oben die Navigationsleiste zum wechseln zwischen Funktionen aus. Mit dem Design richteten wir uns stark nach dem Minimalismus, um es Nutzern einfacher zu gestalten sich auf der Seite zurechtzufinden. Wir richteten uns nach der Regel 'as simple as possible, but not simpler'. Außerdem ließen wir in unserem Mockup viel Platz um immernoch Bereiche für potentielle weitere Funktionen zu haben (was sich später als sehr wertvoll herausstellte). Die Farben aus dem Design hatten wir erst mal uns frei Überlegt um einen ersten Eindruck zu bekommen, wie dieser Aufbau wirkt.\\
 
 \begin{figure}[H]
  \centering
@@ -69,12 +69,12 @@ Wie in dem Entwicklungsprozess beschrieben, haben wir beim Kick off Meeting ein 
  \label{fig:mockup}
 \end{figure}
 
-\noindent Wir sind aber bei diesem Layout nicht geblieben, da uns bei dem Entwicklungsprozess noch schönere Ideen kamen. Zu den neuen Ideen haben wir eine Skizze zu dem neuen Layout entwickelt wir haben das Layout so angepasst, dass wir die Elemente etwas anders Strukturieren können und so auch die Verwendung erleichtern konnten.\\
+\noindent Wir sind aber bei diesem Layout nicht geblieben, da uns bei dem Entwicklungsprozess noch viele weitere Ideen kamen. Zu den neuen Ideen haben wir dann eine einfachere Skizze mit einem neuen Layout entwickelt, welche auf dem alten Layout basierte, aber deutlich mehr Funktionen zu bieten hatte. Die alten Werte des Minimalismus gingen hierbei nicht verloren.\\
 
 
 
 \subsection{Mobile}
-Für die Mobileversion haben wir uns ebenfalls eine Layoutstruktur überlegt, die uns bei der Implementierung für das Anpassen der einzelnen Elemente ein Richtung vorgibt. Hiermit können wir die Gestaltung der einzelnen Elemente durch die Bildschirmgröße anpassen. 
+Für die Mobilversion haben wir uns ebenfalls eine Layoutstruktur überlegt, welche uns bei der Implementierung und Anpassung von einzelnen Elemente ein Richtung vorgab. Hierdurch konnten wir die Gestaltung der einzelnen Elemente anhand der Bildschirmgröße gut strukturieren. 
 \begin{figure}[H]
  \centering
  \includegraphics[width=5cm,height=6cm]{img/mobile.png}
@@ -90,7 +90,7 @@ Für die Mobileversion haben wir uns ebenfalls eine Layoutstruktur überlegt, di
  \label{fig:layout}
 \end{figure}
 
-Wie hier in der Abbildung zu sehen ist sie die Elemente von der Oben an die Seiten verschoben, da wir es einfacher in der Bedienung empfanden und es nach Recherchen auch moderne ist. Ebenfalls hat sich zu dem Mockup auch die obere Leiste verändert, da dort nun die Suche nach Liedern ermöglicht wird und wir haben oben links in der Ecke die Einstellungen hinzugefügt, um es übersichtlicher zu halten und es nicht zu überladen.
+Wie in den Abbildungen zu sehen, sind im Gegensatz zu der Desktopversion alle Elemente in der mobilen Version übereinander gestapelt, um eine Verengung und somit eine Einschränkung der Sicht auf der Horizontalen zu vermeiden. Dies machte die Bedienung deutlich einfacher und wirkte auf uns auch deutlich moderner. Ebenfalls veränderte sich in dem Mockup auch die obere Leiste, da wir nun die Suche nach Liedern ermöglichten und in der Ecke einen gut erreichbaren Button für die Einstellungen hinzufügten.
 \section{Funktionen}
 
 \subsection{Crawler}
